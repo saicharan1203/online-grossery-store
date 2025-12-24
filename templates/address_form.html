@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>{% if address %}Edit Address{% else %}Add New Address{% endif %}</h2>
+
+    <form method="POST" class="address-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="full_name">Full Name *</label>
+                <input type="text" id="full_name" name="full_name" value="{{ address.full_name if address else '' }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" value="{{ address.phone if address else '' }}" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address_line1">Address Line 1 *</label>
+            <input type="text" id="address_line1" name="address_line1" placeholder="Street address, P.O. box"
+                value="{{ address.address_line1 if address else '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address_line2">Address Line 2</label>
+            <input type="text" id="address_line2" name="address_line2"
+                placeholder="Apartment, suite, unit, building, floor, etc."
+                value="{{ address.address_line2 if address else '' }}">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" value="{{ address.city if address else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State/Province *</label>
+                <input type="text" id="state" name="state" value="{{ address.state if address else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pincode/ZIP *</label>
+                <input type="text" id="pincode" name="pincode" value="{{ address.pincode if address else '' }}"
+                    required>
+            </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label>
+                <input type="checkbox" name="is_default" {% if address and address.is_default %}checked{% endif %}>
+                Set as default address
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ url_for('main.addresses') }}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">{% if address %}Update Address{% else %}Save Address{% endif
+                %}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

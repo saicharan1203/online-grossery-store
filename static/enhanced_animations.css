@@ -1,0 +1,105 @@
+/* ========================================
+   ENHANCED UI ANIMATIONS & EFFECTS
+   Apply animations to existing components
+   Products are ALWAYS VISIBLE
+   ======================================== */
+
+/* === PRODUCT CARDS - ALWAYS VISIBLE === */
+
+.product-card {
+    opacity: 1 !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.product-image {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* === NAVIGATION === */
+
+.nav-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* === BUTTONS === */
+
+.btn,
+.add-to-cart-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover,
+.add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn:active,
+.add-to-cart-btn:active {
+    transform: scale(0.95);
+}
+
+/* === FORMS === */
+
+input:focus,
+textarea:focus,
+select:focus {
+    transform: scale(1.01);
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* === CARDS === */
+
+.stat-card,
+.info-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover,
+.info-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* === CATEGORY FILTERS === */
+
+.category-filter {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-filter:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === PRICE TAGS === */
+
+.price {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .price {
+    transform: scale(1.1);
+    color: #667eea;
+}
+
+/* === SMOOTH SCROLLING === */
+
+html {
+    scroll-behavior: smooth;
+}

@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Scheduled Order - FreshMarket{% endblock %}
+
+{% block content %}
+<div class="edit-scheduled-container">
+    <div class="edit-header">
+        <h1>✏️ Edit Scheduled Order</h1>
+        <a href="{{ url_for('main.scheduled_orders') }}" class="btn-back">← Back to Scheduled Orders</a>
+    </div>
+
+    <div class="edit-content">
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="items-list">
+                {% for item in order.items %}
+                <div class="item-row">
+                    <span>{{ item.product_name }}</span>
+                    <span>× {{ item.quantity }}</span>
+                    <span>₹{{ (item.price * item.quantity)|round(2) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="total-row">
+                <strong>Total:</strong>
+                <strong>₹{{ order.total_price|round(2) }}</strong>
+            </div>
+        </div>
+
+        <div class="edit-form-container">
+            <form method="POST" class="edit-form">
+                <div class="form-group">
+                    <label for="scheduled_date">Delivery Date</label>
+                    <input type="date" id="scheduled_date" name="scheduled_date"
+                        value="{{ order.scheduled_date.strftime('%Y-%m-%d') }}"
+                        min="{{ (now() + timedelta(days=1)).strftime('%Y-%m-%d') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="delivery_time_slot">Time Slot</label>
+                    <select id="delivery_time_slot" name="delivery_time_slot" required>
+                        <option value="8 AM - 12 PM" {% if order.delivery_time_slot=="8 AM - 12 PM" %}selected{% endif
+                            %}>8 AM - 12 PM</option>
+                        <option value="12 PM - 4 PM" {% if order.delivery_time_slot=="12 PM - 4 PM" %}selected{% endif
+                            %}>12 PM - 4 PM</option>
+                        <option value="4 PM - 8 PM" {% if order.delivery_time_slot=="4 PM - 8 PM" %}selected{% endif %}>
+                            4 PM - 8 PM</option>
+                    </select>
+                </div>
+
+                {% if order.is_recurring %}
+                <div class="recurring-info">
+                    <p><strong>🔄 Recurring Order:</strong> {{ order.recurrence_frequency|capitalize }}</p>
+                    {% if order.next_delivery_date %}
+                    <p><strong>Next Delivery:</strong> {{ order.next_delivery_date.strftime('%B %d, %Y') }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{{ url_for('main.scheduled_orders') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .edit-scheduled-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .edit-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .edit-header h1 {
+        font-size: 2rem;
+        color: #333;
+        margin: 0;
+    }
+
+    .btn-back {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .btn-back:hover {
+        color: #764ba2;
+    }
+
+    .edit-content {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 2rem;
+    }
+
+    .order-summary {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+    }
+
+    .order-summary h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .items-list {
+        margin: 1rem 0;
+    }
+
+    .item-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 0.5rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+        color: #666;
+    }
+
+    .item-row:last-child {
+        border-bottom: none;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0 0 0;
+        border-top: 2px solid #667eea;
+        margin-top: 1rem;
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+
+    .edit-form-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .recurring-info {
+        background: #f0f0ff;
+        border-left: 4px solid #667eea;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .recurring-info p {
+        margin: 0.5rem 0;
+        color: #333;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .form-actions .btn {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+        background: #f0f0f0;
+        color: #333;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-secondary:hover {
+        background: #e0e0e0;
+    }
+
+    @media (max-width: 768px) {
+        .edit-content {
+            grid-template-columns: 1fr;
+        }
+
+        .edit-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+    }
+</style>
+{% endblock %}

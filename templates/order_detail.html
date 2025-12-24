@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="order-detail-container">
+    <div class="order-detail-header">
+        <div>
+            <h1>Order #{{ order.id }}</h1>
+            <p class="order-date">Placed on {{ order.date.strftime('%B %d, %Y at %I:%M %p') }}</p>
+        </div>
+        <div class="order-status-badge status-{{ order.status.lower() }}">
+            {{ order.status }}
+        </div>
+    </div>
+
+    <!-- Order Tracking Timeline -->
+    <div class="order-timeline">
+        <div
+            class="timeline-step {% if order.status in ['Pending', 'Processing', 'Shipped', 'Delivered', 'Completed'] %}completed{% endif %}">
+            <div class="timeline-icon">✓</div>
+            <div class="timeline-content">
+                <h4>Order Placed</h4>
+                <p>{{ order.date.strftime('%b %d, %Y') }}</p>
+            </div>
+        </div>
+
+        <div
+            class="timeline-connector {% if order.status in ['Processing', 'Shipped', 'Delivered', 'Completed'] %}active{% endif %}">
+        </div>
+
+        <div
+            class="timeline-step {% if order.status in ['Processing', 'Shipped', 'Delivered', 'Completed'] %}completed{% endif %}">
+            <div class="timeline-icon">📦</div>
+            <div class="timeline-content">
+                <h4>Processing</h4>
+                <p>Preparing your order</p>
+            </div>
+        </div>
+
+        <div class="timeline-connector {% if order.status in ['Shipped', 'Delivered', 'Completed'] %}active{% endif %}">
+        </div>
+
+        <div class="timeline-step {% if order.status in ['Shipped', 'Delivered', 'Completed'] %}completed{% endif %}">
+            <div class="timeline-icon">🚚</div>
+            <div class="timeline-content">
+                <h4>Shipped</h4>
+                <p>On the way</p>
+            </div>
+        </div>
+
+        <div class="timeline-connector {% if order.status in ['Delivered', 'Completed'] %}active{% endif %}"></div>
+
+        <div class="timeline-step {% if order.status in ['Delivered', 'Completed'] %}completed{% endif %}">
+            <div class="timeline-icon">✅</div>
+            <div class="timeline-content">
+                <h4>Delivered</h4>
+                <p>Order completed</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="order-items-section">
+        <h2>Order Items</h2>
+        <div class="order-items-list">
+            {% for item in order.items %}
+            <div class="order-item-detail">
+                {% if item.product.image_url %}
+                <img src="{{ url_for('static', filename=item.product.image_url) }}" alt="{{ item.product.name }}"
+                    class="order-item-image">
+                {% endif %}
+                <div class="order-item-info">
+                    <h3>{{ item.product.name }}</h3>
+                    <p class="order-item-category">{{ item.product.category }}</p>
+                    <p class="order-item-quantity">Quantity: {{ item.quantity }}</p>
+                </div>
+                <div class="order-item-price">
+                    <p class="unit-price">${{ "%.2f"|format(item.price_at_purchase) }} each</p>
+                    <p class="total-price">${{ "%.2f"|format(item.price_at_purchase * item.quantity) }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-detail-summary">
+        <div class="summary-card">
+            <h3>Payment Information</h3>
+            <p><strong>Payment Method:</strong> {{ order.payment_method or 'N/A' }}</p>
+            <p><strong>Total Amount:</strong> ${{ "%.2f"|format(order.total_price) }}</p>
+        </div>
+
+        {% if order.address %}
+        <div class="summary-card">
+            <h3>Delivery Address</h3>
+            <p><strong>{{ order.address.full_name }}</strong></p>
+            <p>{{ order.address.address_line1 }}</p>
+            {% if order.address.address_line2 %}
+            <p>{{ order.address.address_line2 }}</p>
+            {% endif %}
+            <p>{{ order.address.city }}, {{ order.address.state }} {{ order.address.pincode }}</p>
+            <p>Phone: {{ order.address.phone }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="order-actions">
+        <a href="{{ url_for('main.orders') }}" class="btn btn-secondary">Back to Orders</a>
+    </div>
+</div>
+{% endblock %}

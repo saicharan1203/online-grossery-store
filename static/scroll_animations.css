@@ -1,0 +1,336 @@
+/* ========================================
+   SCROLL-BASED ANIMATIONS
+   Fade-in, Parallax, Sticky Header, Progress Bar
+   ======================================== */
+
+/* === SMOOTH SCROLL BEHAVIOR === */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* === SCROLL PROGRESS BAR === */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    z-index: 9999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+}
+
+/* === STICKY HEADER WITH SHRINK === */
+
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+}
+
+.top-nav.scrolled {
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav.scrolled .logo {
+    transform: scale(0.85);
+}
+
+[data-theme="dark"] .top-nav.scrolled {
+    background: rgba(20, 20, 30, 0.95);
+}
+
+/* === FADE-IN + SLIDE-UP ON SCROLL === */
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animations */
+.scroll-reveal:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.scroll-reveal:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.scroll-reveal:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.scroll-reveal:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.scroll-reveal:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.scroll-reveal:nth-child(6) {
+    transition-delay: 0.6s;
+}
+
+/* === PARALLAX SCROLLING === */
+
+.parallax-bg {
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: transform 0.1s ease-out;
+}
+
+.parallax-element {
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+
+/* === FLOATING CARDS ON SCROLL === */
+
+.float-on-scroll {
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+}
+
+/* Applied via JavaScript based on scroll position */
+
+/* === SECTION REVEAL === */
+
+.section-reveal {
+    opacity: 0;
+    transform: translateY(80px) scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* === LAZY LOADING IMAGES === */
+
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Blur placeholder */
+img[loading="lazy"]:not(.loaded) {
+    filter: blur(10px);
+    transform: scale(1.1);
+}
+
+img[loading="lazy"].loaded {
+    filter: blur(0);
+    transform: scale(1);
+}
+
+/* === SCROLL ANIMATIONS FOR SPECIFIC ELEMENTS === */
+
+/* Product Cards */
+.product-card.scroll-reveal {
+    /* Don't hide products by default - they should always be visible */
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+}
+
+/* Hero Section */
+.hero-section.scroll-reveal {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-section.scroll-reveal.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Stats Cards */
+.stat-card.scroll-reveal {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.6s ease-out;
+}
+
+.stat-card.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* === SCROLL-TRIGGERED COUNTERS === */
+
+.counter {
+    transition: all 0.3s ease-out;
+}
+
+.counter.counting {
+    animation: countUp 1s ease-out;
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* === SCROLL FADE EFFECTS === */
+
+.fade-in-bottom {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-bottom.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* === ZOOM ON SCROLL === */
+
+.zoom-on-scroll {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.zoom-on-scroll.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* === ROTATE ON SCROLL === */
+
+.rotate-on-scroll {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.9);
+    transition: all 0.6s ease-out;
+}
+
+.rotate-on-scroll.visible {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+
+/* Removed will-change for better performance */
+/* will-change should only be used sparingly */
+
+.scroll-reveal.revealed,
+.section-reveal.revealed {
+    will-change: auto;
+}
+
+/* === REDUCE MOTION === */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .scroll-reveal,
+    .section-reveal,
+    .parallax-element,
+    .float-on-scroll,
+    .fade-in-bottom,
+    .fade-in-left,
+    .fade-in-right,
+    .zoom-on-scroll,
+    .rotate-on-scroll {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .parallax-bg {
+        background-attachment: scroll;
+    }
+}
+
+/* === SCROLL SNAP === */
+
+.scroll-snap-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+
+.scroll-snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* === INTERSECTION OBSERVER CLASSES === */
+
+.observe-fade {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+.observe-fade.in-view {
+    opacity: 1;
+}
+
+.observe-slide {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.observe-slide.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}

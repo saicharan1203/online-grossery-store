@@ -1,0 +1,883 @@
+/* ========================================
+   LOGIN PAGE DECORATIONS - PHOTO-REALISTIC GRASS
+   Matching reference image 100%
+   ======================================== */
+
+/* === HIDE SNACK BANNER === */
+.snack-banner {
+    display: none !important;
+}
+
+/* === ILLUSTRATION CARD BASE === */
+.illustration-card {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 30%, rgba(255, 252, 245, 0.6) 0%, transparent 60%),
+        linear-gradient(to bottom,
+            #f5f3f0 0%,
+            #ede9e3 30%,
+            #d8d4c8 60%,
+            #c5c1b5 100%);
+    border-radius: 32px;
+}
+
+/* === PHOTO-REALISTIC GRASS FIELD === */
+.grass-field {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 280px;
+    z-index: 1;
+    background:
+        /* Base grass texture - very dense */
+        linear-gradient(to bottom,
+            transparent 0%,
+            rgba(120, 160, 60, 0.15) 10%,
+            rgba(100, 140, 50, 0.3) 25%,
+            rgba(85, 125, 45, 0.5) 40%,
+            rgba(70, 110, 40, 0.7) 55%,
+            rgba(60, 100, 35, 0.85) 70%,
+            rgba(50, 90, 30, 0.95) 85%,
+            rgba(45, 80, 28, 1) 100%);
+}
+
+/* Create ultra-dense grass using repeating patterns */
+.grass-field::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image:
+        /* Very dense vertical grass strokes */
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 1px,
+            rgba(80, 120, 45, 0.6) 1.5px,
+            rgba(90, 130, 50, 0.5) 2px,
+            rgba(100, 140, 55, 0.4) 2.5px,
+            transparent 3px,
+            transparent 5px),
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 2px,
+            rgba(70, 110, 40, 0.5) 2.5px,
+            rgba(85, 125, 48, 0.45) 3.5px,
+            transparent 4px,
+            transparent 7px),
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(95, 135, 52, 0.4) 4px,
+            rgba(105, 145, 58, 0.35) 5px,
+            transparent 6px,
+            transparent 10px);
+    background-size: 8px 100%, 12px 100%, 15px 100%;
+    background-position: 0 0, 3px 0, 6px 0;
+    pointer-events: none;
+    opacity: 0.95;
+}
+
+/* Add more grass density layers */
+.grass-field::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image:
+        /* Additional grass texture for ultra realism */
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 1.5px,
+            rgba(60, 100, 35, 0.35) 2px,
+            rgba(75, 115, 42, 0.3) 3px,
+            transparent 3.5px,
+            transparent 6px),
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 4px,
+            rgba(85, 125, 48, 0.25) 5px,
+            rgba(95, 135, 52, 0.2) 6.5px,
+            transparent 7px,
+            transparent 11px);
+    background-size: 10px 100%, 18px 100%;
+    background-position: 2px 0, 8px 0;
+    pointer-events: none;
+    opacity: 0.8;
+    filter: blur(0.5px);
+}
+
+/* Individual prominent grass blades for foreground detail */
+.blade {
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to top,
+            #3d5a25 0%,
+            #4a6e2f 10%,
+            #578238 25%,
+            #649642 45%,
+            #71aa4c 65%,
+            #7ebe56 85%,
+            #8bd260 100%);
+    border-radius: 70% 70% 0 0;
+    transform-origin: bottom center;
+    box-shadow:
+        -1px 0 4px rgba(0, 0, 0, 0.25),
+        1px 0 3px rgba(255, 255, 255, 0.15),
+        inset -1px 0 2px rgba(0, 0, 0, 0.2);
+    filter: blur(0.2px);
+}
+
+/* Foreground grass blades - very prominent */
+.blade-1 {
+    left: 5%;
+    height: 130px;
+    width: 8px;
+    animation: grassSway1 3.5s ease-in-out infinite;
+    filter: blur(0.1px);
+    z-index: 2;
+}
+
+.blade-2 {
+    left: 15%;
+    height: 145px;
+    width: 9px;
+    animation: grassSway2 4.2s ease-in-out infinite;
+    animation-delay: 0.4s;
+    filter: blur(0px);
+    z-index: 2;
+}
+
+.blade-3 {
+    left: 28%;
+    height: 118px;
+    width: 7px;
+    animation: grassSway1 3.8s ease-in-out infinite;
+    animation-delay: 0.8s;
+    opacity: 0.9;
+    filter: blur(0.15px);
+}
+
+.blade-4 {
+    left: 40%;
+    height: 155px;
+    width: 10px;
+    animation: grassSway2 4.5s ease-in-out infinite;
+    animation-delay: 1.2s;
+    filter: blur(0px);
+    z-index: 2;
+}
+
+.blade-5 {
+    left: 53%;
+    height: 135px;
+    width: 8px;
+    animation: grassSway1 4s ease-in-out infinite;
+    animation-delay: 1.6s;
+    filter: blur(0.1px);
+}
+
+.blade-6 {
+    left: 67%;
+    height: 125px;
+    width: 7px;
+    animation: grassSway2 4.3s ease-in-out infinite;
+    animation-delay: 2s;
+    opacity: 0.95;
+    filter: blur(0.12px);
+}
+
+.blade-7 {
+    left: 78%;
+    height: 140px;
+    width: 9px;
+    animation: grassSway1 3.9s ease-in-out infinite;
+    animation-delay: 2.4s;
+    filter: blur(0.08px);
+    z-index: 2;
+}
+
+.blade-8 {
+    left: 88%;
+    height: 128px;
+    width: 8px;
+    animation: grassSway2 4.1s ease-in-out infinite;
+    animation-delay: 2.8s;
+    filter: blur(0.1px);
+}
+
+.blade-9 {
+    left: 95%;
+    height: 150px;
+    width: 9px;
+    animation: grassSway1 4.4s ease-in-out infinite;
+    animation-delay: 3.2s;
+    filter: blur(0px);
+    z-index: 2;
+}
+
+/* Natural grass sway */
+@keyframes grassSway1 {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scaleY(1);
+    }
+
+    25% {
+        transform: rotate(1.5deg) scaleY(0.99);
+    }
+
+    50% {
+        transform: rotate(0deg) scaleY(1);
+    }
+
+    75% {
+        transform: rotate(-1.5deg) scaleY(0.99);
+    }
+}
+
+@keyframes grassSway2 {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scaleY(1);
+    }
+
+    25% {
+        transform: rotate(-2deg) scaleY(0.98);
+    }
+
+    50% {
+        transform: rotate(0deg) scaleY(1);
+    }
+
+    75% {
+        transform: rotate(2deg) scaleY(0.98);
+    }
+}
+
+/* === WHITE DAISY FLOWERS - PHOTO REALISTIC === */
+.meadow-daisy {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+.meadow-daisy-left {
+    left: 18%;
+    bottom: 90px;
+}
+
+.meadow-daisy-right {
+    right: 25%;
+    bottom: 75px;
+}
+
+.meadow-daisy .stem {
+    width: 3px;
+    height: 50px;
+    background: linear-gradient(to top,
+            #3d5a25 0%,
+            #4a6e2f 30%,
+            #578238 70%,
+            #649642 100%);
+    border-radius: 2px;
+    box-shadow: -1px 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.meadow-daisy .flower {
+    width: 38px;
+    height: 38px;
+    background: radial-gradient(circle,
+            #ffb300 0%,
+            #ffc107 25%,
+            #ffd54f 40%,
+            #ffffff 42%,
+            #ffffff 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Ultra-realistic daisy petals */
+.meadow-daisy .flower::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    background:
+        /* 13 petals for maximum realism */
+        radial-gradient(ellipse 36% 42% at 50% 0%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 88% 12%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 100% 50%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 88% 88%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 50% 100%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 12% 88%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 0% 50%, #ffffff 65%, transparent 65%),
+        radial-gradient(ellipse 36% 42% at 12% 12%, #ffffff 65%, transparent 65%),
+        /* Secondary petals */
+        radial-gradient(ellipse 32% 38% at 70% 30%, rgba(255, 255, 255, 0.95) 65%, transparent 65%),
+        radial-gradient(ellipse 32% 38% at 70% 70%, rgba(255, 255, 255, 0.95) 65%, transparent 65%),
+        radial-gradient(ellipse 32% 38% at 30% 70%, rgba(255, 255, 255, 0.95) 65%, transparent 65%),
+        radial-gradient(ellipse 32% 38% at 30% 30%, rgba(255, 255, 255, 0.95) 65%, transparent 65%),
+        radial-gradient(ellipse 32% 38% at 50% 25%, rgba(255, 255, 255, 0.92) 65%, transparent 65%);
+    z-index: -1;
+}
+
+/* === YELLOW BUTTERCUP FLOWERS - PHOTO REALISTIC === */
+.meadow-buttercup {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+.meadow-buttercup {
+    right: 45%;
+    bottom: 85px;
+}
+
+.meadow-buttercup .stem {
+    width: 3px;
+    height: 55px;
+    background: linear-gradient(to top,
+            #3d5a25 0%,
+            #4a6e2f 30%,
+            #578238 70%,
+            #649642 100%);
+    border-radius: 2px;
+    box-shadow: -1px 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.meadow-buttercup .flower {
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(circle,
+            #f57f17 0%,
+            #fb8c00 15%,
+            #ff9800 30%,
+            #ffa726 50%,
+            #ffb74d 70%,
+            #ffd54f 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Realistic 5-petal buttercup with texture */
+.meadow-buttercup .flower::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background:
+        /* 5 main petals with realistic shape */
+        radial-gradient(ellipse 42% 48% at 50% 5%, #ffd700 68%, transparent 68%),
+        radial-gradient(ellipse 42% 48% at 88% 32%, #ffd700 68%, transparent 68%),
+        radial-gradient(ellipse 42% 48% at 88% 88%, #ffd700 68%, transparent 68%),
+        radial-gradient(ellipse 42% 48% at 32% 92%, #ffd700 68%, transparent 68%),
+        radial-gradient(ellipse 42% 48% at 12% 32%, #ffd700 68%, transparent 68%);
+    z-index: -1;
+}
+
+/* Glossy shine on buttercup */
+.meadow-buttercup .flower::after {
+    content: '';
+    position: absolute;
+    top: 22%;
+    left: 28%;
+    width: 45%;
+    height: 45%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%);
+    border-radius: 50%;
+}
+
+/* Subtle flower movement */
+.meadow-daisy,
+.meadow-buttercup {
+    animation: flowerFloat 6s ease-in-out infinite;
+}
+
+.meadow-daisy-right {
+    animation-delay: 1s;
+}
+
+.meadow-buttercup {
+    animation-delay: 1.8s;
+}
+
+@keyframes flowerFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-3px) rotate(0.8deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-3px) rotate(-0.8deg);
+    }
+}
+
+/* === LEAF SPRIGS === */
+.leaf-sprig {
+    position: absolute;
+    bottom: 100px;
+    width: 30px;
+    height: 40px;
+    z-index: 2;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
+}
+
+.sprig-left {
+    left: 8%;
+    bottom: 110px;
+}
+
+.sprig-right {
+    right: 12%;
+    bottom: 95px;
+}
+
+.leaf-sprig::before,
+.leaf-sprig::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 26px;
+    background: linear-gradient(135deg,
+            #649642 0%,
+            #578238 40%,
+            #4a6e2f 80%,
+            #3d5a25 100%);
+    border-radius: 0 65% 65% 0;
+    opacity: 0.9;
+    box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.leaf-sprig::before {
+    transform: rotate(-30deg);
+    left: 0;
+    top: 0;
+}
+
+.leaf-sprig::after {
+    transform: rotate(30deg);
+    right: 0;
+    top: 12px;
+}
+
+/* === FLOATING POLLEN === */
+.floating-pollen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.floating-pollen span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, #fff9c4 0%, #fff176 100%);
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+}
+
+.floating-pollen span:nth-child(1) {
+    left: 20%;
+    top: 40%;
+    animation: pollenDrift1 10s ease-in-out infinite;
+}
+
+.floating-pollen span:nth-child(2) {
+    left: 70%;
+    top: 50%;
+    animation: pollenDrift2 12s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.floating-pollen span:nth-child(3) {
+    left: 90%;
+    top: 35%;
+    animation: pollenDrift1 11s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+.floating-pollen span:nth-child(4) {
+    left: 50%;
+    top: 60%;
+    animation: pollenDrift2 13s ease-in-out infinite;
+    animation-delay: 4.5s;
+}
+
+.floating-pollen span:nth-child(5) {
+    left: 80%;
+    top: 70%;
+    animation: pollenDrift1 9s ease-in-out infinite;
+    animation-delay: 6s;
+}
+
+@keyframes pollenDrift1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.7;
+    }
+
+    25% {
+        transform: translate(12px, -18px) scale(1.15);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: translate(-8px, -32px) scale(0.85);
+        opacity: 0.5;
+    }
+
+    75% {
+        transform: translate(-16px, -16px) scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes pollenDrift2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.65;
+    }
+
+    25% {
+        transform: translate(-14px, -22px) scale(0.9);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translate(10px, -36px) scale(1.2);
+        opacity: 0.45;
+    }
+
+    75% {
+        transform: translate(16px, -18px) scale(0.95);
+        opacity: 0.9;
+    }
+}
+
+/* === FLOATING SNACK ORBITS === */
+.floating-snacks {
+    position: absolute;
+    inset: 10% 12% auto;
+    height: 55%;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.floating-snack {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    --drift-x: 14px;
+    --drift-y: 32px;
+    animation: snackDrift var(--drift-duration, 7s) ease-in-out infinite;
+    opacity: 0.9;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.floating-snack::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    mix-blend-mode: screen;
+    filter: blur(1px);
+    opacity: 0.6;
+}
+
+.floating-snack.floating-donut {
+    --drift-duration: 8.5s;
+    --drift-x: 18px;
+    --drift-y: 34px;
+    left: 16%;
+    top: 8%;
+    border: 6px solid #ff89b0;
+    background: linear-gradient(180deg, #ffe3f0, #ffbad6);
+    animation-delay: 0.2s;
+}
+
+.floating-snack.floating-candy {
+    --drift-duration: 6.5s;
+    --drift-x: 22px;
+    --drift-y: 40px;
+    left: 48%;
+    top: -4%;
+    background: linear-gradient(135deg, #6ad7ff, #2b7bff);
+    animation-delay: 0.9s;
+}
+
+.floating-snack.floating-wafer {
+    --drift-duration: 7.5s;
+    --drift-x: 20px;
+    --drift-y: 38px;
+    width: 42px;
+    height: 24px;
+    border-radius: 16px;
+    left: 68%;
+    top: 12%;
+    background: linear-gradient(135deg,
+            #ffd2a1 25%,
+            #ffaf62 25%,
+            #ffaf62 50%,
+            #ffd2a1 50%,
+            #ffd2a1 75%,
+            #ffaf62 75%);
+    animation-delay: 1.4s;
+}
+
+.floating-snack.floating-berry {
+    --drift-duration: 5.8s;
+    --drift-x: 16px;
+    --drift-y: 28px;
+    left: 30%;
+    top: 30%;
+    background: radial-gradient(circle at 30% 30%, #ffe7ff, #ff55a5);
+    animation-delay: 0.6s;
+}
+
+@keyframes snackDrift {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+
+    20% {
+        transform:
+            translate3d(var(--drift-x), calc(var(--drift-y) * -0.6), 0)
+            rotate(6deg)
+            scale(1.04);
+    }
+
+    40% {
+        transform:
+            translate3d(calc(var(--drift-x) * -0.65), calc(var(--drift-y) * -1.15), 0)
+            rotate(12deg)
+            scale(0.96);
+    }
+
+    60% {
+        transform:
+            translate3d(calc(var(--drift-x) * -0.35), calc(var(--drift-y) * -0.25), 0)
+            rotate(-4deg)
+            scale(1.02);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+}
+
+/* === CHARACTER POSITIONING - DRAMATIC FLOATING IN THE AIR === */
+.character {
+    position: absolute;
+    z-index: 4;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+    animation: dramaticFloat 2.5s ease-in-out infinite;
+}
+
+/* Dramatic floating animation - really alive and continuous! */
+@keyframes dramaticFloat {
+    0% {
+        transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    }
+
+    15% {
+        transform: translateY(-30px) translateX(6px) rotate(4deg) scale(1.03);
+    }
+
+    30% {
+        transform: translateY(-50px) translateX(10px) rotate(6deg) scale(1.06);
+    }
+
+    45% {
+        transform: translateY(-45px) translateX(6px) rotate(4deg) scale(1.04);
+    }
+
+    60% {
+        transform: translateY(-25px) translateX(0px) rotate(0deg) scale(1.01);
+    }
+
+    75% {
+        transform: translateY(-15px) translateX(-6px) rotate(-4deg) scale(0.98);
+    }
+
+    90% {
+        transform: translateY(-8px) translateX(-4px) rotate(-2deg) scale(0.99);
+    }
+
+    100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    }
+}
+
+/* Orange character - bottom left, floating dramatically */
+.character-orange {
+    bottom: 110px;
+    left: 40px;
+    animation: dramaticFloat 2.3s ease-in-out infinite;
+}
+
+/* Purple character - middle, floating dramatically */
+.character-purple {
+    bottom: 170px;
+    left: 165px;
+    animation: dramaticFloat 2.7s ease-in-out infinite;
+}
+
+/* Blue/Dark character - top right, floating dramatically */
+.character-blue {
+    top: 80px;
+    right: 90px;
+    animation: dramaticFloat 2.1s ease-in-out infinite;
+}
+
+/* Yellow character - bottom right, floating dramatically */
+.character-yellow {
+    bottom: 115px;
+    right: 60px;
+    animation: dramaticFloat 2.9s ease-in-out infinite;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+    .grass-field {
+        height: 200px;
+    }
+
+    .blade {
+        width: 6px;
+    }
+
+    .blade-1,
+    .blade-3,
+    .blade-7 {
+        height: 85px;
+    }
+
+    .blade-2,
+    .blade-4,
+    .blade-8 {
+        height: 100px;
+    }
+
+    .blade-5,
+    .blade-6,
+    .blade-9 {
+        height: 90px;
+    }
+
+    .meadow-daisy .stem,
+    .meadow-buttercup .stem {
+        height: 35px;
+    }
+
+    .meadow-daisy .flower {
+        width: 28px;
+        height: 28px;
+    }
+
+    .meadow-buttercup .flower {
+        width: 24px;
+        height: 24px;
+    }
+
+    .character-orange {
+        bottom: 80px;
+        left: 25px;
+    }
+
+    .character-yellow {
+        bottom: 85px;
+        right: 35px;
+    }
+}
+
+/* === DARK MODE SUPPORT === */
+body[data-theme="dark"] .illustration-card {
+    background:
+        radial-gradient(ellipse at 50% 30%, rgba(60, 70, 80, 0.4) 0%, transparent 60%),
+        linear-gradient(to bottom,
+            #2a2e35 0%,
+            #25292f 30%,
+            #1f2328 60%,
+            #1a1d22 100%);
+}
+
+body[data-theme="dark"] .blade {
+    background: linear-gradient(to top,
+            #2d4a1a 0%,
+            #3a5e22 10%,
+            #477238 25%,
+            #548642 45%,
+            #619a4c 65%,
+            #6eae56 85%,
+            #7bc260 100%);
+}
+
+body[data-theme="dark"] .grass-field {
+    background:
+        linear-gradient(to bottom,
+            transparent 0%,
+            rgba(90, 130, 50, 0.15) 10%,
+            rgba(75, 115, 40, 0.3) 25%,
+            rgba(60, 100, 35, 0.5) 40%,
+            rgba(50, 90, 30, 0.7) 55%,
+            rgba(45, 80, 28, 0.85) 70%,
+            rgba(40, 70, 25, 0.95) 85%,
+            rgba(35, 60, 22, 1) 100%);
+}
+
+body[data-theme="dark"] .meadow-daisy .stem,
+body[data-theme="dark"] .meadow-buttercup .stem {
+    background: linear-gradient(to top,
+            #2d4a1a 0%,
+            #3a5e22 30%,
+            #477238 70%,
+            #548642 100%);
+}

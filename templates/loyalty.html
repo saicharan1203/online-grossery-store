@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+
+{% block title %}Loyalty Rewards - FreshMarket{% endblock %}
+
+{% block content %}
+<div class="loyalty-container">
+    <div class="loyalty-header">
+        <h1>🎁 Loyalty Rewards</h1>
+        <p>Earn points with every purchase and redeem them for discounts!</p>
+    </div>
+
+    <div class="points-summary">
+        <div class="points-card main-balance">
+            <div class="points-icon">⭐</div>
+            <div class="points-info">
+                <h2>{{ current_user.loyalty_points }}</h2>
+                <p>Available Points</p>
+            </div>
+            <div class="points-value">
+                <span class="value-label">Worth</span>
+                <span class="value-amount">₹{{ (current_user.loyalty_points / 100 * 10)|round(2) }}</span>
+            </div>
+        </div>
+
+        <div class="points-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                    <h3>{{ total_earned }}</h3>
+                    <p>Total Earned</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-info">
+                    <h3>{{ total_redeemed }}</h3>
+                    <p>Total Redeemed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rewards-info">
+        <h3>How It Works</h3>
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="info-number">1</div>
+                <h4>Earn Points</h4>
+                <p>Get <strong>1 point for every ₹10</strong> you spend on orders</p>
+            </div>
+            <div class="info-card">
+                <div class="info-number">2</div>
+                <h4>Accumulate</h4>
+                <p>Points never expire - save them up for bigger discounts!</p>
+            </div>
+            <div class="info-card">
+                <div class="info-number">3</div>
+                <h4>Redeem</h4>
+                <p><strong>100 points = ₹10 discount</strong> on your next order (minimum 50 points)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="transaction-history">
+        <h3>Transaction History</h3>
+        {% if transactions %}
+        <div class="transactions-list">
+            {% for transaction in transactions %}
+            <div class="transaction-item {{ transaction.transaction_type }}">
+                <div class="transaction-icon">
+                    {% if transaction.transaction_type == 'earned' %}
+                    <span class="icon-earned">+</span>
+                    {% else %}
+                    <span class="icon-redeemed">−</span>
+                    {% endif %}
+                </div>
+                <div class="transaction-details">
+                    <p class="transaction-desc">{{ transaction.description }}</p>
+                    <p class="transaction-date">{{ transaction.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                </div>
+                <div class="transaction-points {{ transaction.transaction_type }}">
+                    {% if transaction.transaction_type == 'earned' %}
+                    +{{ transaction.points }}
+                    {% else %}
+                    {{ transaction.points }}
+                    {% endif %}
+                    <span>points</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-transactions">
+            <p>No transactions yet. Start shopping to earn points!</p>
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Start Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="loyalty-cta">
+        <h3>Ready to use your points?</h3>
+        <p>Add items to your cart and redeem points at checkout!</p>
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary">Shop Now</a>
+    </div>
+</div>
+
+<style>
+    .loyalty-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .loyalty-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .loyalty-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .points-summary {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .points-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .points-icon {
+        font-size: 3rem;
+    }
+
+    .points-info h2 {
+        font-size: 3rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .points-info p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+
+    .points-value {
+        margin-left: auto;
+        text-align: right;
+    }
+
+    .value-label {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .value-amount {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-top: 0.25rem;
+    }
+
+    .points-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+    }
+
+    .stat-info h3 {
+        margin: 0;
+        font-size: 1.8rem;
+        color: #667eea;
+    }
+
+    .stat-info p {
+        margin: 0.25rem 0 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .rewards-info {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .rewards-info h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .info-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .info-card {
+        text-align: center;
+        padding: 1.5rem;
+        border: 2px solid #f0f0f0;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        border-color: #667eea;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .info-number {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 1rem;
+    }
+
+    .info-card h4 {
+        margin: 0.5rem 0;
+        color: #333;
+    }
+
+    .info-card p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .transaction-history {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .transaction-history h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .transactions-list {
+        margin-top: 1.5rem;
+    }
+
+    .transaction-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.2s ease;
+    }
+
+    .transaction-item:hover {
+        background: #f9f9f9;
+    }
+
+    .transaction-item:last-child {
+        border-bottom: none;
+    }
+
+    .transaction-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .transaction-item.earned .transaction-icon {
+        background: #d4edda;
+        color: #28a745;
+    }
+
+    .transaction-item.redeemed .transaction-icon {
+        background: #f8d7da;
+        color: #dc3545;
+    }
+
+    .transaction-details {
+        flex: 1;
+    }
+
+    .transaction-desc {
+        margin: 0;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .transaction-date {
+        margin: 0.25rem 0 0 0;
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    .transaction-points {
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .transaction-points.earned {
+        color: #28a745;
+    }
+
+    .transaction-points.redeemed {
+        color: #dc3545;
+    }
+
+    .transaction-points span {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #999;
+    }
+
+    .no-transactions {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #999;
+    }
+
+    .loyalty-cta {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .loyalty-cta h3 {
+        margin-top: 0;
+        font-size: 1.8rem;
+    }
+
+    .loyalty-cta p {
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+        .points-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .info-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

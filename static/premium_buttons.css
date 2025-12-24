@@ -1,0 +1,303 @@
+/* ========================================
+   PREMIUM BUTTON INTERACTIONS
+   Glassmorphism, Neumorphism, Ripple Effects
+   ======================================== */
+
+/* === BASE BUTTON STYLES === */
+
+.btn-premium {
+    position: relative;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 8px 32px 0 rgba(31, 38, 135, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Gradient Border */
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Hover Effects */
+.btn-premium:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 12px 40px 0 rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+}
+
+.btn-premium:hover::before {
+    opacity: 1;
+}
+
+/* Active/Click State */
+.btn-premium:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-in-out;
+}
+
+/* Ripple Effect */
+.btn-premium::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-premium:active::after {
+    width: 300px;
+    height: 300px;
+    transition: width 0s, height 0s;
+}
+
+/* Icon + Text Alignment */
+.btn-premium .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeInIcon 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeInIcon {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Disabled State */
+.btn-premium:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-premium:disabled:hover {
+    transform: none;
+    box-shadow:
+        0 8px 32px 0 rgba(31, 38, 135, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+/* === NEUMORPHISM VARIANT === */
+
+.btn-neuro {
+    background: #e0e5ec;
+    border: none;
+    box-shadow:
+        8px 8px 16px #a3b1c6,
+        -8px -8px 16px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-neuro:hover {
+    box-shadow:
+        12px 12px 24px #a3b1c6,
+        -12px -12px 24px #ffffff;
+}
+
+.btn-neuro:active {
+    box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+}
+
+/* === DARK MODE BUTTONS === */
+
+[data-theme="dark"] .btn-premium {
+    background: rgba(30, 30, 50, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .btn-neuro {
+    background: #2d3748;
+    box-shadow:
+        8px 8px 16px #1a202c,
+        -8px -8px 16px #3d4a5c;
+}
+
+[data-theme="dark"] .btn-neuro:hover {
+    box-shadow:
+        12px 12px 24px #1a202c,
+        -12px -12px 24px #3d4a5c;
+}
+
+/* === BUTTON VARIANTS === */
+
+.btn-primary-premium {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.btn-success-premium {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.btn-danger-premium {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+}
+
+/* === MICRO-INTERACTIONS === */
+
+.btn-premium .btn-text {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-premium:hover .btn-text {
+    letter-spacing: 1px;
+}
+
+/* Pulse on hover */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+}
+
+.btn-premium:hover {
+    animation: pulse-glow 1.5s infinite;
+}
+
+/* === LOADING STATE === */
+
+.btn-premium.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-premium.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === SMOOTH TRANSITIONS === */
+
+.btn-premium,
+.btn-premium::before,
+.btn-premium::after,
+.btn-premium .btn-icon,
+.btn-premium .btn-text {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === APPLY TO EXISTING BUTTONS === */
+
+.btn,
+.add-to-cart-btn,
+button[type="submit"],
+.search-button {
+    position: relative;
+    padding: 14px 32px;
+    font-weight: 600;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 8px 32px 0 rgba(31, 38, 135, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn:hover,
+.add-to-cart-btn:hover,
+button[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 12px 40px 0 rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+}
+
+.btn:active,
+.add-to-cart-btn:active,
+button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Ripple for all buttons */
+.btn::after,
+.add-to-cart-btn::after,
+button[type="submit"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::after,
+.add-to-cart-btn:active::after,
+button[type="submit"]:active::after {
+    width: 300px;
+    height: 300px;
+    transition: width 0s, height 0s;
+}

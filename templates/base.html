@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='new_features.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='accessibility.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_animations.css') }}">
+    <!-- Glassmorphism disabled for performance - backdrop-filter causes lag -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='glassmorphism.css') }}"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='premium_buttons.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='scroll_animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_decorations.css') }}">
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    <nav class="top-nav">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="FreshMarket Logo">
+            <span>FreshMarket</span>
+        </div>
+        <div class="links">
+            <button id="theme-toggle" class="theme-toggle ripple-parent" type="button" aria-label="Toggle theme"
+                aria-pressed="false">
+                <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3a8.5 8.5 0 1 0 11.5 11.5z" />
+                </svg>
+            </button>
+            <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.wishlist') }}" class="nav-link nav-link-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Wishlist
+            </a>
+            <a href="{{ url_for('main.cart') }}" class="nav-link nav-link-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2" />
+                    <circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="currentColor"
+                        stroke-width="2" />
+                </svg>
+                Cart
+                {% if cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+            <a href="{{ url_for('main.loyalty') }}" class="nav-link nav-link-icon">
+                ⭐ Rewards
+            </a>
+            <a href="{{ url_for('main.scheduled_orders') }}" class="nav-link nav-link-icon">
+                📅 Scheduled
+            </a>
+            <a href="{{ url_for('main.addresses') }}" class="nav-link">Addresses</a>
+            {% if current_user.is_admin %}
+            <a href="{{ url_for('main.admin_dashboard') }}" class="nav-link admin-link">Admin Dashboard</a>
+            {% endif %}
+            <span class="nav-user">{{ current_user.username }}</span>
+            <a href="{{ url_for('main.logout') }}" class="nav-link">Logout</a>
+            {% else %}
+            <a href="{{ url_for('main.login') }}" class="nav-link">Login</a>
+            <a href="{{ url_for('main.register') }}" class="nav-link">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flashes">
+            {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
+                    fetch(`/add_to_cart/${productId}`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast(data.message);
+                                updateCartBadge(data.cart_count);
+                                updateQuantityPill(productId, data.item_quantity);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+
+            document.querySelectorAll('.plus-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
+                    fetch(`/add_to_cart/${productId}`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast('Added to cart!');
+                                updateCartBadge(data.cart_count);
+                                updateQuantityPill(productId, data.item_quantity);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+
+            initThemeToggle();
+            initButtonRipples();
+        });
+
+        function updateCartBadge(count) {
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = count;
+            } else if (count > 0) {
+                const cartLink = document.querySelector('.links a[href*="cart"]');
+                if (cartLink) {
+                    const newBadge = document.createElement('span');
+                    newBadge.className = 'cart-badge';
+                    newBadge.textContent = count;
+                    cartLink.appendChild(newBadge);
+                }
+            }
+        }
+
+        function updateCartNav(total) {
+            updateCartBadge(Math.round(total));
+        }
+
+        function updateQuantityPill(productId, quantity) {
+            const pill = document.querySelector(`.quantity-pill[data-product-id="${productId}"]`);
+            if (!pill) return;
+            const valueEl = pill.querySelector('.quantity-value');
+            if (valueEl) valueEl.innerText = quantity;
+            if (quantity > 0) {
+                pill.classList.remove('is-hidden');
+            } else {
+                pill.classList.add('is-hidden');
+            }
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = message;
+            container.appendChild(toast);
+            toast.offsetHeight;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => container.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        function initThemeToggle() {
+            const toggle = document.getElementById('theme-toggle');
+            if (!toggle) return;
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+            const storage = {
+                get() {
+                    try {
+                        return localStorage.getItem('fm-theme');
+                    } catch (error) {
+                        return null;
+                    }
+                },
+                set(value) {
+                    try {
+                        localStorage.setItem('fm-theme', value);
+                    } catch (error) {
+                        /* Ignore storage errors */
+                    }
+                }
+            };
+
+            const setTheme = (theme, { persist = true } = {}) => {
+                document.body.dataset.theme = theme;
+                if (persist) {
+                    storage.set(theme);
+                }
+                toggle.setAttribute('aria-pressed', theme === 'dark');
+                toggle.classList.toggle('is-dark', theme === 'dark');
+            };
+
+            const initialTheme = storage.get() || (prefersDark.matches ? 'dark' : 'light');
+            setTheme(initialTheme, { persist: false });
+
+            toggle.addEventListener('click', () => {
+                const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+                setTheme(nextTheme);
+            });
+
+            prefersDark.addEventListener('change', (event) => {
+                if (!storage.get()) {
+                    setTheme(event.matches ? 'dark' : 'light', { persist: false });
+                }
+            });
+        }
+
+        function initButtonRipples() {
+            const rippleSelectors = ['.btn', '.add-to-cart-btn', '.plus-btn', '.wishlist-btn', '.search-button', '.theme-toggle'];
+            const targets = document.querySelectorAll(rippleSelectors.join(', '));
+            if (!targets.length) return;
+
+            targets.forEach(target => target.classList.add('ripple-parent'));
+
+            document.body.addEventListener('pointerdown', function (event) {
+                const button = event.target.closest('.ripple-parent');
+                if (!button) return;
+
+                const rect = button.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height);
+                ripple.className = 'btn-ripple';
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+                ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+
+                button.appendChild(ripple);
+
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                });
+            });
+        }
+    </script>
+    <script src="{{ url_for('static', filename='interactive-ui.js') }}"></script>
+</body>
+
+</html>

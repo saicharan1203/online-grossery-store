@@ -1,0 +1,182 @@
+/* ==============================================
+   ACCESSIBILITY & CONTRAST ENHANCEMENTS
+   ============================================== */
+
+/* Navigation - Enhanced Contrast */
+nav.top-nav {
+    background: var(--surface-dark);
+    color: var(--text-inverse);
+}
+
+body[data-theme="light"] nav.top-nav {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+}
+
+body[data-theme="light"] .nav-link {
+    color: var(--text-secondary);
+}
+
+body[data-theme="light"] .nav-link:hover {
+    color: var(--text-primary);
+}
+
+body[data-theme="light"] .nav-user {
+    color: var(--text-primary);
+}
+
+/* Hero Section - Accessible Text */
+body[data-theme="light"] .hero-heading {
+    color: var(--text-primary);
+}
+
+body[data-theme="light"] .hero-subheading,
+body[data-theme="light"] .hero-description {
+    color: var(--text-secondary);
+}
+
+body[data-theme="light"] .hero .search-bar {
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+body[data-theme="light"] .hero .search-bar::placeholder {
+    color: var(--text-muted);
+}
+
+/* Filter Chips - Enhanced Visibility */
+body[data-theme="light"] .filter-chip {
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+body[data-theme="light"] .filter-chip:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-primary);
+}
+
+body[data-theme="light"] .filter-chip.active {
+    background: var(--text-primary);
+    color: var(--surface);
+}
+
+/* Sort Dropdown - Accessible */
+body[data-theme="light"] .sort-container {
+    color: var(--text-secondary);
+}
+
+body[data-theme="light"] .sort-select {
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+body[data-theme="light"] .sort-select:hover {
+    color: var(--text-primary);
+}
+
+/* Product Cards - High Contrast */
+body[data-theme="light"] .product-title {
+    color: var(--text-primary);
+}
+
+body[data-theme="light"] .product-card .category {
+    color: var(--text-muted);
+}
+
+body[data-theme="light"] .product-card .price {
+    color: var(--accent-secondary-dark);
+}
+
+/* Buttons - Accessible States */
+body[data-theme="light"] .btn {
+    background: linear-gradient(135deg, var(--accent-secondary-dark), var(--accent-secondary));
+    color: #ffffff;
+}
+
+body[data-theme="light"] .add-to-cart-btn,
+body[data-theme="light"] .plus-btn {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+body[data-theme="light"] .add-to-cart-btn:hover,
+body[data-theme="light"] .plus-btn:hover {
+    background: var(--text-primary);
+    color: #ffffff;
+}
+
+/* Headings - Consistent Contrast */
+body[data-theme="light"] h2,
+body[data-theme="light"] h3,
+body[data-theme="light"] h4 {
+    color: var(--text-primary);
+}
+
+/* Dark Mode - Enhanced Contrast */
+body[data-theme="dark"] {
+    background: var(--bg-gradient-dark);
+    color: var(--text-inverse);
+}
+
+body[data-theme="dark"] .nav-link {
+    color: var(--text-inverse-secondary);
+}
+
+body[data-theme="dark"] .nav-link:hover {
+    color: var(--text-inverse);
+}
+
+body[data-theme="dark"] .filter-chip {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-inverse-secondary);
+    border: 1px solid var(--border-dark);
+}
+
+body[data-theme="dark"] .filter-chip:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-inverse);
+}
+
+body[data-theme="dark"] .filter-chip.active {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary);
+}
+
+body[data-theme="dark"] .sort-select {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-inverse);
+    border: 1px solid var(--border-dark);
+}
+
+body[data-theme="dark"] .product-title {
+    color: var(--text-inverse);
+}
+
+body[data-theme="dark"] .product-card .category {
+    color: var(--text-inverse-secondary);
+}
+
+/* Focus States - Accessible */
+*:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+/* Ensure minimum touch targets (44x44px) */
+.btn,
+.filter-chip,
+.nav-link,
+.add-to-cart-btn,
+.plus-btn,
+.search-button {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="upi-payment-container">
+    <div class="upi-payment-card">
+        <h2>Complete UPI Payment</h2>
+        <p class="payment-instruction">Scan the QR code below to complete your payment</p>
+
+        <div class="qr-code-section">
+            <img src="{{ url_for('static', filename='images/upi_qr.png') }}" alt="UPI QR Code" class="qr-code-image">
+        </div>
+
+        <div class="payment-details">
+            <div class="detail-row">
+                <span class="label">Order Total:</span>
+                <span class="value">${{ "%.2f"|format(total) }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Payment Method:</span>
+                <span class="value">UPI</span>
+            </div>
+        </div>
+
+        <div class="payment-instructions">
+            <h3>How to Pay:</h3>
+            <ol>
+                <li>Open any UPI app (GPay, PhonePe, Paytm, etc.)</li>
+                <li>Scan the QR code above</li>
+                <li>Verify the amount: ${{ "%.2f"|format(total) }}</li>
+                <li>Complete the payment</li>
+                <li>Click "I've Paid" button below</li>
+            </ol>
+        </div>
+
+        <form method="POST" action="{{ url_for('main.confirm_payment') }}">
+            <input type="hidden" name="payment_method" value="UPI">
+            <div class="payment-actions">
+                <a href="{{ url_for('main.checkout') }}" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">I've Paid</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,374 @@
+{% extends 'base.html' %}
+
+{% block title %}Scheduled Orders - FreshMarket{% endblock %}
+
+{% block content %}
+<div class="scheduled-container">
+    <div class="scheduled-header">
+        <h1>📅 Scheduled Orders</h1>
+        <p>Manage your upcoming and recurring deliveries</p>
+    </div>
+
+    {% if orders %}
+    <div class="orders-grid">
+        {% for order in orders %}
+        <div class="scheduled-order-card">
+            <div class="order-header">
+                <div class="order-date">
+                    <span class="date-icon">📦</span>
+                    <div>
+                        <h3>{{ order.scheduled_date.strftime('%B %d, %Y') }}</h3>
+                        <p>{{ order.delivery_time_slot }}</p>
+                    </div>
+                </div>
+                {% if order.is_recurring %}
+                <span class="recurring-badge">🔄 Recurring</span>
+                {% endif %}
+            </div>
+
+            <div class="order-items">
+                <h4>Items ({{ order.items|length }})</h4>
+                <ul>
+                    {% for item in order.items[:3] %}
+                    <li>{{ item.product_name }} × {{ item.quantity }}</li>
+                    {% endfor %}
+                    {% if order.items|length > 3 %}
+                    <li class="more-items">+ {{ order.items|length - 3 }} more items</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="order-details">
+                <div class="detail-row">
+                    <span>Total:</span>
+                    <strong>₹{{ order.total_price|round(2) }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Payment:</span>
+                    <span>{{ order.payment_method or 'Not set' }}</span>
+                </div>
+                {% if order.is_recurring %}
+                <div class="detail-row">
+                    <span>Frequency:</span>
+                    <span class="frequency-badge">{{ order.recurrence_frequency|capitalize }}</span>
+                </div>
+                {% if order.next_delivery_date %}
+                <div class="detail-row">
+                    <span>Next Delivery:</span>
+                    <span>{{ order.next_delivery_date.strftime('%b %d, %Y') }}</span>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="order-actions">
+                <a href="{{ url_for('main.edit_scheduled_order', order_id=order.id) }}" class="btn btn-secondary">
+                    ✏️ Edit
+                </a>
+                <form action="{{ url_for('main.cancel_scheduled_order', order_id=order.id) }}" method="POST"
+                    style="display: inline;"
+                    onsubmit="return confirm('Are you sure you want to cancel this scheduled order?');">
+                    <button type="submit" class="btn btn-danger">🗑️ Cancel</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-orders">
+        <div class="empty-state">
+            <span class="empty-icon">📅</span>
+            <h2>No Scheduled Orders</h2>
+            <p>You don't have any scheduled deliveries yet.</p>
+            <p>Schedule your next grocery delivery and never run out of essentials!</p>
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Start Shopping</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="scheduling-info">
+        <h3>About Scheduled Orders</h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-icon">⏰</span>
+                <h4>Flexible Scheduling</h4>
+                <p>Choose your preferred delivery date and time slot</p>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">🔄</span>
+                <h4>Recurring Deliveries</h4>
+                <p>Set up automatic deliveries - daily, weekly, or monthly</p>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">✏️</span>
+                <h4>Easy Management</h4>
+                <p>Edit or cancel scheduled orders anytime before delivery</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .scheduled-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .scheduled-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .scheduled-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .orders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .scheduled-order-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .scheduled-order-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .order-date {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .date-icon {
+        font-size: 2rem;
+    }
+
+    .order-date h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .order-date p {
+        margin: 0.25rem 0 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .recurring-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .order-items {
+        margin-bottom: 1.5rem;
+    }
+
+    .order-items h4 {
+        margin: 0 0 0.75rem 0;
+        color: #333;
+        font-size: 1rem;
+    }
+
+    .order-items ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .order-items li {
+        padding: 0.5rem 0;
+        color: #666;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .order-items li:last-child {
+        border-bottom: none;
+    }
+
+    .more-items {
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    .order-details {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+    }
+
+    .detail-row:not(:last-child) {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .detail-row strong {
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+
+    .frequency-badge {
+        background: #667eea;
+        color: white;
+        padding: 0.25rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+    }
+
+    .order-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .order-actions .btn {
+        flex: 1;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .btn-secondary:hover {
+        background: #e0e0e0;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+    }
+
+    .no-orders {
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .empty-state {
+        text-align: center;
+        max-width: 500px;
+    }
+
+    .empty-icon {
+        font-size: 5rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h2 {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state p {
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+
+    .scheduling-info {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .scheduling-info h3 {
+        margin-top: 0;
+        text-align: center;
+        color: #333;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .info-item {
+        text-align: center;
+        padding: 1.5rem;
+        border: 2px solid #f0f0f0;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+        border-color: #667eea;
+        transform: translateY(-5px);
+    }
+
+    .info-icon {
+        font-size: 2.5rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .info-item h4 {
+        margin: 0.5rem 0;
+        color: #333;
+    }
+
+    .info-item p {
+        color: #666;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .orders-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

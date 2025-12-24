@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="login-shell">
+    <div class="login-illustration">
+        <div class="illustration-card">
+            <div class="snack-stage">
+                <div class="snack-plate plate-left">
+                    <span class="snack-biscuit"></span>
+                    <span class="snack-leaf leaf-left"></span>
+                </div>
+                <div class="snack-plate plate-center">
+                    <span class="snack-fruit"></span>
+                    <span class="snack-slice"></span>
+                </div>
+                <div class="snack-plate plate-right">
+                    <span class="snack-stack"></span>
+                    <span class="snack-leaf leaf-right"></span>
+                </div>
+                <div class="floating-snacks">
+                    <span class="floating-snack floating-donut"></span>
+                    <span class="floating-snack floating-candy"></span>
+                    <span class="floating-snack floating-wafer"></span>
+                    <span class="floating-snack floating-berry"></span>
+                </div>
+            </div>
+            <div class="character character-orange" data-eye-range="12" data-eye-tilt="6">
+                <span class="character-eyes">
+                    <span class="eye"></span>
+                    <span class="eye"></span>
+                </span>
+                <span class="character-mouth"></span>
+            </div>
+            <div class="character character-purple" data-eye-range="10" data-eye-tilt="5">
+                <span class="character-eyes">
+                    <span class="eye"></span>
+                    <span class="eye"></span>
+                </span>
+                <span class="character-mouth"></span>
+            </div>
+            <div class="character character-blue" data-eye-range="8" data-eye-tilt="4">
+                <span class="character-eyes">
+                    <span class="eye"></span>
+                    <span class="eye"></span>
+                </span>
+                <span class="character-mouth"></span>
+            </div>
+            <div class="character character-yellow" data-eye-range="9" data-eye-tilt="4">
+                <span class="character-eyes">
+                    <span class="eye"></span>
+                    <span class="eye"></span>
+                </span>
+                <span class="character-mouth"></span>
+            </div>
+            <div class="grass-field">
+                <span class="blade blade-1"></span>
+                <span class="blade blade-2"></span>
+                <span class="blade blade-3"></span>
+                <span class="blade blade-4"></span>
+                <span class="blade blade-5"></span>
+                <span class="blade blade-6"></span>
+                <span class="blade blade-7"></span>
+                <span class="blade blade-8"></span>
+                <span class="blade blade-9"></span>
+            </div>
+            <div class="meadow-daisy meadow-daisy-left">
+                <span class="stem"></span>
+                <span class="flower"></span>
+            </div>
+            <div class="meadow-daisy meadow-daisy-right">
+                <span class="stem"></span>
+                <span class="flower"></span>
+            </div>
+            <div class="meadow-buttercup">
+                <span class="stem"></span>
+                <span class="flower"></span>
+            </div>
+            <div class="leaf-sprig sprig-left"></div>
+            <div class="leaf-sprig sprig-right"></div>
+            <div class="floating-pollen">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="snack-banner">
+                <div class="snack-item snack-berry">
+                    <span class="snack-top"></span>
+                    <span class="snack-face"></span>
+                </div>
+                <div class="snack-item snack-donut">
+                    <span class="snack-top">
+                        <span class="sprinkle sprinkle-1"></span>
+                        <span class="sprinkle sprinkle-2"></span>
+                        <span class="sprinkle sprinkle-3"></span>
+                    </span>
+                    <span class="snack-face"></span>
+                </div>
+                <div class="snack-item snack-citrus">
+                    <span class="snack-top"></span>
+                    <span class="snack-face"></span>
+                </div>
+                <div class="snack-item snack-candy">
+                    <span class="snack-top"></span>
+                    <span class="snack-face"></span>
+                </div>
+            </div>
+            <div class="spot shadow"></div>
+        </div>
+    </div>
+
+    <div class="login-panel">
+        <div class="login-logo"><span>✚</span></div>
+        <div class="login-heading">
+            <p class="eyebrow">Welcome back!</p>
+            <h1>Welcome back!</h1>
+            <p>Please enter your details.</p>
+        </div>
+
+        <form method="POST" class="login-form">
+            <label class="input-label" for="login-username">Email</label>
+            <input id="login-username" type="text" name="username" placeholder="Enter your email" required>
+
+            <label class="input-label" for="login-password">Password</label>
+            <div class="password-field">
+                <input id="login-password" type="password" name="password" placeholder="••••••••" required>
+                <button type="button" class="toggle-visibility" aria-label="Show password" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+                        <path
+                            d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 2c3.04 0 5.68 1.64 7.43 4-1.75 2.36-4.39 4-7.43 4s-5.68-1.64-7.43-4c1.75-2.36 4.39-4 7.43-4zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="login-meta">
+                <label class="remember">
+                    <input type="checkbox" name="remember">
+                    <span>Remember for 30 days</span>
+                </label>
+                <a href="{{ url_for('main.forgot_password') }}">Forgot password</a>
+            </div>
+
+            <button type="submit" class="login-btn">Log in</button>
+            {% if google_login_enabled %}
+            <a class="login-btn login-btn--secondary login-btn--google" href="{{ url_for('main.google_login') }}">
+                <span class="google-icon">G</span>
+                Log in with Google
+            </a>
+            {% else %}
+            <button type="button" class="login-btn login-btn--secondary login-btn--google" disabled
+                title="Google login is not configured">
+                <span class="google-icon">G</span>
+                Log in with Google
+            </button>
+            {% endif %}
+        </form>
+
+        <p class="login-footer">
+            Don't have an account?
+            <a href="{{ url_for('main.register') }}">Sign up</a>
+        </p>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const card = document.querySelector('.illustration-card');
+        const toggleBtn = document.querySelector('.password-field .toggle-visibility');
+        const passwordInput = document.getElementById('login-password');
+
+        if (card) {
+            const characters = card.querySelectorAll('.character');
+            let rafId;
+            let bounds = card.getBoundingClientRect();
+
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+            const updateBounds = () => {
+                bounds = card.getBoundingClientRect();
+            };
+
+            const moveEyes = (clientX, clientY) => {
+                const centerX = bounds.left + bounds.width / 2;
+                const centerY = bounds.top + bounds.height / 2;
+                const normX = clamp((clientX - centerX) / (bounds.width / 2 || 1), -1, 1);
+                const normY = clamp((clientY - centerY) / (bounds.height / 2 || 1), -1, 1);
+
+                characters.forEach(character => {
+                    const eyes = character.querySelectorAll('.eye');
+                    const rangeX = parseFloat(character.dataset.eyeRange || '10');
+                    const rangeY = parseFloat(character.dataset.eyeTilt || '5');
+
+                    eyes.forEach(eye => {
+                        eye.style.setProperty('--eye-shift-x', `${normX * rangeX}px`);
+                        eye.style.setProperty('--eye-shift-y', `${normY * rangeY}px`);
+                    });
+                });
+            };
+
+            const resetEyes = () => {
+                characters.forEach(character => {
+                    const eyes = character.querySelectorAll('.eye');
+                    eyes.forEach(eye => {
+                        eye.style.setProperty('--eye-shift-x', `0px`);
+                        eye.style.setProperty('--eye-shift-y', `0px`);
+                    });
+                });
+            };
+
+            const pointerHandler = (event) => {
+                if (event.pointerType === 'touch' && event.type === 'pointermove') return;
+                cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => moveEyes(event.clientX, event.clientY));
+            };
+
+            document.addEventListener('pointermove', pointerHandler);
+            document.addEventListener('pointerdown', pointerHandler);
+            document.addEventListener('pointerleave', (event) => {
+                if (!event.relatedTarget && event.pointerType !== 'touch') {
+                    resetEyes();
+                }
+            });
+            window.addEventListener('blur', resetEyes);
+            window.addEventListener('resize', updateBounds);
+            updateBounds();
+        }
+
+        if (passwordInput && toggleBtn) {
+            const updateToggleState = () => {
+                const isVisible = passwordInput.type === 'text';
+                toggleBtn.setAttribute('aria-pressed', String(isVisible));
+                toggleBtn.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
+                toggleBtn.classList.toggle('is-visible', isVisible);
+            };
+
+            toggleBtn.addEventListener('click', () => {
+                const nextType = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', nextType);
+                updateToggleState();
+                passwordInput.focus({ preventScroll: true });
+                passwordInput.setSelectionRange(passwordInput.value.length, passwordInput.value.length);
+            });
+
+            toggleBtn.addEventListener('mousedown', (event) => {
+                event.preventDefault();
+            });
+
+            updateToggleState();
+        }
+    });
+</script>
+{% endblock %}

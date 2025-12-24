@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cart-header">
+    <h2><img src="{{ url_for('static', filename='logo.png') }}" alt="Cart"
+            style="height: 30px; vertical-align: middle; margin-right: 10px;">Cart</h2>
+</div>
+
+{% if cart_items %}
+<div class="cart-container">
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td class="product-col">
+                    {% if item.product.image_url %}
+                    <img src="{{ url_for('static', filename=item.product.image_url) }}" alt="{{ item.product.name }}"
+                        class="cart-thumb">
+                    {% endif %}
+                    <div class="product-info">
+                        <h3>{{ item.product.name }}</h3>
+                        <p>{{ item.product.category }}</p>
+                    </div>
+                </td>
+                <td>${{ "%.2f"|format(item.product.price) }}</td>
+                <td>
+                    <div class="quantity-control">
+                        <a href="{{ url_for('main.decrease_quantity', item_id=item.id) }}" class="qty-btn">-</a>
+                        <span>{{ item.quantity }}</span>
+                        <a href="{{ url_for('main.add_to_cart', product_id=item.product.id) }}" class="qty-btn">+</a>
+                    </div>
+                </td>
+                <td class="total-col">${{ "%.2f"|format(item.product.price * item.quantity) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span class="total-amount">${{ "%.2f"|format(total) }}</span>
+        </div>
+        <a href="{{ url_for('main.checkout') }}" class="btn checkout-btn">Proceed to Checkout</a>
+    </div>
+</div>
+{% else %}
+<div style="text-align: center; padding: 3rem;">
+    <p>Your cart is empty.</p>
+    <a href="{{ url_for('main.index') }}" class="btn">Go Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

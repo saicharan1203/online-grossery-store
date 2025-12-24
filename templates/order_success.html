@@ -1,0 +1,742 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-card">
+        <!-- Animated Checkmark -->
+        <div class="success-checkmark">
+            <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <h1 class="success-title">Order Placed Successfully!</h1>
+        <p class="success-subtitle">Thank you for shopping with Fresh Market</p>
+
+        <!-- Order Details -->
+        <div class="order-details-box">
+            <div class="detail-row">
+                <span class="detail-label">Order ID</span>
+                <span class="detail-value">#{{ order.id }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Total Amount</span>
+                <span class="detail-value highlight">₹{{ "%.2f"|format(order.total_price) }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Payment Method</span>
+                <span class="detail-value">{{ order.payment_method }}</span>
+            </div>
+            {% if order.points_earned > 0 %}
+            <div class="detail-row points-row">
+                <span class="detail-label">⭐ Points Earned</span>
+                <span class="detail-value points">+{{ order.points_earned }} points</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Confetti Animation -->
+        <div class="confetti-container">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="redirect-notice">
+            <div class="timer-circle">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                    <circle class="timer-progress" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <span class="timer-text" id="countdown">20</span>
+            </div>
+            <p>Redirecting to home page in <span id="countdown-text">20</span> seconds...</p>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="success-actions">
+            <a href="{{ url_for('main.order_detail', order_id=order.id) }}" class="btn btn-outline">View Order
+                Details</a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-icons">
+        <span class="float-icon">🎉</span>
+        <span class="float-icon">🛒</span>
+        <span class="float-icon">✨</span>
+        <span class="float-icon">🎊</span>
+        <span class="float-icon">💚</span>
+    </div>
+</div>
+
+<style>
+    /* Success Container */
+    .success-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .success-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        padding: 3rem;
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 10;
+        animation: cardSlideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cardSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    body[data-theme="dark"] .success-card {
+        background: rgba(15, 20, 30, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Animated Checkmark */
+    .success-checkmark {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+    }
+
+    .check-icon {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        border-radius: 50%;
+        box-sizing: content-box;
+        border: 4px solid #0d5c3e;
+        animation: checkScale 0.5s ease-in-out 0.3s forwards;
+        transform: scale(0);
+    }
+
+    @keyframes checkScale {
+        0% {
+            transform: scale(0);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .check-icon::before {
+        top: 3px;
+        left: -2px;
+        width: 30px;
+        transform-origin: 100% 50%;
+        border-radius: 100px 0 0 100px;
+    }
+
+    .check-icon::after {
+        top: 0;
+        left: 30px;
+        width: 60px;
+        transform-origin: 0 50%;
+        border-radius: 0 100px 100px 0;
+        animation: rotateCircle 4.25s ease-in;
+    }
+
+    .check-icon::before,
+    .check-icon::after {
+        content: '';
+        height: 100px;
+        position: absolute;
+        background: transparent;
+    }
+
+    @keyframes rotateCircle {
+        0% {
+            transform: rotate(-45deg);
+        }
+
+        5% {
+            transform: rotate(-45deg);
+        }
+
+        12% {
+            transform: rotate(-405deg);
+        }
+
+        100% {
+            transform: rotate(-405deg);
+        }
+    }
+
+    .icon-line {
+        height: 5px;
+        background-color: #0d5c3e;
+        display: block;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+    }
+
+    .icon-line.line-tip {
+        top: 46px;
+        left: 14px;
+        width: 25px;
+        transform: rotate(45deg);
+        animation: iconLineTip 0.75s ease forwards 0.5s;
+        opacity: 0;
+    }
+
+    .icon-line.line-long {
+        top: 38px;
+        right: 8px;
+        width: 47px;
+        transform: rotate(-45deg);
+        animation: iconLineLong 0.75s ease forwards 0.5s;
+        opacity: 0;
+    }
+
+    @keyframes iconLineTip {
+        0% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+            opacity: 1;
+        }
+
+        54% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+            opacity: 1;
+        }
+
+        70% {
+            width: 50px;
+            left: -8px;
+            top: 37px;
+            opacity: 1;
+        }
+
+        84% {
+            width: 17px;
+            left: 21px;
+            top: 48px;
+            opacity: 1;
+        }
+
+        100% {
+            width: 25px;
+            left: 14px;
+            top: 46px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes iconLineLong {
+        0% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+            opacity: 1;
+        }
+
+        65% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+            opacity: 1;
+        }
+
+        84% {
+            width: 55px;
+            right: 0px;
+            top: 35px;
+            opacity: 1;
+        }
+
+        100% {
+            width: 47px;
+            right: 8px;
+            top: 38px;
+            opacity: 1;
+        }
+    }
+
+    .icon-circle {
+        top: -4px;
+        left: -4px;
+        z-index: 10;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        box-sizing: content-box;
+        border: 4px solid rgba(13, 92, 62, 0.3);
+    }
+
+    .icon-fix {
+        top: 8px;
+        width: 5px;
+        left: 26px;
+        z-index: 1;
+        height: 85px;
+        position: absolute;
+        transform: rotate(-45deg);
+        background-color: transparent;
+    }
+
+    body[data-theme="dark"] .check-icon {
+        border-color: #34d399;
+    }
+
+    body[data-theme="dark"] .icon-line {
+        background-color: #34d399;
+    }
+
+    body[data-theme="dark"] .icon-circle {
+        border-color: rgba(52, 211, 153, 0.3);
+    }
+
+    /* Success Text */
+    .success-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #0f1419;
+        margin: 0 0 0.5rem;
+        animation: fadeInUp 0.6s ease 0.8s forwards;
+        opacity: 0;
+    }
+
+    .success-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+        margin: 0 0 2rem;
+        animation: fadeInUp 0.6s ease 1s forwards;
+        opacity: 0;
+    }
+
+    body[data-theme="dark"] .success-title {
+        color: #f5f7fa;
+    }
+
+    body[data-theme="dark"] .success-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Order Details Box */
+    .order-details-box {
+        background: #f8f9fc;
+        border-radius: 16px;
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        animation: fadeInUp 0.6s ease 1.2s forwards;
+        opacity: 0;
+    }
+
+    body[data-theme="dark"] .order-details-box {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    body[data-theme="dark"] .detail-row {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .detail-label {
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .detail-value {
+        font-weight: 600;
+        color: #0f1419;
+    }
+
+    .detail-value.highlight {
+        color: #0d5c3e;
+        font-size: 1.1rem;
+    }
+
+    .detail-value.points {
+        color: #f59e0b;
+    }
+
+    body[data-theme="dark"] .detail-label {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    body[data-theme="dark"] .detail-value {
+        color: #f5f7fa;
+    }
+
+    body[data-theme="dark"] .detail-value.highlight {
+        color: #34d399;
+    }
+
+    /* Confetti */
+    .confetti-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #0d5c3e;
+        animation: confetti 3s ease-in-out infinite;
+    }
+
+    .confetti:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+        background: #0d5c3e;
+    }
+
+    .confetti:nth-child(2) {
+        left: 20%;
+        animation-delay: 0.2s;
+        background: #34d399;
+        border-radius: 50%;
+    }
+
+    .confetti:nth-child(3) {
+        left: 30%;
+        animation-delay: 0.4s;
+        background: #ff7bc6;
+    }
+
+    .confetti:nth-child(4) {
+        left: 40%;
+        animation-delay: 0.6s;
+        background: #ffd68a;
+        border-radius: 50%;
+    }
+
+    .confetti:nth-child(5) {
+        left: 50%;
+        animation-delay: 0.1s;
+        background: #ba80ff;
+    }
+
+    .confetti:nth-child(6) {
+        left: 60%;
+        animation-delay: 0.3s;
+        background: #0d5c3e;
+        border-radius: 50%;
+    }
+
+    .confetti:nth-child(7) {
+        left: 70%;
+        animation-delay: 0.5s;
+        background: #ff7bc6;
+    }
+
+    .confetti:nth-child(8) {
+        left: 80%;
+        animation-delay: 0.7s;
+        background: #34d399;
+        border-radius: 50%;
+    }
+
+    .confetti:nth-child(9) {
+        left: 90%;
+        animation-delay: 0.15s;
+        background: #ffd68a;
+    }
+
+    .confetti:nth-child(10) {
+        left: 95%;
+        animation-delay: 0.35s;
+        background: #ba80ff;
+        border-radius: 50%;
+    }
+
+    @keyframes confetti {
+        0% {
+            transform: translateY(-100px) rotate(0deg);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+
+    /* Timer */
+    .redirect-notice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        animation: fadeInUp 0.6s ease 1.4s forwards;
+        opacity: 0;
+    }
+
+    .redirect-notice p {
+        margin: 0;
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    body[data-theme="dark"] .redirect-notice p {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .timer-circle {
+        position: relative;
+        width: 50px;
+        height: 50px;
+    }
+
+    .timer-svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    .timer-bg {
+        fill: none;
+        stroke: #e5e7eb;
+        stroke-width: 6;
+    }
+
+    .timer-progress {
+        fill: none;
+        stroke: #0d5c3e;
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-dasharray: 283;
+        stroke-dashoffset: 0;
+        animation: timerCountdown 20s linear forwards;
+    }
+
+    body[data-theme="dark"] .timer-bg {
+        stroke: rgba(255, 255, 255, 0.1);
+    }
+
+    body[data-theme="dark"] .timer-progress {
+        stroke: #34d399;
+    }
+
+    @keyframes timerCountdown {
+        from {
+            stroke-dashoffset: 0;
+        }
+
+        to {
+            stroke-dashoffset: 283;
+        }
+    }
+
+    .timer-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 700;
+        font-size: 1rem;
+        color: #0d5c3e;
+    }
+
+    body[data-theme="dark"] .timer-text {
+        color: #34d399;
+    }
+
+    /* Actions */
+    .success-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 0.6s ease 1.6s forwards;
+        opacity: 0;
+    }
+
+    .success-actions .btn {
+        padding: 0.85rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .success-actions .btn-outline {
+        background: transparent;
+        border: 2px solid #e5e7eb;
+        color: #4b5563;
+    }
+
+    .success-actions .btn-outline:hover {
+        border-color: #0d5c3e;
+        color: #0d5c3e;
+    }
+
+    body[data-theme="dark"] .success-actions .btn-outline {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    body[data-theme="dark"] .success-actions .btn-outline:hover {
+        border-color: #34d399;
+        color: #34d399;
+    }
+
+    /* Floating Icons */
+    .floating-icons {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .float-icon {
+        position: absolute;
+        font-size: 2rem;
+        animation: floatAround 15s ease-in-out infinite;
+    }
+
+    .float-icon:nth-child(1) {
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+    }
+
+    .float-icon:nth-child(2) {
+        top: 20%;
+        right: 10%;
+        animation-delay: 1s;
+    }
+
+    .float-icon:nth-child(3) {
+        bottom: 30%;
+        left: 8%;
+        animation-delay: 2s;
+    }
+
+    .float-icon:nth-child(4) {
+        bottom: 15%;
+        right: 5%;
+        animation-delay: 0.5s;
+    }
+
+    .float-icon:nth-child(5) {
+        top: 50%;
+        left: 3%;
+        animation-delay: 1.5s;
+    }
+
+    @keyframes floatAround {
+
+        0%,
+        100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        25% {
+            transform: translate(20px, -20px) rotate(10deg);
+        }
+
+        50% {
+            transform: translate(-10px, 20px) rotate(-5deg);
+        }
+
+        75% {
+            transform: translate(15px, 10px) rotate(5deg);
+        }
+    }
+
+    /* Points Row Highlight */
+    .points-row {
+        background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+        border-radius: 8px;
+        margin: 0.5rem -0.5rem;
+        padding: 0.75rem 0.5rem !important;
+    }
+</style>
+
+<script>
+    // Countdown timer
+    let timeLeft = 20;
+    const countdownEl = document.getElementById('countdown');
+    const countdownTextEl = document.getElementById('countdown-text');
+
+    const countdown = setInterval(() => {
+        timeLeft--;
+        countdownEl.textContent = timeLeft;
+        countdownTextEl.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            window.location.href = "{{ url_for('main.index') }}";
+        }
+    }, 1000);
+</script>
+{% endblock %}

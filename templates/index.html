@@ -1,0 +1,506 @@
+{% extends "base.html" %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block content %}
+{% set category_icons = {
+'Fruit': '',
+'Vegetable': '',
+'Dairy': '',
+'Bakery': '',
+'Meat': '',
+'Grains': ''
+} %}
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-heading">FreshMarket</h1>
+        <p class="hero-subheading">Hand-picked groceries, delivered fresh to your door.</p>
+        <p class="hero-description">Shop seasonal staples, chef-grade produce, and daily essentials with a tap. Curated
+            picks, transparent ratings, and same-day slots built for food lovers.</p>
+        <div class="hero-search">
+            <input type="text" id="search-input" placeholder="Search for products..." value="{{ search_query }}"
+                class="search-bar">
+            <button id="search-btn" class="search-button" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4.35-4.35" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <span class="stat-value">{{ products|length }}</span>
+                <span class="stat-label">Items live</span>
+            </div>
+            <div>
+                <span class="stat-value">{{ categories|length }}</span>
+                <span class="stat-label">Curated categories</span>
+            </div>
+            <div>
+                <span class="stat-value">4.8★</span>
+                <span class="stat-label">Avg. guest rating</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="spotlight-section">
+    <div class="spotlight-header">
+        <div>
+            <p class="eyebrow">Chef-picked hype</p>
+            <h2>Today&apos;s tasting-table spotlight</h2>
+            <p class="muted">We surface the most loved, best-stocked groceries so you can add them in two taps.</p>
+        </div>
+        <div class="spotlight-meta">
+            <span class="meta-pill">Top ratings</span>
+            <span class="meta-pill">In stock now</span>
+            <span class="meta-pill">Fast to cart</span>
+        </div>
+    </div>
+    <div class="spotlight-grid">
+        {% if spotlight_products %}
+        {% for product in spotlight_products %}
+        {% set category_icon = category_icons.get(product.category, '') %}
+        <article class="spotlight-card">
+            <span class="floating-icon" aria-hidden="true">{{ category_icon }}</span>
+            <header>
+                <p class="category-pill">{{ product.category }}</p>
+                <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="spotlight-title">
+                    {{ product.name }}
+                </a>
+            </header>
+            <div class="spotlight-body">
+                <div class="spotlight-rating">
+                    <span class="rating-value">{{ "%.1f"|format(product.average_rating or 0) }}★</span>
+                    <span class="rating-count">{{ product.review_count }} reviews</span>
+                </div>
+                <p class="spotlight-price">${{ "%.2f"|format(product.price) }}</p>
+                {% if product.stock <= 0 %} <p class="stock-flag out">Out of stock</p>
+                    {% elif product.stock < 10 %} <p class="stock-flag low">Only {{ product.stock }} left</p>
+                        {% else %}
+                        <p class="stock-flag in">In stock • {{ product.stock }} pcs</p>
+                        {% endif %}
+            </div>
+            <footer>
+                <a href="{{ url_for('main.product_detail', product_id=product.id) }}"
+                    class="btn btn-secondary btn-ghost">See
+                    details</a>
+                {% if current_user.is_authenticated and product.stock > 0 %}
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ product.id }}">Add to cart</button>
+                {% endif %}
+            </footer>
+        </article>
+        {% endfor %}
+        {% else %}
+        <div class="spotlight-empty">
+            <h3>No spotlight items yet</h3>
+            <p>Add ratings or stock to products to let us curate them automatically.</p>
+            {% if current_user.is_admin %}
+            <a href="{{ url_for('main.add_product') }}" class="btn btn-primary">Add product</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="fresh-drop-section">
+    <div class="fresh-header">
+        <div>
+            <p class="eyebrow">Fresh drop radar</p>
+            <h2>Brand-new arrivals just landed</h2>
+            <p class="muted">Track the latest launches before they sell out. Tap any card to peek at tasting notes and
+                inventory.</p>
+        </div>
+        <div class="fresh-pulse" aria-hidden="true">
+            <span class="pulse-dot"></span>
+            <span>Live feed</span>
+        </div>
+    </div>
+
+    {% if fresh_products %}
+    <div class="fresh-grid">
+        {% for product in fresh_products %}
+        {% set category_icon = category_icons.get(product.category, '') %}
+        <article class="fresh-card">
+            <span class="floating-icon floating-icon--fresh" aria-hidden="true">{{ category_icon }}</span>
+            <div class="fresh-card-header">
+                <span class="badge">{{ product.category }}</span>
+                <span class="timestamp">ID #{{ product.id }}</span>
+            </div>
+            <h3>{{ product.name }}</h3>
+            <p class="fresh-description">
+                {{ product.description or 'New stock ready for your basket.' }}
+            </p>
+            <div class="fresh-meta">
+                <div>
+                    <span class="label">Price</span>
+                    <strong>${{ "%.2f"|format(product.price) }}</strong>
+                </div>
+                <div>
+                    <span class="label">Stock</span>
+                    <strong>{{ product.stock }}</strong>
+                </div>
+                <div>
+                    <span class="label">Rating</span>
+                    <strong>{{ "%.1f"|format(product.average_rating or 0) }}★</strong>
+                </div>
+            </div>
+            <footer>
+                <a class="btn btn-secondary btn-ghost"
+                    href="{{ url_for('main.product_detail', product_id=product.id) }}">
+                    View details
+                </a>
+                {% if current_user.is_authenticated and product.stock > 0 %}
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ product.id }}">
+                    Quick add
+                </button>
+                {% endif %}
+            </footer>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="fresh-empty">
+        <h3>No new drops this hour</h3>
+        <p>Check back soon — our buyers restock favorites daily.</p>
+    </div>
+    {% endif %}
+</section>
+
+<section class="reorder-section">
+    <div class="section-header reorder-header">
+        <div>
+            <p class="eyebrow">Skip the list</p>
+            <h2>Quick re-order lane</h2>
+            <p class="muted">We remember your household staples and surface them while they&apos;re in stock.</p>
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    {% if quick_reorder_items %}
+    <div class="reorder-grid">
+        {% for item in quick_reorder_items %}
+        {% set product = item.product %}
+        <article class="reorder-card">
+            <div class="reorder-info">
+                <div class="reorder-title-row">
+                    <h3>{{ product.name }}</h3>
+                    <span class="times-pill">{{ item.times_ordered }}× ordered</span>
+                </div>
+                <p class="muted">{{ product.category }}</p>
+                <p class="reorder-meta">
+                    Last ordered:
+                    {% if item.last_ordered %}
+                    {{ item.last_ordered.strftime('%b %d, %Y') }}
+                    {% else %}
+                    Recently
+                    {% endif %}
+                </p>
+            </div>
+            <div class="reorder-actions">
+                <p class="reorder-price">${{ "%.2f"|format(product.price) }}</p>
+                {% if product.stock > 0 %}
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ product.id }}">Add again</button>
+                {% else %}
+                <span class="stock-flag out">Out of stock</span>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="reorder-empty">
+        <h3>No re-order suggestions yet</h3>
+        <p>Place an order and we&apos;ll build this lane automatically.</p>
+        <a href="#catalog-section" class="btn btn-secondary">Browse catalog</a>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="reorder-empty login-prompt">
+        <h3>Sign in to unlock instant re-ordering</h3>
+        <p>We&apos;ll tailor this lane with your past purchases once you log in.</p>
+        <div class="login-benefits">
+            <article class="benefit-pill">
+                <span class="benefit-icon">⚡</span>
+                <div>
+                    <h4>Smart suggestions</h4>
+                    <p>See the 8 items you reach for most, refreshed daily.</p>
+                </div>
+            </article>
+            <article class="benefit-pill">
+                <span class="benefit-icon">🔔</span>
+                <div>
+                    <h4>Restock nudges</h4>
+                    <p>We ping you when pantry staples dip below your average.</p>
+                </div>
+            </article>
+            <article class="benefit-pill">
+                <span class="benefit-icon">🎯</span>
+                <div>
+                    <h4>One-tap carts</h4>
+                    <p>Drop recurring bundles straight into checkout.</p>
+                </div>
+            </article>
+        </div>
+        <div class="prompt-actions">
+            <a href="{{ url_for('main.login') }}" class="btn btn-primary">Login</a>
+            <a href="{{ url_for('main.register') }}" class="btn btn-secondary btn-ghost">Create account</a>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<section class="product-section" id="catalog-section" data-state-category="{{ current_category or '' }}"
+    data-state-sort="{{ current_sort or 'name_asc' }}">
+    <div class="section-header">
+        <h2 class="text-center">Products</h2>
+        <div class="controls">
+            {% set filter_categories = [
+            {'label': 'All', 'value': ''},
+            {'label': 'Fruit', 'value': 'Fruit'},
+            {'label': 'Dairy', 'value': 'Dairy'},
+            {'label': 'Bakery', 'value': 'Bakery'},
+            {'label': 'Meat', 'value': 'Meat'},
+            {'label': 'Grains', 'value': 'Grains'},
+            {'label': 'Vegetable', 'value': 'Vegetable'}
+            ] %}
+            <div class="category-filters">
+                {% for filter in filter_categories %}
+                {% set url_parts = [] %}
+                {% if filter.value %}
+                {% set _ = url_parts.append('category=' + filter.value) %}
+                {% endif %}
+                {% if search_query %}
+                {% set _ = url_parts.append('search=' + search_query) %}
+                {% endif %}
+                {% if current_sort %}
+                {% set _ = url_parts.append('sort=' + current_sort) %}
+                {% endif %}
+                {% set url = '/?' + url_parts|join('&') %}
+
+                <a href="{{ url }}"
+                    class="filter-chip {% if (not filter.value and not current_category) or (filter.value == current_category) %}active{% endif %}">
+                    {{ filter.label }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="sort-container">
+                <label for="sort-select">Sort</label>
+                <select id="sort-select" class="sort-select">
+                    <option value="name_asc" {% if current_sort=='name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="name_desc" {% if current_sort=='name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                    <option value="price_asc" {% if current_sort=='price_asc' %}selected{% endif %}>Price (Low-High)
+                    </option>
+                    <option value="price_desc" {% if current_sort=='price_desc' %}selected{% endif %}>Price (High-Low)
+                    </option>
+                    <option value="rating" {% if current_sort=='rating' %}selected{% endif %}>Top Rated</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    {% if not products %}
+    <div class="empty-state">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="40" stroke="#ddd" stroke-width="2" />
+            <path d="M35 50h30M50 35v30" stroke="#ddd" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <p>No products found.</p>
+        {% if not search_query and not current_category %}
+        <a href="{{ url_for('main.seed_database') }}" class="btn">Seed Database</a>
+        {% else %}
+        <a href="{{ url_for('main.index') }}" class="btn">Clear Filters</a>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="product-grid">
+        {% for product in products %}
+        {% set quantity = cart_quantities.get(product.id, 0) %}
+        {% set in_wishlist = product.id in wishlist_ids %}
+        {% set category_slug = (product.category or 'item')|lower|replace(' ', '-')|replace('&', '') %}
+        <div class="product-card category-{{ category_slug }}" data-product-id="{{ product.id }}"
+            data-category="{{ product.category }}">
+
+            <!-- Wishlist Heart Icon -->
+            {% if current_user.is_authenticated %}
+            <button class="wishlist-btn {% if in_wishlist %}active{% endif %}" data-product-id="{{ product.id }}"
+                aria-label="Add to wishlist">
+                <svg class="heart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+            {% endif %}
+
+            <!-- Quantity Pill -->
+            <div class="quantity-pill {% if quantity == 0 %}is-hidden{% endif %}" data-product-id="{{ product.id }}"
+                aria-live="polite">
+                <span class="quantity-label">Qty</span>
+                <span class="quantity-value">{{ quantity }}</span>
+            </div>
+
+            <!-- Product Image - Clickable -->
+            <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="product-link">
+                {% if product.image_url %}
+                <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}"
+                    class="product-image">
+                {% endif %}
+
+                {% if product.stock <= 0 %} <div class="stock-badge out-of-stock">Out of Stock
+        </div>
+        {% elif product.stock < 10 %} <div class="stock-badge low-stock">Only {{ product.stock }} left
+    </div>
+    {% endif %}
+    </a>
+
+    <!-- Product Info -->
+    <div class="product-copy">
+        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="product-link">
+            <h3 class="product-title">{{ product.name }}</h3>
+        </a>
+        <p class="category">{{ product.category }}</p>
+
+        <!-- Rating Stars -->
+        {% if product.review_count > 0 %}
+        <div class="product-rating">
+            <div class="stars">
+                {% for i in range(5) %}
+                <span class="star {% if i < product.average_rating %}filled{% endif %}">★</span>
+                {% endfor %}
+            </div>
+            <span class="rating-text">{{ "%.1f"|format(product.average_rating) }} ({{ product.review_count }})
+            </span>
+        </div>
+        {% endif %}
+
+        <p class="price">${{ "%.2f"|format(product.price) }}</p>
+    </div>
+
+    <!-- Add to Cart Bar -->
+    {% if current_user.is_authenticated %}
+    {% if product.stock > 0 %}
+    <div class="add-to-cart-bar" data-product-id="{{ product.id }}">
+        <button type="button" class="add-to-cart-btn" data-product-id="{{ product.id }}"
+            aria-label="Add {{ product.name }} to cart">Add to Cart</button>
+        <button type="button" class="plus-btn" data-product-id="{{ product.id }}"
+            aria-label="Increase quantity of {{ product.name }}">+</button>
+    </div>
+    {% else %}
+    <div class="add-to-cart-bar disabled">
+        <button type="button" class="add-to-cart-btn" disabled>Out of Stock</button>
+    </div>
+    {% endif %}
+    {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+</section>
+
+<script>
+    const catalogSection = document.getElementById('catalog-section');
+    const pageState = {
+        category: catalogSection?.dataset.stateCategory || '',
+        sort: catalogSection?.dataset.stateSort || 'name_asc'
+    };
+
+    // Search functionality
+    document.getElementById('search-btn').addEventListener('click', performSearch);
+    document.getElementById('search-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        const searchValue = document.getElementById('search-input').value;
+        const params = new URLSearchParams();
+        params.set('search', searchValue || '');
+        if (pageState.category) params.set('category', pageState.category);
+        if (pageState.sort) params.set('sort', pageState.sort);
+        window.location.href = '/?' + params.toString();
+    }
+
+    // Sort functionality
+    document.getElementById('sort-select').addEventListener('change', function () {
+        const sortValue = this.value;
+        const searchValue = '{{ search_query }}';
+        const params = new URLSearchParams();
+        params.set('sort', sortValue);
+        if (searchValue) params.set('search', searchValue);
+        if (pageState.category) params.set('category', pageState.category);
+        window.location.href = '/?' + params.toString();
+    });
+
+    // Wishlist toggle
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            fetch(`/wishlist/toggle/${productId}`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.classList.toggle('active');
+                        showToast(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+    const priceFilter = document.querySelector('.price-filter');
+    if (priceFilter) {
+        const floor = parseFloat(priceFilter.dataset.floor) || 0;
+        const ceiling = parseFloat(priceFilter.dataset.ceiling) || 0;
+        const minSlider = document.getElementById('price-min-slider');
+        const maxSlider = document.getElementById('price-max-slider');
+        const minHidden = document.getElementById('min-price-hidden');
+        const maxHidden = document.getElementById('max-price-hidden');
+        const minDisplay = document.getElementById('price-min-display');
+        const maxDisplay = document.getElementById('price-max-display');
+
+        const syncPrices = (changed) => {
+            let minVal = parseFloat(minSlider.value);
+            let maxVal = parseFloat(maxSlider.value);
+
+            if (minVal > maxVal) {
+                if (changed === minSlider) {
+                    maxVal = minVal;
+                    maxSlider.value = maxVal;
+                } else {
+                    minVal = maxVal;
+                    minSlider.value = minVal;
+                }
+            }
+
+            minDisplay.textContent = `$${minVal.toFixed(2)}`;
+            maxDisplay.textContent = `$${maxVal.toFixed(2)}`;
+
+            minHidden.value = minVal <= floor ? '' : minVal.toFixed(2);
+            maxHidden.value = maxVal >= ceiling ? '' : maxVal.toFixed(2);
+        };
+
+        ['input', 'change'].forEach(eventName => {
+            minSlider.addEventListener(eventName, () => syncPrices(minSlider));
+            maxSlider.addEventListener(eventName, () => syncPrices(maxSlider));
+        });
+
+        syncPrices();
+    }
+
+    const filterForm = document.getElementById('advanced-filter-form');
+    const searchField = document.getElementById('search-input');
+    const hiddenSearch = document.getElementById('filter-search-hidden');
+    if (filterForm) {
+        filterForm.addEventListener('submit', () => {
+            if (hiddenSearch && searchField) {
+                hiddenSearch.value = searchField.value.trim();
+            }
+        });
+    }
+</script>
+{% endblock %}
