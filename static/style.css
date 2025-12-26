@@ -1395,6 +1395,18 @@ th {
     font-weight: 600;
 }
 
+body[data-theme="dark"] table {
+    background: transparent;
+    box-shadow: none;
+}
+
+body[data-theme="dark"] th,
+body[data-theme="dark"] td {
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f7fbff;
+    background: transparent;
+}
+
 /* Cart Styles */
 .cart-header {
     display: flex;
@@ -1436,6 +1448,7 @@ th {
     padding: 1.5rem 1rem;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
+    color: #1a1a1a;
 }
 
 /* Center alignment for Price, Quantity, Total columns */
@@ -1504,6 +1517,14 @@ th {
     text-align: center;
     font-weight: 500;
     font-size: 1.1rem;
+    color: #333;
+    background: #fff;
+}
+
+body[data-theme="dark"] .quantity-control span {
+    color: #f5f7ff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .total-col {
@@ -1550,6 +1571,81 @@ th {
 
 .checkout-btn:hover {
     background-color: #0d6935;
+}
+
+/* Dark cart to match scheduler block */
+body[data-theme="dark"] .cart-container {
+    background: linear-gradient(145deg, rgba(4, 8, 18, 0.95), rgba(7, 14, 28, 0.9));
+    border-radius: 18px;
+    padding: 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 24px 65px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(18px);
+}
+
+body[data-theme="dark"] .cart-table th,
+body[data-theme="dark"] .cart-table td {
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f5fbff;
+    background: transparent;
+}
+
+body[data-theme="dark"] .cart-table th {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+body[data-theme="dark"] .cart-table tbody tr:nth-child(odd) td {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+body[data-theme="dark"] .product-info h3 {
+    color: #f7fbff;
+}
+
+body[data-theme="dark"] .product-info p {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+body[data-theme="dark"] .quantity-control {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body[data-theme="dark"] .qty-btn {
+    color: #f7fbff;
+    background: transparent;
+}
+
+body[data-theme="dark"] .qty-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .quantity-control span {
+    color: #f7fbff;
+    background: rgba(255, 255, 255, 0.02);
+    border-left-color: rgba(255, 255, 255, 0.12);
+    border-right-color: rgba(255, 255, 255, 0.12);
+}
+
+body[data-theme="dark"] .total-col,
+body[data-theme="dark"] .cart-total,
+body[data-theme="dark"] .total-amount {
+    color: #fdfefe;
+}
+
+body[data-theme="dark"] .cart-total span:first-child {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+body[data-theme="dark"] .checkout-btn {
+    background: linear-gradient(135deg, #34d399, #059669);
+    box-shadow: 0 28px 58px rgba(5, 150, 105, 0.35);
+}
+
+body[data-theme="dark"] .checkout-btn:hover {
+    background: linear-gradient(135deg, #2dd4bf, #047857);
 }
 
 /* Flashes */
@@ -1684,6 +1780,114 @@ th {
     color: #0d5c3e;
 }
 
+body[data-theme="dark"] .order-summary,
+body[data-theme="dark"] .payment-section,
+body[data-theme="dark"] .scheduling-section {
+    background: linear-gradient(160deg, rgba(11, 14, 22, 0.98), rgba(5, 9, 16, 0.95));
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 18px 45px rgba(2, 3, 8, 0.65);
+    padding: 2rem;
+}
+
+body[data-theme="dark"] .order-summary h3,
+body[data-theme="dark"] .payment-section h3,
+body[data-theme="dark"] .scheduling-section h4 {
+    color: #f7f8ff;
+}
+
+body[data-theme="dark"] .summary-items,
+body[data-theme="dark"] .summary-item,
+body[data-theme="dark"] .summary-total {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body[data-theme="dark"] .summary-thumb {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .summary-details h4,
+body[data-theme="dark"] .summary-details p,
+body[data-theme="dark"] .summary-price,
+body[data-theme="dark"] .summary-total span {
+    color: rgba(247, 248, 255, 0.9) !important;
+}
+
+body[data-theme="dark"] .coupon-section label,
+body[data-theme="dark"] .loyalty-section .form-label,
+body[data-theme="dark"] .loyalty-info,
+body[data-theme="dark"] .form-text,
+body[data-theme="dark"] .points-badge {
+    color: rgba(247, 248, 255, 0.78) !important;
+}
+
+body[data-theme="dark"] .coupon-section .form-control,
+body[data-theme="dark"] .loyalty-section .form-control,
+body[data-theme="dark"] .payment-section .form-control,
+body[data-theme="dark"] .payment-section select,
+body[data-theme="dark"] .payment-section input[type="text"],
+body[data-theme="dark"] .payment-section input[type="number"] {
+    background: rgba(17, 21, 33, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f7fbff;
+}
+
+body[data-theme="dark"] .coupon-section .form-control::placeholder,
+body[data-theme="dark"] .loyalty-section .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+body[data-theme="dark"] .input-group .btn {
+    background: linear-gradient(120deg, #2dd4bf, #0ea5e9);
+    border: none;
+    color: #0b111c;
+    font-weight: 600;
+}
+
+body[data-theme="dark"] .points-badge {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body[data-theme="dark"] .payment-options {
+    gap: 1.25rem;
+}
+
+body[data-theme="dark"] .payment-card {
+    background: rgba(17, 21, 33, 0.9);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    color: #f7fbff;
+}
+
+body[data-theme="dark"] .payment-card:hover {
+    border-color: rgba(45, 212, 191, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.55);
+}
+
+body[data-theme="dark"] .payment-option input[type="radio"]:checked+.payment-card {
+    border-color: #2dd4bf;
+    box-shadow: 0 18px 38px rgba(45, 212, 191, 0.18);
+    background: linear-gradient(120deg, rgba(45, 212, 191, 0.12), rgba(14, 165, 233, 0.08));
+}
+
+body[data-theme="dark"] .payment-info h4 {
+    color: #f7fbff;
+}
+
+body[data-theme="dark"] .payment-info p {
+    color: rgba(247, 248, 255, 0.65);
+}
+
+body[data-theme="dark"] .card-details-section {
+    background: rgba(15, 19, 29, 0.95);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .card-details-section label {
+    color: rgba(247, 248, 255, 0.85);
+}
+
 /* Payment Section */
 .payment-section {
     background: white;
@@ -1731,6 +1935,13 @@ th {
 }
 
 .payment-option input[type="radio"]:checked+.payment-card {
+    font-weight: 600;
+}
+
+.payment-info h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    color: #1a1a1a;
     font-weight: 600;
 }
 
@@ -3239,4 +3450,235 @@ nav.top-nav {
 
 body[data-theme="dark"] .toast {
     color: var(--text-inverse);
+}
+
+/* =========================================
+   Quick Fixes for Checkout Visibility 
+   ========================================= */
+
+/* Schedule Delivery Section - Force Light Mode Visibility */
+.scheduling-section {
+    background: #ffffff !important;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    color: #1a1a1a !important;
+}
+
+.scheduling-section h4 {
+    color: #1a1a1a !important;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.scheduling-section .text-muted {
+    color: #555 !important;
+}
+
+.scheduling-section .form-label {
+    color: #333 !important;
+    font-weight: 600;
+}
+
+.scheduling-section .form-check-label {
+    color: #333 !important;
+}
+
+/* Calendar Container */
+.calendar-container {
+    background: #ffffff !important;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.calendar-title {
+    font-weight: 700 !important;
+    color: #000000 !important;
+    font-size: 1.1rem;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 600;
+    color: #333 !important;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    color: #1a1a1a !important;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.calendar-day:hover:not(.disabled):not(.selected) {
+    background-color: #f0fdf4 !important;
+    color: #0d5c3e !important;
+}
+
+.calendar-day.selected {
+    background-color: #0d5c3e !important;
+    color: white !important;
+}
+
+.calendar-day.disabled {
+    color: #ccc !important;
+    cursor: not-allowed;
+}
+
+.calendar-day.other-month {
+    color: #ddd !important;
+}
+
+.calendar-nav {
+    background: #f8f9fa !important;
+    border: 1px solid #ddd !important;
+    font-size: 1.2rem;
+    color: #1a1a1a !important;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.calendar-nav:hover {
+    background-color: #e9ecef !important;
+}
+
+/* Time Slots */
+.timeslot-container {
+    padding: 1.5rem;
+    background: #ffffff !important;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.timeslot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.timeslot-option input[type="radio"] {
+    display: none;
+}
+
+.timeslot-btn {
+    display: block;
+    padding: 0.75rem;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #1a1a1a !important;
+    transition: all 0.2s ease;
+    background: white !important;
+}
+
+.timeslot-option input[type="radio"]:checked+.timeslot-btn {
+    border-color: #0d5c3e;
+    background-color: #f0fdf4 !important;
+    color: #0d5c3e !important;
+    font-weight: 600;
+}
+
+/* Dark Mode Overrides - Ensure these still work */
+body[data-theme="dark"] .scheduling-section {
+    background: linear-gradient(145deg, #0b1220, #131c2b) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #f5f7fa !important;
+    box-shadow: 0 20px 60px rgba(8, 12, 20, 0.65);
+}
+
+body[data-theme="dark"] .calendar-container,
+body[data-theme="dark"] .timeslot-container {
+    background: rgba(10, 15, 25, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+body[data-theme="dark"] .calendar-title,
+body[data-theme="dark"] .scheduling-section h4,
+body[data-theme="dark"] .calendar-day:not(.disabled):not(.other-month),
+body[data-theme="dark"] .calendar-nav,
+body[data-theme="dark"] .timeslot-btn,
+body[data-theme="dark"] .scheduling-section .form-label,
+body[data-theme="dark"] .scheduling-section .form-check-label {
+    color: #f6fbff !important;
+}
+
+body[data-theme="dark"] .scheduling-section .text-muted,
+body[data-theme="dark"] .calendar-weekdays {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+body[data-theme="dark"] .calendar-day {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+}
+
+body[data-theme="dark"] .calendar-day:hover:not(.disabled):not(.selected):not(.other-month) {
+    border-color: rgba(52, 211, 153, 0.5);
+    color: #34d399 !important;
+    background: rgba(52, 211, 153, 0.08);
+}
+
+body[data-theme="dark"] .calendar-day.selected {
+    background: linear-gradient(135deg, #34d399, #2dd4bf) !important;
+    color: #061218 !important;
+    box-shadow: 0 10px 25px rgba(52, 211, 153, 0.35);
+}
+
+body[data-theme="dark"] .calendar-day.disabled,
+body[data-theme="dark"] .calendar-day.other-month {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body[data-theme="dark"] .calendar-nav {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+body[data-theme="dark"] .calendar-nav:hover {
+    color: #34d399 !important;
+    border-color: rgba(52, 211, 153, 0.6) !important;
+}
+
+body[data-theme="dark"] .timeslot-btn {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(10, 15, 25, 0.6) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+body[data-theme="dark"] .timeslot-btn:hover {
+    border-color: rgba(52, 211, 153, 0.7);
+    color: #34d399 !important;
+    transform: translateY(-1px);
+}
+
+body[data-theme="dark"] .timeslot-option input[type="radio"]:checked+.timeslot-btn {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.25), rgba(45, 212, 191, 0.25)) !important;
+    border-color: #34d399;
+    color: #34d399 !important;
+    font-weight: 600;
+    box-shadow: 0 14px 32px rgba(52, 211, 153, 0.2);
+}
+
+body[data-theme="dark"] .recurring-options,
+body[data-theme="dark"] .recurring-options .form-check-label {
+    color: rgba(255, 255, 255, 0.85) !important;
 }
