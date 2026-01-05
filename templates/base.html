@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=fix1">
     <link rel="stylesheet" href="{{ url_for('static', filename='new_features.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='accessibility.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_animations.css') }}">
+    <!-- Heavy animation files disabled for performance -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_animations.css') }}"> -->
     <!-- Glassmorphism disabled for performance - backdrop-filter causes lag -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='glassmorphism.css') }}"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='premium_buttons.css') }}"> -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='scroll_animations.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='login_decorations.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='scroll_animations.css') }}"> -->
+    <!-- Login decorations disabled for performance - heavy grass/flower animations -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='login_decorations.css') }}"> -->
+    <!-- Performance optimizations - must be last to override other styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='performance.css') }}">
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
