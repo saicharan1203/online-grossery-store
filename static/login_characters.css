@@ -1,0 +1,381 @@
+/* ============================================
+   LOGIN PAGE CHARACTER STYLES - 3D Design
+   Matches the reference image exactly
+   ============================================ */
+
+/* Main illustration container */
+.login-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(145deg, #d4c4b0 0%, #c9b9a5 100%);
+    min-height: 100vh;
+}
+
+.illustration-card {
+    width: clamp(380px, 50vw, 550px);
+    height: clamp(500px, 70vh, 650px);
+    background: linear-gradient(180deg, #ddd0c0 0%, #d0c3b3 100%);
+    border-radius: 40px;
+    position: relative;
+    box-shadow:
+        0 40px 80px rgba(0, 0, 0, 0.15),
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+/* Base character styles */
+.character {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.character:hover {
+    transform: scale(1.03);
+}
+
+/* Eyes container */
+.char-eyes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* Individual eye */
+.char-eye {
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f0f0f0 60%, #e0e0e0 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow:
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+/* Pupil */
+.char-pupil {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+    transition: transform 0.1s ease-out;
+}
+
+/* Mouth */
+.char-mouth {
+    width: 20px;
+    height: 10px;
+    border-radius: 0 0 20px 20px;
+    background: rgba(0, 0, 0, 0.25);
+    margin-top: 4px;
+}
+
+/* ===== INDIVIDUAL CHARACTERS ===== */
+
+/* Dark Blue/Black - Top Center */
+.char-dark {
+    width: 85px;
+    height: 150px;
+    background: linear-gradient(180deg, #3d4156 0%, #2a2d3e 50%, #1f2130 100%);
+    border-radius: 43px;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.char-dark:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* Purple - Center */
+.char-purple {
+    width: 95px;
+    height: 175px;
+    background: linear-gradient(180deg, #8b7bdb 0%, #7461c9 50%, #5f4fb3 100%);
+    border-radius: 48px;
+    top: 35%;
+    left: 38%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.char-purple:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* Pink - Right of Purple */
+.char-pink {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(180deg, #f5a5b8 0%, #ed8fa5 50%, #e27992 100%);
+    border-radius: 30px;
+    top: 28%;
+    right: 12%;
+    z-index: 2;
+}
+
+/* Orange Square - Bottom Left */
+.char-orange {
+    width: 105px;
+    height: 105px;
+    background: linear-gradient(180deg, #ff9b5a 0%, #f58442 50%, #e56e2c 100%);
+    border-radius: 28px;
+    bottom: 32%;
+    left: 8%;
+    z-index: 3;
+}
+
+/* Small Orange - Below Orange Square */
+.char-small-orange {
+    position: absolute;
+    width: 70px;
+    height: 45px;
+    background: linear-gradient(180deg, #ff9b5a 0%, #f58442 50%, #e56e2c 100%);
+    border-radius: 15px;
+    bottom: 22%;
+    left: 10%;
+    z-index: 2;
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15),
+        0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Yellow - Right Side */
+.char-yellow {
+    width: 70px;
+    height: 125px;
+    background: linear-gradient(180deg, #ffd84a 0%, #f5c832 50%, #e5b51c 100%);
+    border-radius: 35px;
+    bottom: 25%;
+    right: 12%;
+    z-index: 2;
+}
+
+/* ===== DESK/BASE ELEMENTS FOR ALL CHARACTERS ===== */
+
+/* Dark character desk */
+.char-dark::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 35px;
+    background: linear-gradient(180deg, #3d4156 0%, #2a2d3e 100%);
+    border-radius: 12px;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: -1;
+}
+
+/* Purple character desk */
+.char-purple::after {
+    content: '';
+    position: absolute;
+    width: 65px;
+    height: 40px;
+    background: linear-gradient(180deg, #8b7bdb 0%, #7461c9 100%);
+    border-radius: 14px;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: -1;
+}
+
+/* Pink character desk */
+.char-pink::after {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 40px;
+    background: linear-gradient(180deg, #f5a5b8 0%, #ed8fa5 100%);
+    border-radius: 14px;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: -1;
+}
+
+/* Yellow character desk */
+.char-yellow::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 35px;
+    background: linear-gradient(180deg, #ffd84a 0%, #f5c832 100%);
+    border-radius: 12px;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: -1;
+}
+
+/* ===== BOTTOM SNACK CARDS ===== */
+
+.snack-cards {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 20px;
+    z-index: 1;
+}
+
+.snack-card {
+    width: 30%;
+    height: 80px;
+    border-radius: 20px 20px 15px 15px;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.snack-card::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    background: inherit;
+    border-radius: 15px 15px 0 0;
+    top: 0;
+    filter: brightness(1.1);
+}
+
+.snack-card-peach {
+    background: linear-gradient(180deg, #ffd4b8 0%, #ffbe98 100%);
+}
+
+.snack-card-peach::after {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 12px;
+    background: linear-gradient(90deg, #ff9b5a, #f58442);
+    border-radius: 6px;
+    bottom: 20px;
+    left: 15%;
+}
+
+.snack-card-yellow {
+    background: linear-gradient(180deg, #fff5e0 0%, #ffe8c8 100%);
+}
+
+.snack-card-yellow::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: radial-gradient(circle, #ffd84a 0%, #f5c832 100%);
+    border-radius: 50%;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Little triangle/leaf accent */
+.snack-card-yellow::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 20px solid #ff9b5a;
+    top: -10px;
+    right: 20%;
+    border-radius: 0;
+    background: transparent;
+    filter: none;
+}
+
+.snack-card-pink {
+    background: linear-gradient(180deg, #fff0f3 0%, #ffe0e8 100%);
+}
+
+.snack-card-pink::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 20px;
+    background: linear-gradient(90deg, #f5a5b8, #ed8fa5);
+    border-radius: 10px;
+    bottom: 20px;
+    left: 20%;
+}
+
+/* Hide old elements that might conflict */
+.snack-stage,
+.grass-field,
+.meadow-daisy,
+.meadow-buttercup,
+.leaf-sprig,
+.floating-pollen,
+.snack-banner,
+.spot.shadow,
+.character-highlight,
+.character-orange,
+.character-purple,
+.character-blue,
+.character-yellow,
+.character-pink,
+.character-eyes,
+.eye,
+.pupil,
+.character-mouth {
+    display: none !important;
+}
+
+/* Show new character elements */
+.char-dark,
+.char-purple,
+.char-pink,
+.char-orange,
+.char-yellow,
+.char-small-orange {
+    display: flex !important;
+}
+
+/* Dark mode support */
+body[data-theme="dark"] .login-illustration {
+    background: linear-gradient(145deg, #2a2520 0%, #1f1a15 100%);
+}
+
+body[data-theme="dark"] .illustration-card {
+    background: linear-gradient(180deg, #3a332a 0%, #2f2820 100%);
+    box-shadow:
+        0 40px 80px rgba(0, 0, 0, 0.4),
+        0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+body[data-theme="dark"] .snack-card-peach {
+    background: linear-gradient(180deg, #5a4035 0%, #4a3328 100%);
+}
+
+body[data-theme="dark"] .snack-card-yellow {
+    background: linear-gradient(180deg, #4a4030 0%, #3a3225 100%);
+}
+
+body[data-theme="dark"] .snack-card-pink {
+    background: linear-gradient(180deg, #4a3540 0%, #3a2832 100%);
+}

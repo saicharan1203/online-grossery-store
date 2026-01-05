@@ -803,7 +803,7 @@ def confirm_payment():
         flash('Cart is empty')
         return redirect(url_for('main.index'))
     
-    payment_method = request.form.get('payment_method')
+    payment_method = request.form.get('payment_method', 'UPI')
     total = sum(item.product.price * item.quantity for item in cart_items)
     
     # Create Order
@@ -814,18 +814,18 @@ def confirm_payment():
         payment_method=payment_method
     )
     db.session.add(new_order)
-    db.session.commit() # Commit to get ID
+    db.session.commit()  # Commit to get ID
     
     # Move items to OrderItem and decrement stock
     for item in cart_items:
         # Check stock again before finalizing
         if item.quantity > item.product.stock:
             flash(f'Sorry, {item.product.name} is out of stock or requested quantity not available.')
-            db.session.delete(new_order) # Rollback order
+            db.session.delete(new_order)  # Rollback order
             db.session.commit()
             return redirect(url_for('main.cart'))
 
-        item.product.stock -= item.quantity # Decrement stock
+        item.product.stock -= item.quantity  # Decrement stock
 
         order_item = OrderItem(
             order_id=new_order.id,
@@ -834,7 +834,23 @@ def confirm_payment():
             price_at_purchase=item.product.price
         )
         db.session.add(order_item)
-        db.session.delete(item) # Clear cart
+        db.session.delete(item)  # Clear cart
+    
+    # Calculate and award loyalty points (1 point per ₹10 spent)
+    points_earned = int(total / 10)
+    new_order.points_earned = points_earned
+    current_user.loyalty_points += points_earned
+    
+    # Create earning transaction
+    if points_earned > 0:
+        earning_transaction = LoyaltyTransaction(
+            user_id=current_user.id,
+            order_id=new_order.id,
+            points=points_earned,
+            transaction_type='earned',
+            description=f'Earned from order #{new_order.id}'
+        )
+        db.session.add(earning_transaction)
         
     db.session.commit()
     return redirect(url_for('main.order_success', order_id=new_order.id))
@@ -1096,9 +1112,17 @@ def delete_coupon(coupon_id):
     flash('Coupon deleted')
     return redirect(url_for('main.admin_coupons'))
 
+
+@main.route('/admin/coupon/toggle/<int:coupon_id>', methods=['POST'])
+@login_required
+def toggle_coupon(coupon_id):
+    if not current_user.is_admin:
+        return redirect(url_for('main.index'))
+        
     coupon = Coupon.query.get_or_404(coupon_id)
     coupon.active = not coupon.active
     db.session.commit()
+    flash(f'Coupon {"activated" if coupon.active else "deactivated"}')
     return redirect(url_for('main.admin_coupons'))
 
 @main.route('/admin/api/stats')
@@ -1161,10 +1185,18 @@ def admin_stats():
 @main.context_processor
 def inject_cart_total():
     if current_user.is_authenticated:
-        cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
-        total_price = sum(item.product.price * item.quantity for item in cart_items)
-        total_items = sum(item.quantity for item in cart_items)
-        return {'cart_total': total_price, 'cart_count': total_items}
+        # Optimized: Use single aggregated query instead of fetching all items
+        result = db.session.query(
+            db.func.coalesce(db.func.sum(CartItem.quantity), 0).label('total_items'),
+            db.func.coalesce(db.func.sum(CartItem.quantity * Product.price), 0).label('total_price')
+        ).join(Product, CartItem.product_id == Product.id).filter(
+            CartItem.user_id == current_user.id
+        ).first()
+        
+        return {
+            'cart_total': float(result.total_price) if result else 0,
+            'cart_count': int(result.total_items) if result else 0
+        }
     return {'cart_total': 0, 'cart_count': 0}
 
 # --- Loyalty Rewards ---

@@ -38,8 +38,8 @@ class Product(db.Model):
 
 class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False, index=True)
     quantity = db.Column(db.Integer, default=1)
     
     product = db.relationship('Product')
@@ -59,10 +59,10 @@ class Address(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'), nullable=True)
     total_price = db.Column(db.Float, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     status = db.Column(db.String(20), default='Pending')
     payment_method = db.Column(db.String(50), nullable=True)  # COD, Debit Card, Credit Card, UPI
     points_earned = db.Column(db.Integer, default=0)  # Loyalty points earned from this order
@@ -75,8 +75,8 @@ class Order(db.Model):
 
 class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False, index=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False, index=True)
     quantity = db.Column(db.Integer, nullable=False)
     price_at_purchase = db.Column(db.Float, nullable=False)
     
@@ -84,8 +84,8 @@ class OrderItem(db.Model):
 
 class Wishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False, index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Ensure unique wishlist items per user
@@ -93,8 +93,8 @@ class Wishlist(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False, index=True)
     rating = db.Column(db.Integer, nullable=False)  # 1-5 stars
     comment = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

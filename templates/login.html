@@ -6,105 +6,60 @@
 <div class="login-shell">
     <div class="login-illustration">
         <div class="illustration-card">
-            <div class="snack-stage">
-                <div class="snack-plate plate-left">
-                    <span class="snack-biscuit"></span>
-                    <span class="snack-leaf leaf-left"></span>
-                </div>
-                <div class="snack-plate plate-center">
-                    <span class="snack-fruit"></span>
-                    <span class="snack-slice"></span>
-                </div>
-                <div class="snack-plate plate-right">
-                    <span class="snack-stack"></span>
-                    <span class="snack-leaf leaf-right"></span>
-                </div>
-                <div class="floating-snacks">
-                    <span class="floating-snack floating-donut"></span>
-                    <span class="floating-snack floating-candy"></span>
-                    <span class="floating-snack floating-wafer"></span>
-                    <span class="floating-snack floating-berry"></span>
-                </div>
-            </div>
-            <div class="character character-orange" data-eye-range="12" data-eye-tilt="6">
-                <span class="character-eyes">
-                    <span class="eye"></span>
-                    <span class="eye"></span>
+            <!-- Dark Blue/Black - Top Center -->
+            <div class="character char-dark" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
                 </span>
-                <span class="character-mouth"></span>
+                <span class="char-mouth"></span>
             </div>
-            <div class="character character-purple" data-eye-range="10" data-eye-tilt="5">
-                <span class="character-eyes">
-                    <span class="eye"></span>
-                    <span class="eye"></span>
+
+            <!-- Purple - Center -->
+            <div class="character char-purple" data-eye-range="8" data-eye-tilt="5">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
                 </span>
-                <span class="character-mouth"></span>
+                <span class="char-mouth"></span>
             </div>
-            <div class="character character-blue" data-eye-range="8" data-eye-tilt="4">
-                <span class="character-eyes">
-                    <span class="eye"></span>
-                    <span class="eye"></span>
+
+            <!-- Pink - Right of Purple -->
+            <div class="character char-pink" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
                 </span>
-                <span class="character-mouth"></span>
+                <span class="char-mouth"></span>
             </div>
-            <div class="character character-yellow" data-eye-range="9" data-eye-tilt="4">
-                <span class="character-eyes">
-                    <span class="eye"></span>
-                    <span class="eye"></span>
+
+            <!-- Orange Square - Bottom Left -->
+            <div class="character char-orange" data-eye-range="7" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
                 </span>
-                <span class="character-mouth"></span>
+                <span class="char-mouth"></span>
             </div>
-            <div class="grass-field">
-                <span class="blade blade-1"></span>
-                <span class="blade blade-2"></span>
-                <span class="blade blade-3"></span>
-                <span class="blade blade-4"></span>
-                <span class="blade blade-5"></span>
-                <span class="blade blade-6"></span>
-                <span class="blade blade-7"></span>
-                <span class="blade blade-8"></span>
-                <span class="blade blade-9"></span>
+
+            <!-- Small Orange - Below Orange Square -->
+            <div class="char-small-orange"></div>
+
+            <!-- Yellow - Right Side -->
+            <div class="character char-yellow" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
             </div>
-            <div class="meadow-daisy meadow-daisy-left">
-                <span class="stem"></span>
-                <span class="flower"></span>
+
+            <!-- Bottom Snack Cards -->
+            <div class="snack-cards">
+                <div class="snack-card snack-card-peach"></div>
+                <div class="snack-card snack-card-yellow"></div>
+                <div class="snack-card snack-card-pink"></div>
             </div>
-            <div class="meadow-daisy meadow-daisy-right">
-                <span class="stem"></span>
-                <span class="flower"></span>
-            </div>
-            <div class="meadow-buttercup">
-                <span class="stem"></span>
-                <span class="flower"></span>
-            </div>
-            <div class="leaf-sprig sprig-left"></div>
-            <div class="leaf-sprig sprig-right"></div>
-            <div class="floating-pollen">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="snack-banner">
-                <div class="snack-item snack-berry">
-                    <span class="snack-top"></span>
-                    <span class="snack-face"></span>
-                </div>
-                <div class="snack-item snack-donut">
-                    <span class="snack-top">
-                        <span class="sprinkle sprinkle-1"></span>
-                        <span class="sprinkle sprinkle-2"></span>
-                        <span class="sprinkle sprinkle-3"></span>
-                    </span>
-                    <span class="snack-face"></span>
-                </div>
-                <div class="snack-item snack-citrus">
-                    <span class="snack-top"></span>
-                    <span class="snack-face"></span>
-                </div>
-                <div class="snack-item snack-candy">
-                    <span class="snack-top"></span>
-                    <span class="snack-face"></span>
-                </div>
-            </div>
-            <div class="spot shadow"></div>
         </div>
     </div>
 
@@ -184,23 +139,24 @@
                 const normY = clamp((clientY - centerY) / (bounds.height / 2 || 1), -1, 1);
 
                 characters.forEach(character => {
-                    const eyes = character.querySelectorAll('.eye');
-                    const rangeX = parseFloat(character.dataset.eyeRange || '10');
-                    const rangeY = parseFloat(character.dataset.eyeTilt || '5');
+                    const pupils = character.querySelectorAll('.char-pupil');
+                    const rangeX = parseFloat(character.dataset.eyeRange || '6');
+                    const rangeY = parseFloat(character.dataset.eyeTilt || '4');
 
-                    eyes.forEach(eye => {
-                        eye.style.setProperty('--eye-shift-x', `${normX * rangeX}px`);
-                        eye.style.setProperty('--eye-shift-y', `${normY * rangeY}px`);
+                    // Move pupils inside the eyes
+                    pupils.forEach(pupil => {
+                        const offsetX = normX * rangeX;
+                        const offsetY = normY * rangeY;
+                        pupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
                     });
                 });
             };
 
             const resetEyes = () => {
                 characters.forEach(character => {
-                    const eyes = character.querySelectorAll('.eye');
-                    eyes.forEach(eye => {
-                        eye.style.setProperty('--eye-shift-x', `0px`);
-                        eye.style.setProperty('--eye-shift-y', `0px`);
+                    const pupils = character.querySelectorAll('.char-pupil');
+                    pupils.forEach(pupil => {
+                        pupil.style.transform = `translate(0, 0)`;
                     });
                 });
             };
