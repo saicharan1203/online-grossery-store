@@ -1396,28 +1396,19 @@ def seed_database():
         )
         db.session.add(admin)
     
-    products = [
-        Product(name='Apple', category='Fruit', price=1.20, stock=100, image_url='images/apple.png'),
-        Product(name='Banana', category='Fruit', price=0.50, stock=150, image_url='images/fruit.png'),
-        Product(name='Orange', category='Fruit', price=0.90, stock=120, image_url='images/fruit.png'),
-        Product(name='Grapes', category='Fruit', price=2.50, stock=80, image_url='images/fruit.png'),
-        Product(name='Milk', category='Dairy', price=3.50, stock=50, image_url='images/dairy.png'),
-        Product(name='Yogurt', category='Dairy', price=1.80, stock=60, image_url='images/dairy.png'),
-        Product(name='Cheese', category='Dairy', price=4.50, stock=40, image_url='images/dairy.png'),
-        Product(name='Bread', category='Bakery', price=2.00, stock=40, image_url='images/bakery.png'),
-        Product(name='Croissant', category='Bakery', price=1.50, stock=30, image_url='images/bakery.png'),
-        Product(name='Eggs', category='Dairy', price=4.00, stock=60, image_url='images/dairy.png'),
-        Product(name='Chicken Breast', category='Meat', price=7.50, stock=30, image_url='images/vegetable.png'),
-        Product(name='Ground Beef', category='Meat', price=6.00, stock=25, image_url='images/vegetable.png'),
-        Product(name='Rice', category='Grains', price=5.00, stock=80, image_url='images/bakery.png'),
-        Product(name='Pasta', category='Grains', price=2.50, stock=70, image_url='images/bakery.png'),
-        Product(name='Tomato', category='Vegetable', price=0.80, stock=120, image_url='images/vegetable.png'),
-        Product(name='Carrot', category='Vegetable', price=0.60, stock=100, image_url='images/vegetable.png'),
-        Product(name='Lettuce', category='Vegetable', price=1.20, stock=50, image_url='images/vegetable.png'),
-        Product(name='Potato', category='Vegetable', price=0.40, stock=150, image_url='images/vegetable.png'),
-        Product(name='Onion', category='Vegetable', price=0.50, stock=130, image_url='images/vegetable.png'),
-        Product(name='Olive Oil', category='Pantry', price=8.00, stock=40, image_url='images/bakery.png'),
-    ]
+    # Import products from catalog for consistency
+    from product_catalog import PRODUCTS as CATALOG_PRODUCTS
+    
+    products = []
+    for p in CATALOG_PRODUCTS:
+        products.append(Product(
+            name=p.name, 
+            category=p.category, 
+            price=p.price, 
+            stock=100,  # Default stock
+            image_url=p.image_url,
+            description=f"Fresh {p.name.lower()} - high quality {p.category.lower()} product"
+        ))
     
     db.session.bulk_save_objects(products)
     db.session.commit()
