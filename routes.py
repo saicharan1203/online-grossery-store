@@ -853,7 +853,8 @@ def confirm_payment():
         db.session.add(earning_transaction)
         
     db.session.commit()
-    return redirect(url_for('main.order_success', order_id=new_order.id))
+    flash('Payment successful! Your order has been placed.')
+    return redirect(url_for('main.index'))
 
 # --- Address Management ---
 @main.route('/addresses')

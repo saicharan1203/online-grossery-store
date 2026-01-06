@@ -1,44 +1,188 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .upi-payment-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    .upi-payment-card {
+        background: #000000;
+        border-radius: 20px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .phonepe-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+    }
+
+    .phonepe-logo {
+        width: 40px;
+        height: 40px;
+        background: #5f259f;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        font-weight: bold;
+    }
+
+    .phonepe-title {
+        font-size: 1.5rem;
+        color: white;
+        font-weight: 500;
+    }
+
+    .accepted-text {
+        color: #5f259f;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+    }
+
+    .scan-instruction {
+        color: #ffffff;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .qr-code-section {
+        background: white;
+        border-radius: 15px;
+        padding: 1rem;
+        margin: 1.5rem auto;
+        display: inline-block;
+    }
+
+    .qr-code-image {
+        width: 280px;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .merchant-name {
+        color: #ffffff;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        font-weight: 500;
+    }
+
+    .payment-amount {
+        background: linear-gradient(135deg, #5f259f 0%, #7b3cc3 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 1.5rem 0;
+        display: inline-block;
+    }
+
+    .payment-amount span {
+        font-size: 0.9rem;
+        font-weight: 400;
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    .payment-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .payment-actions .btn {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-confirm {
+        background: linear-gradient(135deg, #5f259f 0%, #7b3cc3 100%);
+        color: white;
+    }
+
+    .btn-confirm:hover {
+        background: linear-gradient(135deg, #7b3cc3 0%, #5f259f 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(95, 37, 159, 0.4);
+    }
+
+    .footer-text {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        margin-top: 2rem;
+        line-height: 1.5;
+    }
+</style>
+
 <div class="upi-payment-container">
     <div class="upi-payment-card">
-        <h2>Complete UPI Payment</h2>
-        <p class="payment-instruction">Scan the QR code below to complete your payment</p>
+        <div class="phonepe-header">
+            <div class="phonepe-logo">॰</div>
+            <span class="phonepe-title">PhonePe</span>
+        </div>
+
+        <p class="accepted-text">ACCEPTED HERE</p>
+        <p class="scan-instruction">Scan & Pay Using PhonePe App</p>
 
         <div class="qr-code-section">
-            <img src="{{ url_for('static', filename='images/upi_qr.png') }}" alt="UPI QR Code" class="qr-code-image">
+            <img src="{{ url_for('static', filename='images/phonepe_qr.jpg') }}" alt="PhonePe QR Code"
+                class="qr-code-image">
         </div>
 
-        <div class="payment-details">
-            <div class="detail-row">
-                <span class="label">Order Total:</span>
-                <span class="value">${{ "%.2f"|format(total) }}</span>
-            </div>
-            <div class="detail-row">
-                <span class="label">Payment Method:</span>
-                <span class="value">UPI</span>
-            </div>
-        </div>
+        <p class="merchant-name">Koka Venkata Sai Charan</p>
 
-        <div class="payment-instructions">
-            <h3>How to Pay:</h3>
-            <ol>
-                <li>Open any UPI app (GPay, PhonePe, Paytm, etc.)</li>
-                <li>Scan the QR code above</li>
-                <li>Verify the amount: ${{ "%.2f"|format(total) }}</li>
-                <li>Complete the payment</li>
-                <li>Click "I've Paid" button below</li>
-            </ol>
+        <div class="payment-amount">
+            <span>Amount to Pay</span>
+            ₹{{ "%.2f"|format(total) }}
         </div>
 
         <form method="POST" action="{{ url_for('main.confirm_payment') }}">
             <input type="hidden" name="payment_method" value="UPI">
             <div class="payment-actions">
-                <a href="{{ url_for('main.checkout') }}" class="btn btn-secondary">Back</a>
-                <button type="submit" class="btn btn-primary">I've Paid</button>
+                <a href="{{ url_for('main.checkout') }}" class="btn btn-back">← Back</a>
+                <button type="submit" class="btn btn-confirm">I've Paid ✓</button>
             </div>
         </form>
+
+        <p class="footer-text">
+            © 2026, All rights reserved, PhonePe Ltd (Formerly known as 'PhonePe Private Ltd')
+        </p>
     </div>
 </div>
 {% endblock %}
