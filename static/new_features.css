@@ -2928,3 +2928,223 @@ body[data-theme="dark"] .reorder-card:hover,
 body[data-theme="dark"] .fresh-card:hover {
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
+
+/* ============================================
+   NEW FEATURES RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet Breakpoint (max-width: 768px) */
+@media (max-width: 768px) {
+
+    .spotlight-section,
+    .reorder-section,
+    .fresh-drop-section {
+        padding: 1.75rem;
+        border-radius: 24px;
+        margin: 2rem 0;
+    }
+
+    .spotlight-header,
+    .reorder-header,
+    .fresh-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .spotlight-header h2,
+    .reorder-header h2,
+    .fresh-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .spotlight-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .spotlight-card {
+        padding: 1.5rem;
+        border-radius: 22px;
+    }
+
+    .reorder-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .reorder-card {
+        padding: 1.5rem;
+        border-radius: 20px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .fresh-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .view-all-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .prompt-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .prompt-actions .btn-primary {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Login Page Responsive */
+    .illustration-card {
+        width: clamp(280px, 80vw, 380px);
+        height: clamp(280px, 80vw, 380px);
+    }
+
+    .character-orange {
+        width: 80px;
+        height: 80px;
+    }
+
+    .character-purple {
+        width: 75px;
+        height: 140px;
+    }
+
+    .character-pink {
+        width: 75px;
+        height: 75px;
+    }
+
+    .character-blue {
+        width: 55px;
+        height: 100px;
+    }
+
+    .character-yellow {
+        width: 50px;
+        height: 95px;
+    }
+}
+
+/* Mobile Breakpoint (max-width: 576px) */
+@media (max-width: 576px) {
+
+    .spotlight-section,
+    .reorder-section,
+    .fresh-drop-section {
+        padding: 1.25rem;
+        border-radius: 18px;
+        margin: 1.5rem 0;
+    }
+
+    .eyebrow {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+    }
+
+    .spotlight-header h2,
+    .reorder-header h2,
+    .fresh-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .spotlight-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .spotlight-card {
+        padding: 1.15rem;
+        border-radius: 18px;
+        gap: 1rem;
+    }
+
+    .spotlight-card .product-price {
+        font-size: 1.1rem;
+    }
+
+    .fresh-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .filter-chip,
+    .view-all-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .btn.btn-ghost {
+        padding: 0.55rem 1.1rem;
+        font-size: 0.8rem;
+    }
+
+    /* Login Page Mobile */
+    .login-illustration {
+        display: none;
+        /* Hide illustration on very small screens */
+    }
+
+    .login-shell {
+        min-height: 100vh;
+    }
+
+    .login-panel {
+        min-height: 100vh;
+        justify-content: flex-start;
+        padding-top: 3rem;
+    }
+
+    .login-heading h1 {
+        font-size: 1.8rem;
+    }
+
+    .login-btn {
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Extra Small Mobile (max-width: 400px) */
+@media (max-width: 400px) {
+
+    .spotlight-section,
+    .reorder-section,
+    .fresh-drop-section {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+
+    .spotlight-header h2,
+    .reorder-header h2,
+    .fresh-header h2 {
+        font-size: 1.15rem;
+    }
+
+    .spotlight-grid,
+    .fresh-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .spotlight-card {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+
+    .reorder-card {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+
+    .times-pill {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.6rem;
+    }
+}

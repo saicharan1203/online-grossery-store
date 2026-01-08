@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshMarket</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=fix1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=responsive2">
     <link rel="stylesheet" href="{{ url_for('static', filename='new_features.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='accessibility.css') }}">
     <!-- Heavy animation files disabled for performance -->
@@ -28,7 +28,16 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="FreshMarket Logo">
             <span>FreshMarket</span>
         </div>
-        <div class="links">
+
+        <!-- Hamburger Menu Button for Mobile -->
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-label="Toggle navigation menu"
+            aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <div class="links" id="nav-links">
             <button id="theme-toggle" class="theme-toggle ripple-parent" type="button" aria-label="Toggle theme"
                 aria-pressed="false">
                 <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -56,7 +65,7 @@
                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                Wishlist
+                <span class="nav-link-text">Wishlist</span>
             </a>
             <a href="{{ url_for('main.cart') }}" class="nav-link nav-link-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -65,26 +74,27 @@
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="currentColor"
                         stroke-width="2" />
                 </svg>
-                Cart
+                <span class="nav-link-text">Cart</span>
                 {% if cart_count > 0 %}
                 <span class="cart-badge">{{ cart_count }}</span>
                 {% endif %}
             </a>
             <a href="{{ url_for('main.loyalty') }}" class="nav-link nav-link-icon">
-                ⭐ Rewards
+                ⭐ <span class="nav-link-text">Rewards</span>
             </a>
             <a href="{{ url_for('main.scheduled_orders') }}" class="nav-link nav-link-icon">
-                📅 Scheduled
+                📅 <span class="nav-link-text">Scheduled</span>
             </a>
-            <a href="{{ url_for('main.addresses') }}" class="nav-link">Addresses</a>
+            <a href="{{ url_for('main.addresses') }}" class="nav-link"><span class="nav-link-text">Addresses</span></a>
             {% if current_user.is_admin %}
-            <a href="{{ url_for('main.admin_dashboard') }}" class="nav-link admin-link">Admin Dashboard</a>
+            <a href="{{ url_for('main.admin_dashboard') }}" class="nav-link admin-link"><span
+                    class="nav-link-text">Admin Dashboard</span></a>
             {% endif %}
             <span class="nav-user">{{ current_user.username }}</span>
-            <a href="{{ url_for('main.logout') }}" class="nav-link">Logout</a>
+            <a href="{{ url_for('main.logout') }}" class="nav-link"><span class="nav-link-text">Logout</span></a>
             {% else %}
-            <a href="{{ url_for('main.login') }}" class="nav-link">Login</a>
-            <a href="{{ url_for('main.register') }}" class="nav-link">Register</a>
+            <a href="{{ url_for('main.login') }}" class="nav-link"><span class="nav-link-text">Login</span></a>
+            <a href="{{ url_for('main.register') }}" class="nav-link"><span class="nav-link-text">Register</span></a>
             {% endif %}
         </div>
     </nav>
@@ -147,6 +157,7 @@
 
             initThemeToggle();
             initButtonRipples();
+            initMobileMenu();
         });
 
         function updateCartBadge(count) {
@@ -265,6 +276,52 @@
                 ripple.addEventListener('animationend', () => {
                     ripple.remove();
                 });
+            });
+        }
+
+        function initMobileMenu() {
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            if (!menuToggle || !navLinks) return;
+
+            menuToggle.addEventListener('click', function () {
+                const isOpen = menuToggle.classList.toggle('is-open');
+                navLinks.classList.toggle('is-open');
+                menuToggle.setAttribute('aria-expanded', isOpen);
+
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function () {
+                    menuToggle.classList.remove('is-open');
+                    navLinks.classList.remove('is-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!menuToggle.contains(event.target) && !navLinks.contains(event.target)) {
+                    menuToggle.classList.remove('is-open');
+                    navLinks.classList.remove('is-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && navLinks.classList.contains('is-open')) {
+                    menuToggle.classList.remove('is-open');
+                    navLinks.classList.remove('is-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
             });
         }
     </script>
