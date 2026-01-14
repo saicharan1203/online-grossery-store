@@ -4873,3 +4873,266 @@ body[data-theme="dark"] .login-form input {
 body[data-theme="dark"] .login-form input::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
+
+/* ============================================
+   ENHANCED MOBILE FIXES - Login & Cart
+   ============================================ */
+
+/* LOGIN: Center the Google button on mobile */
+@media (max-width: 768px) {
+    .login-btn--google {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-form>* {
+        width: 100%;
+    }
+
+    .login-btn {
+        text-align: center;
+    }
+}
+
+/* LOGIN ILLUSTRATION: Scale characters to fit on mobile */
+@media (max-width: 768px) {
+    .login-illustration {
+        display: flex !important;
+        padding: 1.5rem 1rem;
+        min-height: auto;
+        max-height: 50vh;
+    }
+
+    .illustration-card {
+        width: 100%;
+        max-width: 320px;
+        height: 350px;
+        border-radius: 30px;
+        transform: scale(0.85);
+        margin: 0 auto;
+    }
+
+    /* Scale down all characters */
+    .character {
+        transform: scale(0.7);
+    }
+
+    .char-dark {
+        width: 60px;
+        height: 100px;
+        top: 5%;
+        transform: translateX(-50%) scale(0.75);
+    }
+
+    .char-purple {
+        width: 65px;
+        height: 120px;
+        top: 30%;
+        left: 35%;
+        transform: translateX(-50%) scale(0.75);
+    }
+
+    .char-pink {
+        width: 70px;
+        height: 70px;
+        top: 20%;
+        right: 8%;
+        transform: scale(0.75);
+    }
+
+    .char-orange {
+        width: 72px;
+        height: 72px;
+        bottom: 28%;
+        left: 5%;
+        transform: scale(0.75);
+    }
+
+    .char-small-orange {
+        width: 50px;
+        height: 32px;
+        bottom: 18%;
+        left: 8%;
+        transform: scale(0.75);
+    }
+
+    .char-yellow {
+        width: 50px;
+        height: 90px;
+        bottom: 20%;
+        right: 8%;
+        transform: scale(0.75);
+    }
+
+    /* Eyes smaller on mobile */
+    .char-eye {
+        width: 16px;
+        height: 16px;
+    }
+
+    .char-pupil {
+        width: 7px;
+        height: 7px;
+        margin-left: -3.5px;
+        margin-top: -3.5px;
+    }
+
+    .char-mouth {
+        width: 14px;
+        height: 7px;
+    }
+
+    .char-eyes {
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    /* Snack cards smaller */
+    .snack-cards {
+        padding: 0 12px 12px;
+    }
+
+    .snack-card {
+        height: 55px;
+        border-radius: 14px 14px 10px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-illustration {
+        max-height: 45vh;
+        padding: 1rem 0.75rem;
+    }
+
+    .illustration-card {
+        max-width: 280px;
+        height: 300px;
+        border-radius: 24px;
+        transform: scale(0.8);
+    }
+
+    .char-dark {
+        transform: translateX(-50%) scale(0.65);
+    }
+
+    .char-purple {
+        transform: translateX(-50%) scale(0.65);
+    }
+
+    .char-pink,
+    .char-orange,
+    .char-small-orange,
+    .char-yellow {
+        transform: scale(0.65);
+    }
+}
+
+/* CART: Product name and price on same line */
+@media (max-width: 768px) {
+    .cart-table tr {
+        display: block;
+        padding: 1rem;
+    }
+
+    .product-col {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+
+    .cart-thumb {
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+    }
+
+    .product-info {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .product-info h3 {
+        font-size: 0.95rem;
+        margin: 0;
+        flex: 1;
+    }
+
+    .product-info p {
+        display: none;
+        /* Hide category on mobile to save space */
+    }
+
+    /* Show price next to product name */
+    .cart-table td:nth-child(2) {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        padding: 0;
+        border: none;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #0d5c3e;
+    }
+
+    body[data-theme="dark"] .cart-table td:nth-child(2) {
+        color: #34d399;
+    }
+
+    .cart-table td:nth-child(2)::before {
+        display: none;
+    }
+
+    /* Quantity and total row */
+    .cart-table td:nth-child(3),
+    .cart-table td:nth-child(4) {
+        display: inline-flex;
+        width: auto;
+        padding: 0.5rem 0;
+        border: none;
+    }
+
+    .cart-table td:nth-child(3) {
+        margin-right: auto;
+    }
+
+    .cart-table td:nth-child(4) {
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .cart-table td:nth-child(3)::before,
+    .cart-table td:nth-child(4)::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-info h3 {
+        font-size: 0.85rem;
+    }
+
+    .cart-thumb {
+        width: 45px;
+        height: 45px;
+    }
+
+    .cart-table td:nth-child(2) {
+        font-size: 0.9rem;
+    }
+}
