@@ -60,9 +60,9 @@
                     <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
                     <circle class="timer-progress" cx="50" cy="50" r="45"></circle>
                 </svg>
-                <span class="timer-text" id="countdown">20</span>
+                <span class="timer-text" id="countdown">15</span>
             </div>
-            <p>Redirecting to home page in <span id="countdown-text">20</span> seconds...</p>
+            <p>Redirecting to home page in <span id="countdown-text">15</span> seconds...</p>
         </div>
 
         <!-- Quick Actions -->
@@ -572,7 +572,7 @@
         stroke-linecap: round;
         stroke-dasharray: 283;
         stroke-dashoffset: 0;
-        animation: timerCountdown 20s linear forwards;
+        animation: timerCountdown 15s linear forwards;
     }
 
     body[data-theme="dark"] .timer-bg {
@@ -724,7 +724,7 @@
 
 <script>
     // Countdown timer
-    let timeLeft = 20;
+    let timeLeft = 15;
     const countdownEl = document.getElementById('countdown');
     const countdownTextEl = document.getElementById('countdown-text');
 
