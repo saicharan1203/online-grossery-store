@@ -4220,3 +4220,309 @@ body[data-theme="dark"] .recurring-options,
 body[data-theme="dark"] .recurring-options .form-check-label {
     color: rgba(255, 255, 255, 0.85) !important;
 }
+
+/* ============================================
+   ENHANCED MOBILE RESPONSIVENESS FIXES
+   Fixes content cutoff and overflow issues
+   ============================================ */
+
+/* Global mobile overflow fix */
+@media (max-width: 768px) {
+
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
+        padding: 0 1rem;
+    }
+}
+
+/* Hero Section Mobile Fixes */
+@media (max-width: 768px) {
+    .hero {
+        margin: 1rem 0.5rem;
+        padding: 1.5rem 1rem;
+        border-radius: 24px;
+        width: calc(100% - 1rem);
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "title"
+            "subtitle"
+            "description"
+            "search"
+            "stats";
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .hero-heading {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+        text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.2;
+        padding: 0 0.5rem;
+    }
+
+    .hero-subheading {
+        font-size: 0.95rem;
+        text-align: center;
+        max-width: 100%;
+        padding: 0 0.5rem;
+        line-height: 1.4;
+    }
+
+    .hero-description {
+        font-size: 0.85rem;
+        text-align: center;
+        line-height: 1.5;
+        max-width: 100%;
+        padding: 0 0.5rem;
+        word-wrap: break-word;
+    }
+
+    .hero-search {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .hero .search-bar {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .hero .search-button {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        width: 100%;
+        justify-items: center;
+        padding: 0.5rem;
+    }
+
+    .hero-stats div {
+        text-align: center;
+        min-width: auto;
+        width: 100%;
+    }
+
+    .hero-stats .stat-value {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        display: block;
+    }
+
+    .hero-stats .stat-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+        word-wrap: break-word;
+    }
+}
+
+/* Small Mobile Phones */
+@media (max-width: 480px) {
+    nav.top-nav {
+        width: calc(100% - 1rem);
+        margin: 0.5rem auto;
+        padding: 0.6rem 0.75rem;
+        border-radius: 18px;
+    }
+
+    .logo {
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        height: 28px;
+        margin-right: 6px;
+    }
+
+    .logo span {
+        font-size: 0.95rem;
+    }
+
+    .hero {
+        margin: 0.75rem 0.5rem;
+        padding: 1.25rem 0.75rem;
+        border-radius: 20px;
+    }
+
+    .hero-heading {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+        padding: 0;
+    }
+
+    .hero-subheading {
+        font-size: 0.85rem;
+        padding: 0;
+    }
+
+    .hero-description {
+        font-size: 0.8rem;
+        padding: 0;
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .hero-stats .stat-value {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+
+    .hero-stats .stat-label {
+        font-size: 0.55rem;
+        letter-spacing: 0.05em;
+    }
+
+    /* Product cards mobile */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .product-card {
+        padding: 0.75rem;
+        border-radius: 16px;
+    }
+}
+
+/* Extra small screens (360px and below) */
+@media (max-width: 360px) {
+    nav.top-nav {
+        padding: 0.5rem 0.6rem;
+        border-radius: 14px;
+    }
+
+    .logo span {
+        font-size: 0.85rem;
+    }
+
+    .logo img {
+        height: 24px;
+    }
+
+    .hero {
+        padding: 1rem 0.6rem;
+        margin: 0.5rem;
+        border-radius: 16px;
+    }
+
+    .hero-heading {
+        font-size: 1.25rem;
+    }
+
+    .hero-stats {
+        gap: 0.5rem;
+    }
+
+    .hero-stats .stat-value {
+        font-size: 1.4rem;
+    }
+
+    .hero-stats .stat-label {
+        font-size: 0.5rem;
+    }
+}
+
+/* Spotlight and Feature Sections Mobile */
+@media (max-width: 768px) {
+
+    .spotlight-section,
+    .reorder-section,
+    .fresh-drop-section {
+        margin: 1.5rem 0;
+        padding: 1.5rem 1rem;
+        border-radius: 24px;
+    }
+
+    .spotlight-header,
+    .reorder-header,
+    .fresh-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .spotlight-header h2,
+    .reorder-header h2,
+    .fresh-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .spotlight-grid,
+    .reorder-grid,
+    .fresh-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .spotlight-card,
+    .reorder-card,
+    .fresh-card {
+        padding: 1.25rem;
+        border-radius: 18px;
+    }
+
+    .spotlight-meta {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .meta-pill {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.9rem;
+    }
+}
+
+/* Fix text overflow in cards */
+@media (max-width: 576px) {
+
+    .spotlight-title,
+    .fresh-card h3,
+    .reorder-title-row h3 {
+        font-size: 1.1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .fresh-description,
+    .spotlight-body {
+        font-size: 0.85rem;
+    }
+
+    .fresh-meta {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .fresh-meta .label {
+        font-size: 0.65rem;
+    }
+
+    .fresh-meta strong {
+        font-size: 0.95rem;
+    }
+}
