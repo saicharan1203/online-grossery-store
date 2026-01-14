@@ -14,8 +14,9 @@
         </div>
 
         <!-- Success Message -->
-        <h1 class="success-title">Order Placed Successfully!</h1>
-        <p class="success-subtitle">Thank you for shopping with Fresh Market</p>
+        <p class="payment-badge">✓ Payment Completed</p>
+        <h1 class="success-title">Thank You!</h1>
+        <p class="success-subtitle">Your order has been placed successfully</p>
 
         <!-- Order Details -->
         <div class="order-details-box">
@@ -332,9 +333,29 @@
         border-color: rgba(52, 211, 153, 0.3);
     }
 
+    /* Payment Badge */
+    .payment-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #0d5c3e, #10b981);
+        color: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        animation: fadeInUp 0.6s ease 0.7s forwards;
+        opacity: 0;
+        box-shadow: 0 4px 15px rgba(13, 92, 62, 0.3);
+    }
+
+    body[data-theme="dark"] .payment-badge {
+        background: linear-gradient(135deg, #059669, #34d399);
+        box-shadow: 0 4px 15px rgba(52, 211, 153, 0.3);
+    }
+
     /* Success Text */
     .success-title {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
         font-weight: 700;
         color: #0f1419;
         margin: 0 0 0.5rem;
