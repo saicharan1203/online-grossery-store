@@ -5136,3 +5136,145 @@ body[data-theme="dark"] .login-form input::placeholder {
         font-size: 0.9rem;
     }
 }
+
+/* ============================================
+   MOBILE FIXES - Login Page & Mobile Menu
+   ============================================ */
+
+/* LOGIN PAGE: Center Google button properly */
+@media (max-width: 768px) {
+    .login-panel {
+        min-height: auto;
+        height: auto;
+        padding: 1.5rem 1.25rem 2rem;
+        overflow-y: auto;
+        justify-content: flex-start;
+        padding-top: 2rem;
+    }
+
+    .login-form {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .login-form>* {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .login-btn {
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .login-btn--google {
+        margin-bottom: 1rem;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-footer {
+        margin-top: 1rem;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+
+    .login-heading {
+        margin-bottom: 1.25rem;
+        text-align: center;
+    }
+
+    .login-heading h1 {
+        font-size: 1.6rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .login-meta {
+        margin: 0.75rem 0;
+    }
+
+    .input-label {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* MOBILE MENU: Better button alignment - uniform width and centered */
+@media (max-width: 768px) {
+    .links.is-open {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5rem 1.5rem;
+        gap: 1rem;
+    }
+
+    .links.is-open .nav-link {
+        width: 280px !important;
+        max-width: 280px !important;
+        min-width: 280px !important;
+        padding: 1rem 1.5rem;
+        text-align: center;
+        justify-content: center;
+        font-size: 1rem;
+        border-radius: 20px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .links.is-open .nav-link .nav-link-text {
+        display: inline;
+    }
+
+    .links.is-open .theme-toggle {
+        margin-bottom: 1.5rem;
+        width: 50px;
+        height: 50px;
+    }
+
+    .links.is-open .nav-user {
+        font-size: 0.9rem;
+        margin: 1.5rem 0 0.75rem;
+        opacity: 0.8;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-panel {
+        padding: 1.25rem 1rem 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .login-heading h1 {
+        font-size: 1.4rem;
+    }
+
+    .login-btn {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .links.is-open .nav-link {
+        width: 260px !important;
+        max-width: 260px !important;
+        min-width: 260px !important;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.95rem;
+        border-radius: 18px;
+    }
+}
