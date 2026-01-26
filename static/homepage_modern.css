@@ -402,19 +402,26 @@ body[data-theme="dark"] .top-nav .nav-user {
 }
 
 .btn-secondary {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #0e7490;
+    border: 2px solid #0e7490;
 }
 
 .btn-secondary:hover {
-    background: #e2e8f0;
-    color: #0f172a;
+    background: #0e7490;
+    color: #ffffff;
 }
 
 .btn-ghost {
-    background: transparent;
-    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    color: #475569;
+}
+
+.btn-ghost:hover {
+    background: #f1f5f9;
+    border-color: #0e7490;
+    color: #0e7490;
 }
 
 /* === FRESH DROP SECTION === */
