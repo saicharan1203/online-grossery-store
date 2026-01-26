@@ -3,7 +3,8 @@
 {% block body_class %}auth-page{% endblock %}
 
 {% block content %}
-<div class="login-shell">
+<div class="login-shell login-shell--modern">
+    <!-- Left Side: Original Character Illustration (KEPT AS IS) -->
     <div class="login-illustration">
         <div class="illustration-card">
             <!-- Dark Blue/Black - Top Center -->
@@ -63,58 +64,58 @@
         </div>
     </div>
 
-    <div class="login-panel">
-        <div class="login-logo"><span>✚</span></div>
-        <div class="login-heading">
-            <p class="eyebrow">Welcome back!</p>
-            <h1>Welcome back!</h1>
-            <p>Please enter your details.</p>
+    <!-- Right Side: Futuristic Login Panel with Diagonal Design -->
+    <div class="login-panel-modern">
+        <!-- Diagonal background layers -->
+        <div class="diagonal-bg">
+            <div class="diagonal-layer diagonal-layer--1"></div>
+            <div class="diagonal-layer diagonal-layer--2"></div>
+            <div class="diagonal-layer diagonal-layer--3"></div>
         </div>
 
-        <form method="POST" class="login-form">
-            <label class="input-label" for="login-username">Email</label>
-            <input id="login-username" type="text" name="username" placeholder="Enter your email" required>
+        <!-- Glowing frame -->
+        <div class="panel-frame"></div>
 
-            <label class="input-label" for="login-password">Password</label>
-            <div class="password-field">
-                <input id="login-password" type="password" name="password" placeholder="••••••••" required>
-                <button type="button" class="toggle-visibility" aria-label="Show password" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
-                        <path
-                            d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 2c3.04 0 5.68 1.64 7.43 4-1.75 2.36-4.39 4-7.43 4s-5.68-1.64-7.43-4c1.75-2.36 4.39-4 7.43-4zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-                    </svg>
-                </button>
+        <!-- Content container -->
+        <div class="panel-content">
+            <!-- Welcome Text on Left of Form -->
+            <div class="welcome-section">
+                <h2 class="welcome-title">WELCOME<br>BACK!</h2>
+                <p class="welcome-subtitle">Hope, You and your<br>Family have a Great<br>Day</p>
             </div>
 
-            <div class="login-meta">
-                <label class="remember">
-                    <input type="checkbox" name="remember">
-                    <span>Remember for 30 days</span>
-                </label>
-                <a href="{{ url_for('main.forgot_password') }}">Forgot password</a>
+            <!-- Login Form -->
+            <div class="form-section">
+                <h1 class="form-title">Login</h1>
+
+                <form method="POST" class="login-form-modern">
+                    <div class="input-group">
+                        <label for="login-username">Username</label>
+                        <div class="input-wrapper">
+                            <input id="login-username" type="text" name="username" required>
+                            <span class="input-icon">👤</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <input id="login-password" type="password" name="password" required>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-button-modern">Login</button>
+
+                    <p class="form-footer">
+                        Don't have an account? <a href="{{ url_for('main.register') }}">Sign Up</a>
+                    </p>
+                </form>
             </div>
-
-            <button type="submit" class="login-btn">Log in</button>
-            {% if google_login_enabled %}
-            <a class="login-btn login-btn--secondary login-btn--google" href="{{ url_for('main.google_login') }}">
-                <span class="google-icon">G</span>
-                Log in with Google
-            </a>
-            {% else %}
-            <button type="button" class="login-btn login-btn--secondary login-btn--google" disabled
-                title="Google login is not configured">
-                <span class="google-icon">G</span>
-                Log in with Google
-            </button>
-            {% endif %}
-        </form>
-
-        <p class="login-footer">
-            Don't have an account?
-            <a href="{{ url_for('main.register') }}">Sign up</a>
-        </p>
+        </div>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const card = document.querySelector('.illustration-card');
@@ -143,7 +144,6 @@
                     const rangeX = parseFloat(character.dataset.eyeRange || '6');
                     const rangeY = parseFloat(character.dataset.eyeTilt || '4');
 
-                    // Move pupils inside the eyes
                     pupils.forEach(pupil => {
                         const offsetX = normX * rangeX;
                         const offsetY = normY * rangeY;
@@ -200,6 +200,25 @@
             });
 
             updateToggleState();
+        }
+
+        // Page Turn Transition - Flip to Sign Up
+        const signUpLink = document.querySelector('.form-footer a[href*="register"]');
+        const rightPanel = document.querySelector('.login-panel-modern');
+
+        if (signUpLink && rightPanel) {
+            signUpLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetUrl = this.href;
+
+                // Add flip-out animation class
+                rightPanel.classList.add('page-flip-out');
+
+                // Navigate after animation completes
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 600);
+            });
         }
     });
 </script>

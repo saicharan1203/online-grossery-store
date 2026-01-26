@@ -1,22 +1,208 @@
 {% extends "base.html" %}
 
+{% block body_class %}auth-page{% endblock %}
+
 {% block content %}
-<div class="auth-form">
-    <h2>Register</h2>
-    <form method="POST">
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" required>
+<div class="login-shell login-shell--modern">
+    <!-- Left Side: Original Character Illustration (SAME AS LOGIN) -->
+    <div class="login-illustration">
+        <div class="illustration-card">
+            <!-- Dark Blue/Black - Top Center -->
+            <div class="character char-dark" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
+            </div>
+
+            <!-- Purple - Center -->
+            <div class="character char-purple" data-eye-range="8" data-eye-tilt="5">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
+            </div>
+
+            <!-- Pink - Right of Purple -->
+            <div class="character char-pink" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
+            </div>
+
+            <!-- Orange Square - Bottom Left -->
+            <div class="character char-orange" data-eye-range="7" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
+            </div>
+
+            <!-- Small Orange - Below Orange Square -->
+            <div class="char-small-orange"></div>
+
+            <!-- Yellow - Right Side -->
+            <div class="character char-yellow" data-eye-range="6" data-eye-tilt="4">
+                <span class="char-eyes">
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                    <span class="char-eye"><span class="char-pupil"></span></span>
+                </span>
+                <span class="char-mouth"></span>
+            </div>
+
+            <!-- Bottom Snack Cards -->
+            <div class="snack-cards">
+                <div class="snack-card snack-card-peach"></div>
+                <div class="snack-card snack-card-yellow"></div>
+                <div class="snack-card snack-card-pink"></div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
+    </div>
+
+    <!-- Right Side: Futuristic Sign Up Panel with Diagonal Design -->
+    <div class="login-panel-modern signup-panel">
+        <!-- Diagonal background layers -->
+        <div class="diagonal-bg">
+            <div class="diagonal-layer diagonal-layer--1"></div>
+            <div class="diagonal-layer diagonal-layer--2"></div>
+            <div class="diagonal-layer diagonal-layer--3"></div>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
+
+        <!-- Glowing frame -->
+        <div class="panel-frame"></div>
+
+        <!-- Content container -->
+        <div class="panel-content panel-content--signup">
+            <!-- Welcome Text on Left of Form -->
+            <div class="welcome-section">
+                <h2 class="welcome-title">WELCOME!</h2>
+                <p class="welcome-subtitle">Hope, You and your<br>Family have a Great Day</p>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div class="form-section">
+                <h1 class="form-title">Sign Up</h1>
+
+                <form method="POST" class="login-form-modern">
+                    <div class="input-group">
+                        <label for="reg-username">Username</label>
+                        <div class="input-wrapper">
+                            <input id="reg-username" type="text" name="username" required>
+                            <span class="input-icon">👤</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-email">Email</label>
+                        <div class="input-wrapper">
+                            <input id="reg-email" type="email" name="email" required>
+                            <span class="input-icon">✉️</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-wrapper">
+                            <input id="reg-password" type="password" name="password" required>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-button-modern">Register</button>
+
+                    <p class="form-footer">
+                        Already have an account? <a href="{{ url_for('main.login') }}">Login</a>
+                    </p>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn">Register</button>
-    </form>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const card = document.querySelector('.illustration-card');
+
+        if (card) {
+            const characters = card.querySelectorAll('.character');
+            let rafId;
+            let bounds = card.getBoundingClientRect();
+
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+            const updateBounds = () => {
+                bounds = card.getBoundingClientRect();
+            };
+
+            const moveEyes = (clientX, clientY) => {
+                const centerX = bounds.left + bounds.width / 2;
+                const centerY = bounds.top + bounds.height / 2;
+                const normX = clamp((clientX - centerX) / (bounds.width / 2 || 1), -1, 1);
+                const normY = clamp((clientY - centerY) / (bounds.height / 2 || 1), -1, 1);
+
+                characters.forEach(character => {
+                    const pupils = character.querySelectorAll('.char-pupil');
+                    const rangeX = parseFloat(character.dataset.eyeRange || '6');
+                    const rangeY = parseFloat(character.dataset.eyeTilt || '4');
+
+                    pupils.forEach(pupil => {
+                        const offsetX = normX * rangeX;
+                        const offsetY = normY * rangeY;
+                        pupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    });
+                });
+            };
+
+            const resetEyes = () => {
+                characters.forEach(character => {
+                    const pupils = character.querySelectorAll('.char-pupil');
+                    pupils.forEach(pupil => {
+                        pupil.style.transform = `translate(0, 0)`;
+                    });
+                });
+            };
+
+            const pointerHandler = (event) => {
+                if (event.pointerType === 'touch' && event.type === 'pointermove') return;
+                cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => moveEyes(event.clientX, event.clientY));
+            };
+
+            document.addEventListener('pointermove', pointerHandler);
+            document.addEventListener('pointerdown', pointerHandler);
+            document.addEventListener('pointerleave', (event) => {
+                if (!event.relatedTarget && event.pointerType !== 'touch') {
+                    resetEyes();
+                }
+            });
+            window.addEventListener('blur', resetEyes);
+            window.addEventListener('resize', updateBounds);
+            updateBounds();
+        }
+
+        // Page Turn Transition - Flip back to Login
+        const loginLink = document.querySelector('.form-footer a[href*="login"]');
+        const rightPanel = document.querySelector('.login-panel-modern');
+
+        if (loginLink && rightPanel) {
+            loginLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetUrl = this.href;
+
+                // Add reverse flip-out animation class
+                rightPanel.classList.add('page-flip-out-reverse');
+
+                // Navigate after animation completes
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 600);
+            });
+        }
+    });
+</script>
 {% endblock %}
