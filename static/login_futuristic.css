@@ -567,170 +567,75 @@
 }
 
 /* ============================================
-   PAGE TURNING TRANSITION - 3D FLIP EFFECT
-   Creates book-like page turn between Login/SignUp
+   PAGE TRANSITION - SMOOTH SLIDE EFFECT
+   Creates smooth transition between Login/SignUp
    ============================================ */
 
-/* Enable 3D perspective on the parent container */
-.login-shell--modern {
-    perspective: 2000px;
-    perspective-origin: center center;
-}
-
-/* Base state for the panel - prepare for 3D transform */
-.login-panel-modern {
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transform-origin: left center;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.4s ease;
-}
-
-/* Page flip OUT animation (Login -> Sign Up) */
+/* Page slide OUT animation (Login -> Sign Up) */
 .login-panel-modern.page-flip-out {
-    animation: pageFlipOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideOut 0.5s ease-in-out forwards !important;
 }
 
-@keyframes pageFlipOut {
+@keyframes slideOut {
     0% {
-        transform: rotateY(0deg);
-        opacity: 1;
-    }
-
-    30% {
+        transform: translateX(0);
         opacity: 1;
     }
 
     100% {
-        transform: rotateY(-90deg);
+        transform: translateX(-100px);
         opacity: 0;
     }
 }
 
-/* Page flip OUT REVERSE animation (Sign Up -> Login) */
+/* Page slide OUT REVERSE animation (Sign Up -> Login) */
 .login-panel-modern.page-flip-out-reverse {
-    animation: pageFlipOutReverse 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideOutReverse 0.5s ease-in-out forwards !important;
 }
 
-@keyframes pageFlipOutReverse {
+@keyframes slideOutReverse {
     0% {
-        transform: rotateY(0deg);
-        opacity: 1;
-    }
-
-    30% {
+        transform: translateX(0);
         opacity: 1;
     }
 
     100% {
-        transform: rotateY(90deg);
+        transform: translateX(100px);
         opacity: 0;
     }
 }
 
-/* Page flip IN animation (when page loads - Login page) */
-.login-panel-modern:not(.signup-panel) {
-    animation: pageFlipIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* Page slide IN animation (when Login page loads) */
+.login-panel-modern:not(.signup-panel):not(.page-flip-out) {
+    animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes pageFlipIn {
+@keyframes slideIn {
     0% {
-        transform: rotateY(90deg);
+        transform: translateX(80px);
         opacity: 0;
-    }
-
-    30% {
-        opacity: 0.5;
     }
 
     100% {
-        transform: rotateY(0deg);
+        transform: translateX(0);
         opacity: 1;
     }
 }
 
-/* Page flip IN REVERSE animation (when Sign Up page loads) */
-.signup-panel {
-    animation: pageFlipInReverse 0.7s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+/* Page slide IN animation (when Sign Up page loads) */
+.signup-panel:not(.page-flip-out-reverse) {
+    animation: slideInReverse 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes pageFlipInReverse {
+@keyframes slideInReverse {
     0% {
-        transform: rotateY(-90deg);
+        transform: translateX(-80px);
         opacity: 0;
-    }
-
-    30% {
-        opacity: 0.5;
     }
 
     100% {
-        transform: rotateY(0deg);
+        transform: translateX(0);
         opacity: 1;
-    }
-}
-
-/* Add shadow during flip for depth effect */
-.login-panel-modern.page-flip-out::before,
-.login-panel-modern.page-flip-out-reverse::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
-    opacity: 0;
-    animation: flipShadow 0.6s ease forwards;
-    pointer-events: none;
-    z-index: 100;
-}
-
-@keyframes flipShadow {
-    0% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-/* Page edge effect during flip */
-.login-panel-modern.page-flip-out::after,
-.login-panel-modern.page-flip-out-reverse::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    background: linear-gradient(to right,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.05) 50%,
-            transparent 100%);
-    transform-origin: left center;
-    opacity: 0;
-    animation: pageEdge 0.6s ease forwards;
-    pointer-events: none;
-    z-index: 101;
-}
-
-@keyframes pageEdge {
-    0% {
-        opacity: 0;
-        transform: scaleX(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scaleX(2);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scaleX(1);
     }
 }
 
@@ -743,5 +648,6 @@
     .signup-panel {
         animation: none !important;
         transform: none !important;
+        opacity: 1 !important;
     }
 }
