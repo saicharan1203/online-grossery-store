@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <!-- Right Side: Futuristic Login Panel with Diagonal Design -->
+    <!-- Right Side: Material Design Login Panel -->
     <div class="login-panel-modern">
         <!-- Diagonal background layers -->
         <div class="diagonal-bg">
@@ -80,35 +80,38 @@
         <div class="panel-content">
             <!-- Welcome Text on Left of Form -->
             <div class="welcome-section">
-                <h2 class="welcome-title">WELCOME<br>BACK!</h2>
-                <p class="welcome-subtitle">Hope, You and your<br>Family have a Great<br>Day</p>
+                <h2 class="welcome-title md-display-small">WELCOME<br>BACK!</h2>
+                <p class="welcome-subtitle md-body-large">Hope, You and your<br>Family have a Great<br>Day</p>
             </div>
 
             <!-- Login Form -->
-            <div class="form-section">
-                <h1 class="form-title">Login</h1>
+            <div class="form-section md-card-elevated">
+                <h1 class="form-title md-headline-large">Login</h1>
 
                 <form method="POST" class="login-form-modern">
-                    <div class="input-group">
-                        <label for="login-username">Username</label>
+                    <div class="input-group md-text-field">
+                        <label for="login-username" class="md-label-medium">Username</label>
                         <div class="input-wrapper">
-                            <input id="login-username" type="text" name="username" required>
-                            <span class="input-icon">👤</span>
+                            <input id="login-username" type="text" name="username" placeholder=" " required>
+                            <span class="input-icon material-icons">person</span>
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label for="login-password">Password</label>
+                    <div class="input-group md-text-field">
+                        <label for="login-password" class="md-label-medium">Password</label>
                         <div class="input-wrapper">
-                            <input id="login-password" type="password" name="password" required>
-                            <span class="input-icon">🔒</span>
+                            <input id="login-password" type="password" name="password" placeholder=" " required>
+                            <span class="input-icon material-icons">lock</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="login-button-modern">Login</button>
+                    <button type="submit" class="login-button-modern md-btn md-btn-filled">
+                        <span class="material-icons">login</span>
+                        Login
+                    </button>
 
-                    <p class="form-footer">
-                        Don't have an account? <a href="{{ url_for('main.register') }}">Sign Up</a>
+                    <p class="form-footer md-body-medium">
+                        Don't have an account? <a href="{{ url_for('main.register') }}" class="md-btn-text">Sign Up</a>
                     </p>
                 </form>
             </div>

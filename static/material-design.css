@@ -1,0 +1,1415 @@
+/* ============================================
+   MATERIAL DESIGN 3 (Material You) CSS System
+   FreshMarket Grocery Store
+   ============================================ */
+
+/* ============================================
+   DESIGN TOKENS - Material Design 3 Colors
+   ============================================ */
+:root {
+    /* Primary Colors - Fresh Green */
+    --md-primary: #2E7D32;
+    --md-primary-light: #60AD5E;
+    --md-primary-dark: #005005;
+    --md-on-primary: #FFFFFF;
+    --md-primary-container: #B8F5B0;
+    --md-on-primary-container: #002204;
+
+    /* Secondary Colors - Orange Accent */
+    --md-secondary: #FF6D00;
+    --md-secondary-light: #FF9E40;
+    --md-secondary-dark: #C43C00;
+    --md-on-secondary: #FFFFFF;
+    --md-secondary-container: #FFE0B2;
+    --md-on-secondary-container: #2D1600;
+
+    /* Tertiary Colors - Purple */
+    --md-tertiary: #7C4DFF;
+    --md-tertiary-light: #B47CFF;
+    --md-tertiary-dark: #3F1DCB;
+    --md-on-tertiary: #FFFFFF;
+    --md-tertiary-container: #E8DDFF;
+    --md-on-tertiary-container: #21005D;
+
+    /* Error Colors */
+    --md-error: #BA1A1A;
+    --md-error-light: #FFDAD6;
+    --md-on-error: #FFFFFF;
+    --md-error-container: #FFDAD6;
+    --md-on-error-container: #410002;
+
+    /* Surface Colors - Light Mode */
+    --md-background: #FEFBFF;
+    --md-on-background: #1C1B1F;
+    --md-surface: #FEFBFF;
+    --md-on-surface: #1C1B1F;
+    --md-surface-variant: #E7E0EC;
+    --md-on-surface-variant: #49454F;
+    --md-surface-1: #F5F2F7;
+    --md-surface-2: #EFECF4;
+    --md-surface-3: #E9E6EF;
+    --md-surface-4: #E7E4ED;
+    --md-surface-5: #E3E0EA;
+
+    /* Outline Colors */
+    --md-outline: #79747E;
+    --md-outline-variant: #CAC4D0;
+
+    /* State Layer Opacities */
+    --md-state-hover: 0.08;
+    --md-state-focus: 0.12;
+    --md-state-pressed: 0.12;
+    --md-state-dragged: 0.16;
+
+    /* Elevation Shadows */
+    --md-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --md-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --md-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --md-elevation-4: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.3);
+    --md-elevation-5: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.3);
+
+    /* Typography Scale */
+    --md-font-family: 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --md-font-display-large: 500 57px/64px var(--md-font-family);
+    --md-font-display-medium: 500 45px/52px var(--md-font-family);
+    --md-font-display-small: 500 36px/44px var(--md-font-family);
+    --md-font-headline-large: 500 32px/40px var(--md-font-family);
+    --md-font-headline-medium: 500 28px/36px var(--md-font-family);
+    --md-font-headline-small: 500 24px/32px var(--md-font-family);
+    --md-font-title-large: 500 22px/28px var(--md-font-family);
+    --md-font-title-medium: 500 16px/24px var(--md-font-family);
+    --md-font-title-small: 500 14px/20px var(--md-font-family);
+    --md-font-body-large: 400 16px/24px var(--md-font-family);
+    --md-font-body-medium: 400 14px/20px var(--md-font-family);
+    --md-font-body-small: 400 12px/16px var(--md-font-family);
+    --md-font-label-large: 500 14px/20px var(--md-font-family);
+    --md-font-label-medium: 500 12px/16px var(--md-font-family);
+    --md-font-label-small: 500 11px/16px var(--md-font-family);
+
+    /* Shape */
+    --md-shape-none: 0;
+    --md-shape-extra-small: 4px;
+    --md-shape-small: 8px;
+    --md-shape-medium: 12px;
+    --md-shape-large: 16px;
+    --md-shape-extra-large: 28px;
+    --md-shape-full: 9999px;
+
+    /* Motion/Easing */
+    --md-motion-standard: cubic-bezier(0.2, 0, 0, 1);
+    --md-motion-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+    --md-motion-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+    --md-motion-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --md-motion-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --md-motion-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+    /* Duration */
+    --md-duration-short1: 50ms;
+    --md-duration-short2: 100ms;
+    --md-duration-short3: 150ms;
+    --md-duration-short4: 200ms;
+    --md-duration-medium1: 250ms;
+    --md-duration-medium2: 300ms;
+    --md-duration-medium3: 350ms;
+    --md-duration-medium4: 400ms;
+    --md-duration-long1: 450ms;
+    --md-duration-long2: 500ms;
+}
+
+/* ============================================
+   DARK MODE TOKENS
+   ============================================ */
+[data-theme="dark"],
+body.dark-mode {
+    --md-primary: #7CDB7F;
+    --md-primary-light: #B8F5B0;
+    --md-primary-dark: #2E7D32;
+    --md-on-primary: #003909;
+    --md-primary-container: #005312;
+    --md-on-primary-container: #B8F5B0;
+
+    --md-secondary: #FFB74D;
+    --md-secondary-light: #FFE0B2;
+    --md-secondary-dark: #FF6D00;
+    --md-on-secondary: #4A2800;
+    --md-secondary-container: #6A3B00;
+    --md-on-secondary-container: #FFE0B2;
+
+    --md-tertiary: #D0BCFF;
+    --md-tertiary-light: #EADDFF;
+    --md-tertiary-dark: #9A82DB;
+    --md-on-tertiary: #381E72;
+    --md-tertiary-container: #4F378B;
+    --md-on-tertiary-container: #EADDFF;
+
+    --md-error: #FFB4AB;
+    --md-on-error: #690005;
+    --md-error-container: #93000A;
+    --md-on-error-container: #FFDAD6;
+
+    --md-background: #1C1B1F;
+    --md-on-background: #E6E1E5;
+    --md-surface: #1C1B1F;
+    --md-on-surface: #E6E1E5;
+    --md-surface-variant: #49454F;
+    --md-on-surface-variant: #CAC4D0;
+    --md-surface-1: #25232A;
+    --md-surface-2: #2B2930;
+    --md-surface-3: #302E35;
+    --md-surface-4: #322F37;
+    --md-surface-5: #36343B;
+
+    --md-outline: #938F99;
+    --md-outline-variant: #49454F;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--md-font-family);
+    font: var(--md-font-body-large);
+    background-color: var(--md-background);
+    color: var(--md-on-background);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   TYPOGRAPHY CLASSES
+   ============================================ */
+.md-display-large {
+    font: var(--md-font-display-large);
+    color: var(--md-on-background);
+}
+
+.md-display-medium {
+    font: var(--md-font-display-medium);
+    color: var(--md-on-background);
+}
+
+.md-display-small {
+    font: var(--md-font-display-small);
+    color: var(--md-on-background);
+}
+
+.md-headline-large {
+    font: var(--md-font-headline-large);
+    color: var(--md-on-background);
+}
+
+.md-headline-medium {
+    font: var(--md-font-headline-medium);
+    color: var(--md-on-background);
+}
+
+.md-headline-small {
+    font: var(--md-font-headline-small);
+    color: var(--md-on-background);
+}
+
+.md-title-large {
+    font: var(--md-font-title-large);
+    color: var(--md-on-background);
+}
+
+.md-title-medium {
+    font: var(--md-font-title-medium);
+    color: var(--md-on-background);
+}
+
+.md-title-small {
+    font: var(--md-font-title-small);
+    color: var(--md-on-background);
+}
+
+.md-body-large {
+    font: var(--md-font-body-large);
+    color: var(--md-on-background);
+}
+
+.md-body-medium {
+    font: var(--md-font-body-medium);
+    color: var(--md-on-background);
+}
+
+.md-body-small {
+    font: var(--md-font-body-small);
+    color: var(--md-on-background);
+}
+
+.md-label-large {
+    font: var(--md-font-label-large);
+    color: var(--md-on-background);
+}
+
+.md-label-medium {
+    font: var(--md-font-label-medium);
+    color: var(--md-on-background);
+}
+
+.md-label-small {
+    font: var(--md-font-label-small);
+    color: var(--md-on-background);
+}
+
+/* ============================================
+   BUTTONS - Material Design 3
+   ============================================ */
+
+/* Base Button Styles */
+.md-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 24px;
+    border: none;
+    border-radius: var(--md-shape-full);
+    font: var(--md-font-label-large);
+    letter-spacing: 0.1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    transition:
+        box-shadow var(--md-duration-short4) var(--md-motion-standard),
+        background-color var(--md-duration-short4) var(--md-motion-standard);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.md-btn:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+}
+
+/* Ripple Effect */
+.md-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-duration-short4) var(--md-motion-standard);
+    pointer-events: none;
+}
+
+.md-btn:hover::before {
+    opacity: var(--md-state-hover);
+}
+
+.md-btn:active::before {
+    opacity: var(--md-state-pressed);
+}
+
+/* State Layer Animation */
+.md-btn::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, currentColor 10%, transparent 10%);
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.md-btn:active::after {
+    animation: md-ripple var(--md-duration-medium4) var(--md-motion-standard);
+}
+
+@keyframes md-ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Filled Button (Primary) */
+.md-btn-filled,
+.btn-primary,
+button[type="submit"],
+.add-to-cart-btn,
+.login-button-modern {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: none;
+    min-height: 40px;
+    padding: 0 24px;
+    border: none;
+    border-radius: var(--md-shape-full);
+    font: var(--md-font-label-large);
+    letter-spacing: 0.1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+        box-shadow var(--md-duration-short4) var(--md-motion-standard),
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        transform var(--md-duration-short3) var(--md-motion-standard);
+}
+
+.md-btn-filled:hover,
+.btn-primary:hover,
+button[type="submit"]:hover,
+.add-to-cart-btn:hover,
+.login-button-modern:hover {
+    box-shadow: var(--md-elevation-1);
+    transform: translateY(-1px);
+}
+
+.md-btn-filled:active,
+.btn-primary:active,
+button[type="submit"]:active,
+.add-to-cart-btn:active,
+.login-button-modern:active {
+    transform: scale(0.98);
+}
+
+.md-btn-filled:disabled,
+.btn-primary:disabled,
+button[type="submit"]:disabled,
+.add-to-cart-btn:disabled {
+    background-color: rgba(28, 27, 31, 0.12);
+    color: rgba(28, 27, 31, 0.38);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Filled Tonal Button */
+.md-btn-tonal {
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+}
+
+.md-btn-tonal:hover {
+    box-shadow: var(--md-elevation-1);
+}
+
+/* Outlined Button */
+.md-btn-outlined,
+.btn-secondary {
+    background-color: transparent;
+    color: var(--md-primary);
+    border: 1px solid var(--md-outline);
+    min-height: 40px;
+    padding: 0 24px;
+    border-radius: var(--md-shape-full);
+    font: var(--md-font-label-large);
+    cursor: pointer;
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        border-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-btn-outlined:hover,
+.btn-secondary:hover {
+    background-color: rgba(var(--md-primary), 0.08);
+    border-color: var(--md-primary);
+}
+
+/* Text Button */
+.md-btn-text {
+    background-color: transparent;
+    color: var(--md-primary);
+    padding: 0 12px;
+}
+
+.md-btn-text:hover {
+    background-color: rgba(103, 80, 164, 0.08);
+}
+
+/* Elevated Button */
+.md-btn-elevated {
+    background-color: var(--md-surface-1);
+    color: var(--md-primary);
+    box-shadow: var(--md-elevation-1);
+}
+
+.md-btn-elevated:hover {
+    box-shadow: var(--md-elevation-2);
+}
+
+/* FAB - Floating Action Button */
+.md-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--md-shape-large);
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    box-shadow: var(--md-elevation-3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        box-shadow var(--md-duration-short4) var(--md-motion-standard),
+        transform var(--md-duration-short3) var(--md-motion-standard);
+}
+
+.md-fab:hover {
+    box-shadow: var(--md-elevation-4);
+    transform: scale(1.05);
+}
+
+.md-fab-small {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--md-shape-medium);
+}
+
+.md-fab-large {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--md-shape-extra-large);
+}
+
+/* Extended FAB */
+.md-fab-extended {
+    width: auto;
+    height: 56px;
+    padding: 0 20px;
+    gap: 12px;
+    font: var(--md-font-label-large);
+}
+
+/* Icon Button */
+.md-icon-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: var(--md-shape-full);
+    background-color: transparent;
+    color: var(--md-on-surface-variant);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-icon-btn:hover {
+    background-color: rgba(28, 27, 31, 0.08);
+}
+
+.md-icon-btn:active {
+    background-color: rgba(28, 27, 31, 0.12);
+}
+
+/* ============================================
+   CARDS - Material Design 3
+   ============================================ */
+.md-card,
+.product-card {
+    background-color: var(--md-surface);
+    border-radius: var(--md-shape-medium);
+    overflow: hidden;
+    transition:
+        box-shadow var(--md-duration-medium2) var(--md-motion-standard),
+        transform var(--md-duration-medium2) var(--md-motion-standard);
+}
+
+/* Elevated Card */
+.md-card-elevated,
+.product-card {
+    box-shadow: var(--md-elevation-1);
+}
+
+.md-card-elevated:hover,
+.product-card:hover {
+    box-shadow: var(--md-elevation-2);
+    transform: translateY(-4px);
+}
+
+/* Filled Card */
+.md-card-filled {
+    background-color: var(--md-surface-variant);
+    box-shadow: none;
+}
+
+/* Outlined Card */
+.md-card-outlined {
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-outline-variant);
+    box-shadow: none;
+}
+
+.md-card-outlined:hover {
+    border-color: var(--md-outline);
+}
+
+/* Card Content */
+.md-card-content {
+    padding: 16px;
+}
+
+.md-card-header {
+    padding: 16px 16px 0;
+}
+
+.md-card-media {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.md-card-actions {
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* ============================================
+   TEXT FIELDS - Material Design 3
+   ============================================ */
+.md-text-field {
+    position: relative;
+    width: 100%;
+}
+
+.md-text-field input,
+.md-text-field textarea,
+.input-wrapper input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    height: 56px;
+    padding: 16px;
+    padding-top: 24px;
+    font: var(--md-font-body-large);
+    color: var(--md-on-surface);
+    background-color: var(--md-surface-variant);
+    border: none;
+    border-bottom: 2px solid var(--md-outline);
+    border-radius: var(--md-shape-extra-small) var(--md-shape-extra-small) 0 0;
+    outline: none;
+    transition:
+        border-color var(--md-duration-short4) var(--md-motion-standard),
+        background-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-text-field input:focus,
+.md-text-field textarea:focus,
+.input-wrapper input:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--md-primary);
+    background-color: var(--md-surface-3);
+}
+
+.md-text-field input:hover,
+.md-text-field textarea:hover,
+.input-wrapper input:hover,
+input:hover,
+select:hover,
+textarea:hover {
+    background-color: var(--md-surface-2);
+}
+
+/* Floating Label */
+.md-text-field label,
+.input-group label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font: var(--md-font-body-large);
+    color: var(--md-on-surface-variant);
+    pointer-events: none;
+    transition:
+        transform var(--md-duration-short4) var(--md-motion-standard),
+        font-size var(--md-duration-short4) var(--md-motion-standard),
+        color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-text-field input:focus+label,
+.md-text-field input:not(:placeholder-shown)+label,
+.input-group label {
+    transform: translateY(-12px);
+    font-size: 12px;
+    color: var(--md-primary);
+}
+
+/* Outlined Text Field */
+.md-text-field-outlined input {
+    background-color: transparent;
+    border: 1px solid var(--md-outline);
+    border-radius: var(--md-shape-extra-small);
+    padding: 16px;
+}
+
+.md-text-field-outlined input:focus {
+    border-width: 2px;
+    border-color: var(--md-primary);
+    padding: 15px;
+}
+
+/* Input Group Styling */
+.input-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
+    font: var(--md-font-label-large);
+    color: var(--md-on-surface-variant);
+    transform: none;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--md-on-surface-variant);
+}
+
+/* ============================================
+   NAVIGATION - Material Design 3
+   ============================================ */
+.top-nav,
+.md-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    background-color: var(--md-surface);
+    box-shadow: var(--md-elevation-2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: box-shadow var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.top-nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-nav .logo img {
+    height: 40px;
+    width: auto;
+}
+
+.top-nav .logo span {
+    font: var(--md-font-title-large);
+    color: var(--md-primary);
+    font-weight: 700;
+}
+
+.top-nav .links,
+.md-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link,
+.md-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    font: var(--md-font-label-large);
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    border-radius: var(--md-shape-full);
+    position: relative;
+    overflow: hidden;
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.nav-link:hover,
+.md-nav-link:hover {
+    background-color: var(--md-surface-variant);
+    color: var(--md-on-surface);
+}
+
+.nav-link.active,
+.md-nav-link.active {
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+}
+
+/* Navigation Rail (Sidebar) */
+.md-nav-rail {
+    width: 80px;
+    height: 100vh;
+    background-color: var(--md-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    gap: 12px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: var(--md-elevation-1);
+}
+
+/* Navigation Drawer */
+.md-nav-drawer {
+    width: 360px;
+    height: 100vh;
+    background-color: var(--md-surface);
+    padding: 28px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: var(--md-elevation-1);
+    transform: translateX(-100%);
+    transition: transform var(--md-duration-medium2) var(--md-motion-emphasized);
+}
+
+.md-nav-drawer.open {
+    transform: translateX(0);
+}
+
+/* ============================================
+   CHIPS - Material Design 3
+   ============================================ */
+.md-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 16px;
+    font: var(--md-font-label-large);
+    border-radius: var(--md-shape-small);
+    cursor: pointer;
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        box-shadow var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-chip-assist,
+.md-chip-suggestion {
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    color: var(--md-on-surface);
+}
+
+.md-chip-filter {
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    color: var(--md-on-surface-variant);
+}
+
+.md-chip-filter.selected {
+    background-color: var(--md-secondary-container);
+    border-color: transparent;
+    color: var(--md-on-secondary-container);
+}
+
+.md-chip-input {
+    background-color: var(--md-surface-variant);
+    border: none;
+    color: var(--md-on-surface-variant);
+}
+
+/* ============================================
+   BADGES - Material Design 3
+   ============================================ */
+.md-badge,
+.cart-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font: var(--md-font-label-small);
+    background-color: var(--md-error);
+    color: var(--md-on-error);
+    border-radius: var(--md-shape-full);
+}
+
+.md-badge-large,
+.cart-badge {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    font: var(--md-font-label-medium);
+}
+
+/* ============================================
+   DIALOGS - Material Design 3
+   ============================================ */
+.md-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.32);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--md-duration-medium2) var(--md-motion-standard),
+        visibility var(--md-duration-medium2) var(--md-motion-standard);
+}
+
+.md-dialog-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.md-dialog {
+    background-color: var(--md-surface);
+    border-radius: var(--md-shape-extra-large);
+    padding: 24px;
+    min-width: 280px;
+    max-width: 560px;
+    box-shadow: var(--md-elevation-3);
+    transform: scale(0.9);
+    transition: transform var(--md-duration-medium2) var(--md-motion-emphasized);
+}
+
+.md-dialog-overlay.open .md-dialog {
+    transform: scale(1);
+}
+
+.md-dialog-title {
+    font: var(--md-font-headline-small);
+    color: var(--md-on-surface);
+    margin-bottom: 16px;
+}
+
+.md-dialog-content {
+    font: var(--md-font-body-medium);
+    color: var(--md-on-surface-variant);
+    margin-bottom: 24px;
+}
+
+.md-dialog-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* ============================================
+   SNACKBAR / TOAST - Material Design 3
+   ============================================ */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toast,
+.md-snackbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 344px;
+    max-width: 672px;
+    padding: 14px 16px;
+    background-color: var(--md-surface-5);
+    color: var(--md-on-surface);
+    border-radius: var(--md-shape-extra-small);
+    box-shadow: var(--md-elevation-3);
+    font: var(--md-font-body-medium);
+    transform: translateY(100px);
+    opacity: 0;
+    transition:
+        transform var(--md-duration-medium2) var(--md-motion-emphasized),
+        opacity var(--md-duration-medium2) var(--md-motion-standard);
+}
+
+.toast.show,
+.md-snackbar.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+[data-theme="dark"] .toast,
+[data-theme="dark"] .md-snackbar {
+    background-color: var(--md-surface-2);
+}
+
+/* ============================================
+   PROGRESS INDICATORS - Material Design 3
+   ============================================ */
+.md-progress-linear {
+    width: 100%;
+    height: 4px;
+    background-color: var(--md-surface-variant);
+    border-radius: var(--md-shape-full);
+    overflow: hidden;
+}
+
+.md-progress-linear-indicator {
+    height: 100%;
+    background-color: var(--md-primary);
+    border-radius: var(--md-shape-full);
+    transition: width var(--md-duration-medium4) var(--md-motion-standard);
+}
+
+.md-progress-linear-indeterminate .md-progress-linear-indicator {
+    width: 50%;
+    animation: md-progress-indeterminate 1.5s var(--md-motion-standard) infinite;
+}
+
+@keyframes md-progress-indeterminate {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(300%);
+    }
+}
+
+.md-progress-circular {
+    width: 48px;
+    height: 48px;
+    animation: md-circular-rotate 1.4s linear infinite;
+}
+
+.md-progress-circular circle {
+    fill: none;
+    stroke: var(--md-primary);
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: md-circular-dash 1.4s var(--md-motion-standard) infinite;
+}
+
+@keyframes md-circular-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes md-circular-dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* ============================================
+   DIVIDERS - Material Design 3
+   ============================================ */
+.md-divider {
+    height: 1px;
+    background-color: var(--md-outline-variant);
+    margin: 0;
+    border: none;
+}
+
+.md-divider-inset {
+    margin-left: 16px;
+}
+
+/* ============================================
+   LISTS - Material Design 3
+   ============================================ */
+.md-list {
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+}
+
+.md-list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    min-height: 56px;
+    cursor: pointer;
+    transition: background-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-list-item:hover {
+    background-color: var(--md-surface-variant);
+}
+
+.md-list-item-leading {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-on-surface-variant);
+}
+
+.md-list-item-content {
+    flex: 1;
+}
+
+.md-list-item-headline {
+    font: var(--md-font-body-large);
+    color: var(--md-on-surface);
+}
+
+.md-list-item-supporting {
+    font: var(--md-font-body-medium);
+    color: var(--md-on-surface-variant);
+}
+
+.md-list-item-trailing {
+    font: var(--md-font-label-small);
+    color: var(--md-on-surface-variant);
+}
+
+/* ============================================
+   SWITCHES - Material Design 3
+   ============================================ */
+.md-switch {
+    position: relative;
+    display: inline-flex;
+    width: 52px;
+    height: 32px;
+}
+
+.md-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.md-switch-track {
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-surface-variant);
+    border: 2px solid var(--md-outline);
+    border-radius: var(--md-shape-full);
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        border-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-switch-thumb {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--md-outline);
+    border-radius: var(--md-shape-full);
+    transition:
+        transform var(--md-duration-short4) var(--md-motion-standard),
+        width var(--md-duration-short4) var(--md-motion-standard),
+        height var(--md-duration-short4) var(--md-motion-standard),
+        background-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-switch input:checked+.md-switch-track {
+    background-color: var(--md-primary);
+    border-color: var(--md-primary);
+}
+
+.md-switch input:checked+.md-switch-track .md-switch-thumb {
+    transform: translateX(20px);
+    width: 24px;
+    height: 24px;
+    top: 2px;
+    background-color: var(--md-on-primary);
+}
+
+/* ============================================
+   CHECKBOXES - Material Design 3
+   ============================================ */
+.md-checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.md-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.md-checkbox-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--md-on-surface-variant);
+    border-radius: 2px;
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        border-color var(--md-duration-short4) var(--md-motion-standard);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.md-checkbox input:checked+.md-checkbox-box {
+    background-color: var(--md-primary);
+    border-color: var(--md-primary);
+}
+
+.md-checkbox-check {
+    opacity: 0;
+    transform: scale(0);
+    transition:
+        opacity var(--md-duration-short4) var(--md-motion-standard),
+        transform var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-checkbox input:checked+.md-checkbox-box .md-checkbox-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ============================================
+   RADIO BUTTONS - Material Design 3
+   ============================================ */
+.md-radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.md-radio input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.md-radio-outer {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--md-on-surface-variant);
+    border-radius: var(--md-shape-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-radio-inner {
+    width: 10px;
+    height: 10px;
+    background-color: var(--md-primary);
+    border-radius: var(--md-shape-full);
+    opacity: 0;
+    transform: scale(0);
+    transition:
+        opacity var(--md-duration-short4) var(--md-motion-standard),
+        transform var(--md-duration-short4) var(--md-motion-standard);
+}
+
+.md-radio input:checked+.md-radio-outer {
+    border-color: var(--md-primary);
+}
+
+.md-radio input:checked+.md-radio-outer .md-radio-inner {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ============================================
+   FLASH MESSAGES - Material Design 3
+   ============================================ */
+.flashes {
+    padding: 16px;
+}
+
+.flash {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: var(--md-tertiary-container);
+    color: var(--md-on-tertiary-container);
+    border-radius: var(--md-shape-medium);
+    font: var(--md-font-body-medium);
+    margin-bottom: 12px;
+    animation: md-flash-slide-in var(--md-duration-medium2) var(--md-motion-emphasized-decelerate);
+}
+
+@keyframes md-flash-slide-in {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 0 16px;
+        height: 56px;
+    }
+
+    .md-dialog {
+        margin: 16px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .toast,
+    .md-snackbar {
+        min-width: auto;
+        max-width: calc(100vw - 32px);
+        margin: 0 16px;
+    }
+
+    .container {
+        padding: 16px;
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING - Material Design 3
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--md-surface-variant);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-outline);
+    border-radius: var(--md-shape-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-on-surface-variant);
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+::selection {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+}
+
+/* ============================================
+   FOCUS VISIBLE - Accessibility
+   ============================================ */
+:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ANIMATIONS - Material Design 3
+   ============================================ */
+@keyframes md-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes md-slide-up {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes md-scale-in {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.md-animate-fade-in {
+    animation: md-fade-in var(--md-duration-medium2) var(--md-motion-emphasized-decelerate);
+}
+
+.md-animate-slide-up {
+    animation: md-slide-up var(--md-duration-medium2) var(--md-motion-emphasized-decelerate);
+}
+
+.md-animate-scale-in {
+    animation: md-scale-in var(--md-duration-medium2) var(--md-motion-emphasized-decelerate);
+}

@@ -11,34 +11,36 @@
 'Meat': '',
 'Grains': ''
 } %}
-<section class="hero">
+<section class="hero md-surface-1">
     <div class="hero-content">
-        <h1 class="hero-heading">FreshMarket</h1>
-        <p class="hero-subheading">Hand-picked groceries, delivered fresh to your door.</p>
-        <p class="hero-description">Shop seasonal staples, chef-grade produce, and daily essentials with a tap. Curated
+        <h1 class="hero-heading md-display-medium">FreshMarket</h1>
+        <p class="hero-subheading md-title-large">Hand-picked groceries, delivered fresh to your door.</p>
+        <p class="hero-description md-body-large">Shop seasonal staples, chef-grade produce, and daily essentials with a
+            tap. Curated
             picks, transparent ratings, and same-day slots built for food lovers.</p>
-        <div class="hero-search">
+        <div class="hero-search md-card-elevated">
+            <span class="material-icons search-icon">search</span>
             <input type="text" id="search-input" placeholder="Search for products..." value="{{ search_query }}"
                 class="search-bar">
-            <button id="search-btn" class="search-button" aria-label="Search">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                    <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4.35-4.35" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" />
-                </svg>
+            <button id="search-btn" class="search-button md-btn md-btn-filled" aria-label="Search">
+                <span class="material-icons">search</span>
             </button>
         </div>
         <div class="hero-stats">
-            <div>
-                <span class="stat-value">{{ products|length }}</span>
-                <span class="stat-label">Items live</span>
+            <div class="md-card-filled stat-card">
+                <span class="material-icons stat-icon">inventory_2</span>
+                <span class="stat-value md-headline-small">{{ products|length }}</span>
+                <span class="stat-label md-label-medium">Items live</span>
             </div>
-            <div>
-                <span class="stat-value">{{ categories|length }}</span>
-                <span class="stat-label">Curated categories</span>
+            <div class="md-card-filled stat-card">
+                <span class="material-icons stat-icon">category</span>
+                <span class="stat-value md-headline-small">{{ categories|length }}</span>
+                <span class="stat-label md-label-medium">Curated categories</span>
             </div>
-            <div>
-                <span class="stat-value">4.8★</span>
-                <span class="stat-label">Avg. guest rating</span>
+            <div class="md-card-filled stat-card">
+                <span class="material-icons stat-icon">star</span>
+                <span class="stat-value md-headline-small">4.8</span>
+                <span class="stat-label md-label-medium">Avg. guest rating</span>
             </div>
         </div>
     </div>
@@ -52,9 +54,12 @@
             <p class="muted">We surface the most loved, best-stocked groceries so you can add them in two taps.</p>
         </div>
         <div class="spotlight-meta">
-            <span class="meta-pill">Top ratings</span>
-            <span class="meta-pill">In stock now</span>
-            <span class="meta-pill">Fast to cart</span>
+            <span class="meta-pill md-chip md-chip-filter selected"><span class="material-icons">trending_up</span> Top
+                ratings</span>
+            <span class="meta-pill md-chip md-chip-filter selected"><span class="material-icons">check_circle</span> In
+                stock now</span>
+            <span class="meta-pill md-chip md-chip-filter selected"><span class="material-icons">bolt</span> Fast to
+                cart</span>
         </div>
     </div>
     <div class="spotlight-grid">
@@ -83,10 +88,10 @@
             </div>
             <footer>
                 <a href="{{ url_for('main.product_detail', product_id=product.id) }}"
-                    class="btn btn-secondary btn-ghost">See
-                    details</a>
+                    class="md-btn md-btn-outlined"><span class="material-icons">visibility</span> See details</a>
                 {% if current_user.is_authenticated and product.stock > 0 %}
-                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ product.id }}">Add to cart</button>
+                <button class="md-btn md-btn-filled add-to-cart-btn" data-product-id="{{ product.id }}"><span
+                        class="material-icons">add_shopping_cart</span> Add to cart</button>
                 {% endif %}
             </footer>
         </article>
@@ -279,7 +284,7 @@
                 {% set url = '/?' + url_parts|join('&') %}
 
                 <a href="{{ url }}"
-                    class="filter-chip {% if (not filter.value and not current_category) or (filter.value == current_category) %}active{% endif %}">
+                    class="filter-chip md-chip md-chip-filter {% if (not filter.value and not current_category) or (filter.value == current_category) %}selected{% endif %}">
                     {{ filter.label }}
                 </a>
                 {% endfor %}

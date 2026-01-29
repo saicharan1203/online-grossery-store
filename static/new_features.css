@@ -1880,27 +1880,20 @@ body[data-theme="dark"] .fresh-card footer .btn.btn-ghost {
 
 /* ===== EDIT PROFILE PAGE ===== */
 .edit-profile-container {
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .edit-profile-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* Styles moved to edit_profile.html inline styles */
 }
 
 .form-divider {
-    height: 1px;
-    background: #eee;
-    margin: 2rem 0;
+    /* Styles moved to edit_profile.html inline styles */
 }
 
 .form-hint {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    /* Styles moved to edit_profile.html inline styles */
 }
 
 /* Responsive Design */

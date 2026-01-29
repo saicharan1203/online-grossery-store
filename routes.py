@@ -584,7 +584,25 @@ def edit_profile():
         
         # Update password if provided
         new_password = request.form.get('new_password')
-        if new_password:
+        confirm_password = request.form.get('confirm_password')
+        
+        if new_password or confirm_password:
+            if not new_password:
+                flash('Please enter a new password')
+                return redirect(url_for('main.edit_profile'))
+            
+            if not confirm_password:
+                flash('Please confirm your new password')
+                return redirect(url_for('main.edit_profile'))
+            
+            if new_password != confirm_password:
+                flash('Passwords do not match')
+                return redirect(url_for('main.edit_profile'))
+            
+            if len(new_password) < 6:
+                flash('Password must be at least 6 characters long')
+                return redirect(url_for('main.edit_profile'))
+            
             current_user.password_hash = generate_password_hash(new_password)
         
         db.session.commit()

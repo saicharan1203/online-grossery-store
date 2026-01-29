@@ -2,110 +2,529 @@
 
 {% block content %}
 <div class="profile-container">
-    <div class="profile-header">
+    <div class="profile-header md-card-elevated">
         <div class="profile-avatar">
-            <div class="avatar-circle">{{ current_user.username[0].upper() }}</div>
+            <div class="avatar-circle md-fab md-fab-large">
+                <span class="material-icons" style="font-size: 48px;">person</span>
+            </div>
         </div>
         <div class="profile-info">
-            <h1>{{ current_user.username }}</h1>
-            <p class="profile-email">{{ current_user.email }}</p>
-            <a href="{{ url_for('main.edit_profile') }}" class="btn btn-secondary">Edit Profile</a>
+            <h1 class="md-headline-large">{{ current_user.username }}</h1>
+            <p class="profile-email md-body-large">{{ current_user.email }}</p>
+            <a href="{{ url_for('main.edit_profile') }}" class="md-btn md-btn-outlined">
+                <span class="material-icons">edit</span>
+                Edit Profile
+            </a>
         </div>
     </div>
 
     <!-- Statistics Cards -->
     <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">📦</div>
+        <div class="stat-card md-card-elevated">
+            <div class="stat-icon">
+                <span class="material-icons">inventory_2</span>
+            </div>
             <div class="stat-content">
-                <h3 class="stat-value">{{ total_orders }}</h3>
-                <p class="stat-label">Total Orders</p>
+                <h3 class="stat-value md-headline-medium">{{ total_orders }}</h3>
+                <p class="stat-label md-label-large">Total Orders</p>
             </div>
         </div>
 
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
+        <div class="stat-card md-card-elevated">
+            <div class="stat-icon">
+                <span class="material-icons">payments</span>
+            </div>
             <div class="stat-content">
-                <h3 class="stat-value">${{ "%.2f"|format(total_spent) }}</h3>
-                <p class="stat-label">Total Spent</p>
+                <h3 class="stat-value md-headline-medium">${{ "%.2f"|format(total_spent) }}</h3>
+                <p class="stat-label md-label-large">Total Spent</p>
             </div>
         </div>
 
-        <div class="stat-card">
-            <div class="stat-icon">❤️</div>
+        <div class="stat-card md-card-elevated">
+            <div class="stat-icon">
+                <span class="material-icons">favorite</span>
+            </div>
             <div class="stat-content">
-                <h3 class="stat-value">{{ wishlist_count }}</h3>
-                <p class="stat-label">Wishlist Items</p>
+                <h3 class="stat-value md-headline-medium">{{ wishlist_count }}</h3>
+                <p class="stat-label md-label-large">Wishlist Items</p>
             </div>
         </div>
     </div>
 
     <!-- Recent Orders -->
-    <div class="recent-orders-section">
+    <div class="recent-orders-section md-card-elevated">
         <div class="section-header">
-            <h2>Recent Orders</h2>
-            <a href="{{ url_for('main.orders') }}" class="view-all-link">View All →</a>
+            <h2 class="md-headline-small">
+                <span class="material-icons">receipt_long</span>
+                Recent Orders
+            </h2>
+            <a href="{{ url_for('main.orders') }}" class="view-all-link md-btn-text">
+                View All
+                <span class="material-icons">arrow_forward</span>
+            </a>
         </div>
 
         {% if recent_orders %}
         <div class="recent-orders-list">
             {% for order in recent_orders %}
-            <div class="recent-order-card">
-                <div class="recent-order-info">
-                    <h4>Order #{{ order.id }}</h4>
-                    <p class="recent-order-date">{{ order.date.strftime('%b %d, %Y') }}</p>
+            <div class="recent-order-card md-list-item">
+                <div class="md-list-item-leading">
+                    <span class="material-icons">shopping_bag</span>
+                </div>
+                <div class="md-list-item-content">
+                    <span class="md-list-item-headline">Order #{{ order.id }}</span>
+                    <span class="md-list-item-supporting">{{ order.date.strftime('%b %d, %Y') }}</span>
                 </div>
                 <div class="recent-order-status">
-                    <span class="status-badge status-{{ order.status.lower() }}">{{ order.status }}</span>
+                    <span class="status-badge status-{{ order.status.lower() }} md-chip md-chip-filter">{{ order.status
+                        }}</span>
                 </div>
-                <div class="recent-order-total">
-                    <p>${{ "%.2f"|format(order.total_price) }}</p>
+                <div class="recent-order-total md-title-medium">
+                    ${{ "%.2f"|format(order.total_price) }}
                 </div>
                 <div class="recent-order-action">
-                    <a href="{{ url_for('main.order_detail', order_id=order.id) }}" class="btn-link">View →</a>
+                    <a href="{{ url_for('main.order_detail', order_id=order.id) }}" class="md-icon-btn">
+                        <span class="material-icons">visibility</span>
+                    </a>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <p class="no-orders-message">No orders yet. <a href="{{ url_for('main.index') }}">Start shopping!</a></p>
+        <div class="no-orders-message">
+            <span class="material-icons" style="font-size: 48px; color: var(--md-outline);">shopping_cart</span>
+            <p class="md-body-large">No orders yet. <a href="{{ url_for('main.index') }}" class="md-btn-text">Start
+                    shopping!</a></p>
+        </div>
         {% endif %}
     </div>
 
     <!-- Quick Links -->
     <div class="quick-links-section">
-        <h2>Quick Links</h2>
+        <h2 class="md-headline-small">Quick Links</h2>
         <div class="quick-links-grid">
-            <a href="{{ url_for('main.wishlist') }}" class="quick-link-card">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                    <path
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                        stroke="#ff6b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <h3>Wishlist</h3>
-                <p>{{ wishlist_count }} items</p>
+            <a href="{{ url_for('main.wishlist') }}" class="quick-link-card md-card-elevated">
+                <span class="material-icons" style="font-size: 40px; color: var(--md-error);">favorite</span>
+                <h3 class="md-title-medium">Wishlist</h3>
+                <p class="md-body-small">{{ wishlist_count }} items</p>
             </a>
 
-            <a href="{{ url_for('main.addresses') }}" class="quick-link-card">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#0d5c3e" stroke-width="2" />
-                    <circle cx="12" cy="10" r="3" stroke="#0d5c3e" stroke-width="2" />
-                </svg>
-                <h3>Addresses</h3>
-                <p>Manage delivery addresses</p>
+            <a href="{{ url_for('main.addresses') }}" class="quick-link-card md-card-elevated">
+                <span class="material-icons" style="font-size: 40px; color: var(--md-primary);">location_on</span>
+                <h3 class="md-title-medium">Addresses</h3>
+                <p class="md-body-small">Manage delivery addresses</p>
             </a>
 
-            <a href="{{ url_for('main.cart') }}" class="quick-link-card">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                    <circle cx="9" cy="21" r="1" stroke="#0d5c3e" stroke-width="2" />
-                    <circle cx="20" cy="21" r="1" stroke="#0d5c3e" stroke-width="2" />
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="#0d5c3e"
-                        stroke-width="2" />
-                </svg>
-                <h3>Shopping Cart</h3>
-                <p>{{ cart_count }} items</p>
+            <a href="{{ url_for('main.cart') }}" class="quick-link-card md-card-elevated">
+                <span class="material-icons" style="font-size: 40px; color: var(--md-secondary);">shopping_cart</span>
+                <h3 class="md-title-medium">Shopping Cart</h3>
+                <p class="md-body-small">{{ cart_count }} items</p>
+            </a>
+
+            <a href="{{ url_for('main.orders') }}" class="quick-link-card md-card-elevated">
+                <span class="material-icons" style="font-size: 40px; color: var(--md-tertiary);">receipt_long</span>
+                <h3 class="md-title-medium">Order History</h3>
+                <p class="md-body-small">View all orders</p>
             </a>
         </div>
     </div>
 </div>
+
+<style>
+    /* Profile Page Material Design Styles */
+    .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 32px;
+        border-radius: var(--md-shape-extra-large);
+        margin-bottom: 24px;
+    }
+
+    .profile-avatar .avatar-circle {
+        width: 100px;
+        height: 100px;
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+        border-radius: var(--md-shape-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-info h1 {
+        margin-bottom: 8px;
+        color: var(--md-on-surface);
+    }
+
+    .profile-email {
+        color: var(--md-on-surface-variant);
+        margin-bottom: 16px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .stats-grid .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 24px;
+        border-radius: var(--md-shape-large);
+        transition: transform var(--md-duration-short4) var(--md-motion-standard);
+    }
+
+    .stats-grid .stat-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .stats-grid .stat-icon {
+        width: 56px;
+        height: 56px;
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+        border-radius: var(--md-shape-medium);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stats-grid .stat-icon .material-icons {
+        font-size: 28px;
+    }
+
+    .stats-grid .stat-value {
+        color: var(--md-on-surface);
+        margin-bottom: 4px;
+    }
+
+    .stats-grid .stat-label {
+        color: var(--md-on-surface-variant);
+    }
+
+    .recent-orders-section {
+        padding: 24px;
+        border-radius: var(--md-shape-large);
+        margin-bottom: 24px;
+    }
+
+    .recent-orders-section .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .recent-orders-section .section-header h2 {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--md-on-surface);
+    }
+
+    .view-all-link {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--md-primary);
+        text-decoration: none;
+        font: var(--md-font-label-large);
+    }
+
+    .recent-orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .recent-order-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: var(--md-surface-1);
+        border-radius: var(--md-shape-medium);
+        transition: background-color var(--md-duration-short4) var(--md-motion-standard);
+    }
+
+    .recent-order-card:hover {
+        background: var(--md-surface-2);
+    }
+
+    .recent-order-card .md-list-item-leading {
+        width: 40px;
+        height: 40px;
+        background: var(--md-tertiary-container);
+        color: var(--md-on-tertiary-container);
+        border-radius: var(--md-shape-small);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .recent-order-total {
+        color: var(--md-primary);
+        font-weight: 600;
+        margin-left: auto;
+    }
+
+    .no-orders-message {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--md-on-surface-variant);
+    }
+
+    .quick-links-section h2 {
+        margin-bottom: 16px;
+        color: var(--md-on-surface);
+    }
+
+    .quick-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+    .quick-link-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 24px;
+        border-radius: var(--md-shape-large);
+        text-decoration: none;
+        text-align: center;
+        transition:
+            transform var(--md-duration-short4) var(--md-motion-standard),
+            box-shadow var(--md-duration-short4) var(--md-motion-standard);
+    }
+
+    .quick-link-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--md-elevation-3);
+    }
+
+    .quick-link-card h3 {
+        color: var(--md-on-surface);
+        margin: 0;
+    }
+
+    .quick-link-card p {
+        color: var(--md-on-surface-variant);
+        margin: 0;
+    }
+
+    /* Status badges */
+    .status-badge.status-pending {
+        background: var(--md-secondary-container);
+        color: var(--md-on-secondary-container);
+    }
+
+    .status-badge.status-processing {
+        background: var(--md-tertiary-container);
+        color: var(--md-on-tertiary-container);
+    }
+
+    .status-badge.status-shipped {
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+    }
+
+    .status-badge.status-delivered {
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+    }
+
+    .status-badge.status-cancelled {
+        background: var(--md-error-container);
+        color: var(--md-on-error-container);
+    }
+
+    /* Dark mode adjustments - Comprehensive */
+    [data-theme="dark"] .profile-container {
+        background: var(--md-background);
+    }
+
+    [data-theme="dark"] .profile-header {
+        background: var(--md-surface-1);
+    }
+
+    [data-theme="dark"] .profile-avatar .avatar-circle {
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+    }
+
+    [data-theme="dark"] .profile-info h1 {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .profile-email {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .stats-grid .stat-card {
+        background: var(--md-surface-1);
+    }
+
+    [data-theme="dark"] .stats-grid .stat-card:hover {
+        background: var(--md-surface-2);
+    }
+
+    [data-theme="dark"] .stats-grid .stat-icon {
+        background: var(--md-surface-3);
+        color: var(--md-primary);
+    }
+
+    [data-theme="dark"] .stats-grid .stat-value {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .stats-grid .stat-label {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .recent-orders-section {
+        background: var(--md-surface-1);
+    }
+
+    [data-theme="dark"] .recent-orders-section .section-header h2 {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .recent-order-card {
+        background: var(--md-surface-2);
+    }
+
+    [data-theme="dark"] .recent-order-card:hover {
+        background: var(--md-surface-3);
+    }
+
+    [data-theme="dark"] .recent-order-card .md-list-item-leading {
+        background: var(--md-surface-4);
+        color: var(--md-tertiary);
+    }
+
+    [data-theme="dark"] .recent-order-card .md-list-item-headline {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .recent-order-card .md-list-item-supporting {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .recent-order-total {
+        color: var(--md-primary);
+    }
+
+    [data-theme="dark"] .quick-links-section h2 {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .quick-link-card {
+        background: var(--md-surface-1);
+    }
+
+    [data-theme="dark"] .quick-link-card:hover {
+        background: var(--md-surface-2);
+        box-shadow: var(--md-elevation-2);
+    }
+
+    [data-theme="dark"] .quick-link-card h3 {
+        color: var(--md-on-surface);
+    }
+
+    [data-theme="dark"] .quick-link-card p {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .no-orders-message {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .view-all-link {
+        color: var(--md-primary);
+    }
+
+    [data-theme="dark"] .md-icon-btn {
+        color: var(--md-on-surface-variant);
+    }
+
+    [data-theme="dark"] .md-icon-btn:hover {
+        background: var(--md-surface-4);
+        color: var(--md-primary);
+    }
+
+    /* Additional Dark Mode Text Visibility Fixes */
+    [data-theme="dark"] .md-headline-large,
+    [data-theme="dark"] .md-headline-medium,
+    [data-theme="dark"] .md-headline-small,
+    [data-theme="dark"] .md-title-large,
+    [data-theme="dark"] .md-title-medium {
+        color: #E6E1E5 !important;
+    }
+
+    [data-theme="dark"] .md-body-large,
+    [data-theme="dark"] .md-body-medium,
+    [data-theme="dark"] .md-body-small {
+        color: #CAC4D0 !important;
+    }
+
+    [data-theme="dark"] .md-label-large,
+    [data-theme="dark"] .md-label-medium {
+        color: #CAC4D0 !important;
+    }
+
+    [data-theme="dark"] .stat-content h3,
+    [data-theme="dark"] .stat-content .stat-value {
+        color: #E6E1E5 !important;
+    }
+
+    [data-theme="dark"] .stat-content p,
+    [data-theme="dark"] .stat-content .stat-label {
+        color: #CAC4D0 !important;
+    }
+
+    [data-theme="dark"] .md-list-item-content span {
+        color: #E6E1E5;
+    }
+
+    [data-theme="dark"] .md-list-item-content .md-list-item-supporting {
+        color: #CAC4D0;
+    }
+
+    [data-theme="dark"] .recent-order-card h4,
+    [data-theme="dark"] .recent-order-card .md-list-item-headline {
+        color: #E6E1E5 !important;
+    }
+
+    [data-theme="dark"] .recent-order-card p {
+        color: #CAC4D0 !important;
+    }
+
+    [data-theme="dark"] .md-btn-text,
+    [data-theme="dark"] a.md-btn-text {
+        color: #7CDB7F !important;
+    }
+
+    @media (max-width: 768px) {
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+    }
+</style>
 {% endblock %}

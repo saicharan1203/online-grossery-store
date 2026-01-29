@@ -2,33 +2,352 @@
 
 {% block content %}
 <div class="edit-profile-container">
-    <h1>Edit Profile</h1>
+    <div class="edit-profile-card">
+        <form method="POST" class="edit-profile-form">
+            <div class="form-group">
+                <label for="username" class="form-label">
+                    <span class="material-icons">person</span>
+                    Username
+                </label>
+                <input type="text" id="username" name="username" value="{{ current_user.username }}" required>
+            </div>
 
-    <form method="POST" class="edit-profile-form">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="{{ current_user.username }}" required>
-        </div>
+            <div class="form-group">
+                <label for="email" class="form-label">
+                    <span class="material-icons">email</span>
+                    Email
+                </label>
+                <input type="email" id="email" name="email" value="{{ current_user.email }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="{{ current_user.email }}" required>
-        </div>
+            <div class="form-divider"></div>
 
-        <div class="form-divider"></div>
+            <div class="password-section">
+                <h3 class="section-title">
+                    <span class="material-icons">lock</span>
+                    Change Password
+                </h3>
+                <p class="form-hint">Leave blank to keep current password</p>
 
-        <h3>Change Password (Optional)</h3>
-        <p class="form-hint">Leave blank to keep current password</p>
+                <div class="form-group">
+                    <label for="new_password" class="form-label">
+                        <span class="material-icons">vpn_key</span>
+                        New Password
+                    </label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
+                </div>
 
-        <div class="form-group">
-            <label for="new_password">New Password</label>
-            <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
-        </div>
+                <div class="form-group">
+                    <label for="confirm_password" class="form-label">
+                        <span class="material-icons">check_circle</span>
+                        Confirm Password
+                    </label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter new password">
+                </div>
+            </div>
 
-        <div class="form-actions">
-            <a href="{{ url_for('main.profile') }}" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-        </div>
-    </form>
+            <div class="form-actions">
+                <a href="{{ url_for('main.profile') }}" class="btn-cancel">
+                    <span class="material-icons">close</span>
+                    Cancel
+                </a>
+                <button type="submit" class="btn-save">
+                    <span class="material-icons">save</span>
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<style>
+    /* Edit Profile Page - Dark Modern Design */
+    .edit-profile-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .edit-profile-card {
+        background: #FFFFFF;
+        border-radius: 24px;
+        padding: 48px;
+        width: 100%;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .edit-profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #5A6370;
+        letter-spacing: 0.3px;
+    }
+
+    .form-label .material-icons {
+        font-size: 20px;
+        color: #2E7D32;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 18px 20px;
+        font-size: 16px;
+        font-family: inherit;
+        color: #1C1B1F;
+        background: #F5F7FA;
+        border: 1px solid #E0E4E8;
+        border-radius: 12px;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:hover {
+        background: #EDF0F4;
+        border-color: #D0D4D8;
+    }
+
+    .form-group input:focus {
+        background: #FFFFFF;
+        border-color: #2E7D32;
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    }
+
+    .form-group input::placeholder {
+        color: #A0A8B0;
+    }
+
+    .form-divider {
+        height: 1px;
+        background: #E0E4E8;
+        margin: 16px 0;
+    }
+
+    .password-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1C1B1F;
+        letter-spacing: 0.3px;
+    }
+
+    .section-title .material-icons {
+        font-size: 24px;
+        color: #FF6D00;
+    }
+
+    .form-hint {
+        color: #6A7280;
+        font-size: 14px;
+        margin: -8px 0 0 0;
+        letter-spacing: 0.2px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: flex-end;
+        margin-top: 16px;
+        padding-top: 32px;
+        border-top: 1px solid #E0E4E8;
+    }
+
+    .btn-cancel,
+    .btn-save {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 32px;
+        font-size: 15px;
+        font-weight: 500;
+        font-family: inherit;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: none;
+        letter-spacing: 0.3px;
+    }
+
+    .btn-cancel {
+        background: transparent;
+        color: #5A6370;
+        border: 1px solid #D0D4D8;
+    }
+
+    .btn-cancel:hover {
+        background: #F5F7FA;
+        border-color: #B0B4B8;
+        color: #3A4350;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+        color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-save:hover {
+        background: linear-gradient(135deg, #388E3C 0%, #2E7D32 100%);
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4);
+        transform: translateY(-1px);
+    }
+
+    .btn-save:active {
+        transform: translateY(0);
+    }
+
+    .btn-cancel .material-icons,
+    .btn-save .material-icons {
+        font-size: 20px;
+    }
+
+    /* ============================================
+       DARK MODE - FORCE DARK STYLING
+       ============================================ */
+    body[data-theme="dark"] .edit-profile-card {
+        background: #1E232D !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    body[data-theme="dark"] .form-label {
+        color: #8B95A5 !important;
+    }
+
+    body[data-theme="dark"] .form-label .material-icons {
+        color: #6B9080 !important;
+    }
+
+    body[data-theme="dark"] .form-group input {
+        background: #14191F !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+        color: #E8EDF2 !important;
+    }
+
+    body[data-theme="dark"] .form-group input:hover {
+        background: #191E26 !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    body[data-theme="dark"] .form-group input:focus {
+        background: #1A1F28 !important;
+        border-color: #6B9080 !important;
+        box-shadow: 0 0 0 3px rgba(107, 144, 128, 0.15) !important;
+    }
+
+    body[data-theme="dark"] .form-group input::placeholder {
+        color: #5A6370 !important;
+    }
+
+    body[data-theme="dark"] .form-divider {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    body[data-theme="dark"] .section-title {
+        color: #E8EDF2 !important;
+    }
+
+    body[data-theme="dark"] .section-title .material-icons {
+        color: #D4A574 !important;
+    }
+
+    body[data-theme="dark"] .form-hint {
+        color: #7A8694 !important;
+    }
+
+    body[data-theme="dark"] .form-actions {
+        border-top-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    body[data-theme="dark"] .btn-cancel {
+        background: transparent !important;
+        color: #8B95A5 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+
+    body[data-theme="dark"] .btn-cancel:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        color: #A8B2C0 !important;
+    }
+
+    body[data-theme="dark"] .btn-save {
+        background: linear-gradient(135deg, #6B9080 0%, #5A7A6A 100%) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 4px 12px rgba(107, 144, 128, 0.3) !important;
+    }
+
+    body[data-theme="dark"] .btn-save:hover {
+        background: linear-gradient(135deg, #7AA090 0%, #6A8A7A 100%) !important;
+        box-shadow: 0 6px 16px rgba(107, 144, 128, 0.4) !important;
+        transform: translateY(-1px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .edit-profile-container {
+            padding: 24px 16px;
+        }
+
+        .edit-profile-card {
+            padding: 32px 24px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-cancel,
+        .btn-save {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .edit-profile-card {
+            padding: 24px 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+        }
+
+        .form-group input {
+            padding: 16px 18px;
+            font-size: 15px;
+        }
+    }
+</style>
 {% endblock %}
