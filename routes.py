@@ -1440,3 +1440,9 @@ def seed_database():
 def scroll_showcase():
     """Display the cinematic scroll-triggered animation showcase"""
     return render_template('scroll_showcase.html')
+
+# --- Stacked Cards ---
+@main.route('/stacked-cards')
+def stacked_cards():
+    """Display the stacked cards scrolling effect showcase"""
+    return render_template('stacked_cards.html')
