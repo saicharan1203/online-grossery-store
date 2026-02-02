@@ -281,18 +281,19 @@
 
     <!-- Add Stacking Animation Script -->
     <script>
-        // Intersection Observer for stacked cards scaling
+        // Intersection Observer for stacked cards scaling (exact same as demo)
         const categoryCards = document.querySelectorAll('.stacked-category-card');
 
         const observerOptions = {
             root: null,
-            rootMargin: '-10% 0px -10% 0px',
+            rootMargin: '-20% 0px -20% 0px',
             threshold: [0, 0.25, 0.5, 0.75, 1.0]
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.boundingClientRect.top < 80 && !entry.isIntersecting) {
+                // Scale down cards that are being covered
+                if (entry.boundingClientRect.top < 100 && !entry.isIntersecting) {
                     entry.target.classList.add('scaled');
                 } else if (entry.isIntersecting) {
                     entry.target.classList.remove('scaled');
@@ -304,14 +305,18 @@
             observer.observe(card);
         });
 
-        // Enhanced scroll performance
+        // Enhanced scroll effect (exact same as demo)
         let ticking = false;
+
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
-                    categoryCards.forEach(card => {
+                    categoryCards.forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
-                        if (rect.top < 80) {
+                        const topPos = rect.top;
+
+                        // Scale down cards that have scrolled past
+                        if (topPos < 70) {
                             card.classList.add('scaled');
                         } else {
                             card.classList.remove('scaled');
