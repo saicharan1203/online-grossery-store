@@ -284,47 +284,33 @@
         // Intersection Observer for stacked cards scaling
         const categoryCards = document.querySelectorAll('.stacked-category-card');
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '-30% 0px -30% 0px',
-            threshold: [0, 0.25, 0.5, 0.75, 1.0]
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const windowHeight = window.innerHeight;
-                const triggerPoint = windowHeight * 0.3; // 30% from top (70% scrolled)
-
-                // Scale down cards only when they're 70% scrolled up
-                if (entry.boundingClientRect.top < triggerPoint && !entry.isIntersecting) {
-                    entry.target.classList.add('scaled');
-                } else if (entry.isIntersecting) {
-                    entry.target.classList.remove('scaled');
-                }
-            });
-        }, observerOptions);
-
-        categoryCards.forEach(card => {
-            observer.observe(card);
-        });
-
-        // Enhanced scroll effect with delayed scaling
+        // Enhanced scroll effect - fade when card is being covered (going UP)
         let ticking = false;
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const windowHeight = window.innerHeight;
-                    const triggerPoint = windowHeight * 0.3; // Only scale when 30% from top (70% scrolled)
 
                     categoryCards.forEach((card, index) => {
-                        const rect = card.getBoundingClientRect();
-                        const topPos = rect.top;
+                        // Check if there's a next card
+                        const nextCard = categoryCards[index + 1];
 
-                        // Scale down cards only after they've scrolled 70% up
-                        if (topPos < triggerPoint) {
-                            card.classList.add('scaled');
+                        if (nextCard) {
+                            const nextCardRect = nextCard.getBoundingClientRect();
+
+                            // Calculate how much the next card has scrolled up
+                            // When next card is at 30% from top (70% scrolled up), fade current card
+                            const triggerPoint = windowHeight * 0.3;
+
+                            // Fade current card when NEXT card has scrolled 70% up
+                            if (nextCardRect.top <= triggerPoint) {
+                                card.classList.add('scaled');
+                            } else {
+                                card.classList.remove('scaled');
+                            }
                         } else {
+                            // Last card never fades
                             card.classList.remove('scaled');
                         }
                     });
