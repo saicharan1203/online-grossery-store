@@ -1455,3 +1455,9 @@ def scroll_showcase():
 def stacked_cards():
     """Display the stacked cards scrolling effect showcase"""
     return render_template('stacked_cards.html')
+
+# --- Ultra Smooth Scroll ---
+@main.route('/ultra-smooth')
+def ultra_smooth():
+    """Display the ultra smooth 120fps scrolling experience"""
+    return render_template('ultra_smooth_scroll.html')

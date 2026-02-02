@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Smooth Scroll | 120fps Experience</title>
+    <meta name="description" content="Buttery smooth scrolling with cinematic animations and premium feel">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --text-light: #ffffff;
+            --text-muted: #a0a0b8;
+            --accent: #6B9080;
+        }
+
+        html {
+            /* Disable default scrolling - we'll handle it */
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* Smooth scroll container */
+        #scroll-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            will-change: transform;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 300ms;
+        }
+
+        .nav a:hover {
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 24px;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(107, 144, 128, 0.15) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 48px;
+            position: relative;
+        }
+
+        .section-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .section-content {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-content.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-number {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .section-content p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        /* Visual Media */
+        .section-visual {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+
+        .section-visual.in-view {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .visual-box {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #6B9080 0%, #4a6d5f 100%);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.5);
+        }
+
+        .visual-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+        }
+
+        /* Alternate layout */
+        .content-section:nth-child(even) .section-inner {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .content-section:nth-child(even) .section-content {
+            order: 2;
+        }
+
+        .content-section:nth-child(even) .section-visual {
+            order: 1;
+        }
+
+        /* Footer */
+        .footer-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 100%);
+            padding: 120px 24px;
+        }
+
+        .footer-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--accent), #8ab69a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .section-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .content-section:nth-child(even) .section-content,
+            .content-section:nth-child(even) .section-visual {
+                order: initial;
+            }
+
+            .visual-box {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="logo">UltraSmooth</div>
+        <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <!-- Smooth Scroll Container -->
+    <div id="scroll-container">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Ultra Smooth Scrolling</h1>
+                <p>
+                    Experience 120fps-quality scrolling with buttery smooth animations.
+                    Cinematic, effortless, and premium — just like Apple.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 1 -->
+        <section class="content-section">
+            <div class="section-inner">
+                <div class="section-content">
+                    <div class="section-number">Feature 01</div>
+                    <h2>Hardware Acceleration</h2>
+                    <p>
+                        Every animation uses GPU-accelerated transforms and opacity.
+                        No layout reflows, no janky frames — just pure smoothness
+                        powered by transform3d and will-change optimization.
+                    </p>
+                </div>
+                <div class="section-visual">
+                    <div class="visual-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="content-section">
+            <div class="section-inner">
+                <div class="section-content">
+                    <div class="section-number">Feature 02</div>
+                    <h2>Smooth Interpolation</h2>
+                    <p>
+                        Custom requestAnimationFrame-based scrolling with LERP (linear interpolation).
+                        Every frame is perfectly timed, creating a continuous, fluid motion
+                        that feels premium and controlled.
+                    </p>
+                </div>
+                <div class="section-visual">
+                    <div class="visual-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="content-section">
+            <div class="section-inner">
+                <div class="section-content">
+                    <div class="section-number">Feature 03</div>
+                    <h2>Perfect Sync</h2>
+                    <p>
+                        Scroll-triggered animations stay perfectly synced with your scroll position.
+                        No skipped frames, no lag — animations appear exactly when they should,
+                        creating a cinematic storytelling experience.
+                    </p>
+                </div>
+                <div class="section-visual">
+                    <div class="visual-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="content-section">
+            <div class="section-inner">
+                <div class="section-content">
+                    <div class="section-number">Feature 04</div>
+                    <h2>High Refresh Rate</h2>
+                    <p>
+                        Optimized for 120Hz displays with stable frame pacing.
+                        Ultra-responsive to mouse wheel, trackpad, and touch inputs.
+                        Feel the difference on high-refresh-rate monitors.
+                    </p>
+                </div>
+                <div class="section-visual">
+                    <div class="visual-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-section">
+            <div class="footer-content">
+                <h2>Effortless Scrolling</h2>
+                <p>Premium quality. Cinema-grade smoothness.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // ============================================
+        // ULTRA SMOOTH SCROLL ENGINE (120fps Quality)
+        // ============================================
+
+        class UltraSmoothScroll {
+            constructor() {
+                this.scrollContainer = document.getElementById('scroll-container');
+                this.currentScroll = 0;
+                this.targetScroll = 0;
+                this.ease = 0.08; // Lower = smoother (0.05-0.12 range)
+                this.maxScroll = 0;
+                this.isScrolling = false;
+                this.rafId = null;
+
+                this.init();
+            }
+
+            init() {
+                // Calculate max scroll
+                this.calculateMaxScroll();
+
+                // Set up event listeners
+                this.addEventListeners();
+
+                // Start RAF loop
+                this.startRAF();
+
+                // Set up resize observer
+                window.addEventListener('resize', () => this.calculateMaxScroll());
+            }
+
+            calculateMaxScroll() {
+                const containerHeight = this.scrollContainer.offsetHeight;
+                const windowHeight = window.innerHeight;
+                this.maxScroll = containerHeight - windowHeight;
+            }
+
+            addEventListeners() {
+                // Wheel events (mouse wheel)
+                window.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const delta = e.deltaY;
+                    this.targetScroll += delta;
+                    this.clampScroll();
+                }, { passive: false });
+
+                // Touch events (mobile)
+                let touchStartY = 0;
+                let touchCurrentY = 0;
+
+                window.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    touchCurrentY = this.targetScroll;
+                }, { passive: true });
+
+                window.addEventListener('touchmove', (e) => {
+                    const touchDelta = touchStartY - e.touches[0].clientY;
+                    this.targetScroll = touchCurrentY + touchDelta;
+                    this.clampScroll();
+                }, { passive: true });
+
+                // Keyboard events
+                window.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        this.targetScroll += 100;
+                        this.clampScroll();
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.targetScroll -= 100;
+                        this.clampScroll();
+                    } else if (e.key === 'PageDown') {
+                        e.preventDefault();
+                        this.targetScroll += window.innerHeight * 0.8;
+                        this.clampScroll();
+                    } else if (e.key === 'PageUp') {
+                        e.preventDefault();
+                        this.targetScroll -= window.innerHeight * 0.8;
+                        this.clampScroll();
+                    }
+                });
+            }
+
+            clampScroll() {
+                this.targetScroll = Math.max(0, Math.min(this.targetScroll, this.maxScroll));
+            }
+
+            // Linear interpolation (LERP)
+            lerp(start, end, factor) {
+                return start + (end - start) * factor;
+            }
+
+            // Main animation loop
+            animate() {
+                // Calculate smooth scroll with LERP
+                const delta = this.targetScroll - this.currentScroll;
+
+                // Only update if there's meaningful movement (performance optimization)
+                if (Math.abs(delta) > 0.1) {
+                    this.currentScroll = this.lerp(this.currentScroll, this.targetScroll, this.ease);
+
+                    // Apply transform with GPU acceleration
+                    this.scrollContainer.style.transform = `translate3d(0, ${-this.currentScroll}px, 0)`;
+
+                    // Update scroll-based animations
+                    this.updateScrollAnimations();
+                } else {
+                    // Snap to target when very close (prevents micro-movements)
+                    this.currentScroll = this.targetScroll;
+                    this.scrollContainer.style.transform = `translate3d(0, ${-this.currentScroll}px, 0)`;
+                }
+
+                // Continue RAF loop
+                this.rafId = requestAnimationFrame(() => this.animate());
+            }
+
+            startRAF() {
+                this.animate();
+            }
+
+            updateScrollAnimations() {
+                // Get all animated elements
+                const elements = document.querySelectorAll('.section-content, .section-visual');
+
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+
+                    // Trigger when element is 70% in view
+                    if (rect.top < windowHeight * 0.7 && rect.bottom > 0) {
+                        el.classList.add('in-view');
+                    } else {
+                        // Optional: remove class when out of view for re-triggering
+                        // el.classList.remove('in-view');
+                    }
+                });
+
+                // Parallax effect on hero (optional)
+                const hero = document.querySelector('.hero-content');
+                if (hero) {
+                    const heroOffset = this.currentScroll * 0.5;
+                    hero.style.transform = `translate3d(0, ${heroOffset}px, 0)`;
+                    hero.style.opacity = 1 - (this.currentScroll / window.innerHeight) * 0.8;
+                }
+            }
+        }
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new UltraSmoothScroll();
+            });
+        } else {
+            new UltraSmoothScroll();
+        }
+
+        // Performance monitoring (optional - remove in production)
+        let lastTime = performance.now();
+        let frames = 0;
+
+        function measureFPS() {
+            frames++;
+            const currentTime = performance.now();
+
+            if (currentTime >= lastTime + 1000) {
+                const fps = Math.round((frames * 1000) / (currentTime - lastTime));
+                // console.log(`FPS: ${fps}`);
+                frames = 0;
+                lastTime = currentTime;
+            }
+
+            requestAnimationFrame(measureFPS);
+        }
+
+        measureFPS();
+    </script>
+</body>
+
+</html>
