@@ -1434,3 +1434,9 @@ def seed_database():
     db.session.commit()
     flash('Database seeded with admin and sample products!')
     return redirect(url_for('main.index'))
+
+# --- Scroll Showcase ---
+@main.route('/scroll-showcase')
+def scroll_showcase():
+    """Display the cinematic scroll-triggered animation showcase"""
+    return render_template('scroll_showcase.html')

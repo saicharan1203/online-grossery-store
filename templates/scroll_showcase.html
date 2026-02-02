@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Scroll Experience | Cinematic Storytelling</title>
+    <meta name="description"
+        content="Experience smooth, cinematic scroll-triggered animations with premium dark theme design">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(26, 26, 38, 0.8);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --accent-neon: #00f0ff;
+            --accent-purple: #b366ff;
+            --accent-pink: #ff3366;
+            --accent-gold: #ffd700;
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 40px rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-neon), var(--accent-purple));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        /* Scroll Container */
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Gradient Background */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #2d1b3d 100%);
+            opacity: 0.9;
+        }
+
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(179, 102, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 51, 102, 0.08) 0%, transparent 60%);
+            animation: breathe 20s ease-in-out infinite;
+        }
+
+        .parallax-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 240, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Section Styling */
+        .section {
+            min-height: 100vh;
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-content {
+            width: 100%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            opacity: 0;
+            will-change: opacity, transform;
+        }
+
+        .section.active .section-content {
+            animation: fadeInUp 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Text Content - Enhanced Slide from Left */
+        .text-content {
+            opacity: 0;
+            transform: translateX(-100px);
+            will-change: opacity, transform;
+        }
+
+        .section.active .text-content {
+            animation: slideInLeft 850ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms forwards;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-number {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--accent-neon), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        .section-number::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-neon), transparent);
+            box-shadow: 0 0 10px var(--accent-neon);
+        }
+
+        .text-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            background: linear-gradient(135deg, #ffffff 0%, #c0c0d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .text-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+            max-width: 560px;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 36px;
+            background: linear-gradient(135deg, var(--accent-neon), var(--accent-purple));
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0, 240, 255, 0.3);
+            transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 600ms;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(0, 240, 255, 0.5);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Image Content - Enhanced Slide from Right */
+        .image-content {
+            opacity: 0;
+            transform: translateX(100px);
+            will-change: opacity, transform;
+        }
+
+        .section.active .image-content {
+            animation: slideInRight 850ms cubic-bezier(0.34, 1.56, 0.64, 1) 350ms forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .image-card {
+            background: var(--bg-card);
+            border-radius: 28px;
+            padding: 52px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(40px);
+            transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .image-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    rgba(0, 240, 255, 0.15) 0%,
+                    rgba(179, 102, 255, 0.15) 100%);
+            opacity: 0;
+            transition: opacity 500ms;
+        }
+
+        .image-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 60px rgba(0, 240, 255, 0.2);
+        }
+
+        .image-card:hover::before {
+            opacity: 1;
+        }
+
+        .gradient-placeholder {
+            width: 100%;
+            height: 420px;
+            border-radius: 20px;
+            background: linear-gradient(135deg,
+                    #6366f1 0%,
+                    #a855f7 25%,
+                    #ec4899 50%,
+                    #f97316 75%,
+                    #eab308 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+        }
+
+        .gradient-placeholder::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .mouse-icon {
+            width: 32px;
+            height: 52px;
+            border: 2px solid var(--accent-neon);
+            border-radius: 22px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .mouse-wheel {
+            width: 4px;
+            height: 12px;
+            background: var(--accent-neon);
+            border-radius: 4px;
+            animation: scrollWheel 2s infinite;
+            box-shadow: 0 0 10px var(--accent-neon);
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(16px);
+                opacity: 0;
+            }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-neon), var(--accent-purple), var(--accent-pink));
+            z-index: 1000;
+            transform-origin: left;
+            transition: transform 150ms ease-out;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Section Navigation Dots */
+        .section-nav {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            transition: all 400ms;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-neon);
+            box-shadow: 0 0 20px var(--accent-neon);
+        }
+
+        .nav-dot.active::before {
+            border-color: var(--accent-neon);
+        }
+
+        .nav-dot:hover {
+            background: var(--accent-purple);
+            transform: scale(1.3);
+        }
+
+        /* Section-specific Backgrounds */
+        .section:nth-child(even) {
+            background: rgba(18, 18, 26, 0.2);
+        }
+
+        /* Fade out exiting sections */
+        .section.exiting {
+            opacity: 0;
+            transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Highlight text */
+        .highlight {
+            color: var(--accent-neon);
+            font-weight: 800;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .highlight-purple {
+            color: var(--accent-purple);
+            font-weight: 800;
+            text-shadow: 0 0 30px rgba(179, 102, 255, 0.3);
+        }
+
+        .highlight-pink {
+            color: var(--accent-pink);
+            font-weight: 800;
+            text-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .section-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 60px 0;
+            }
+
+            .section-nav {
+                right: 20px;
+            }
+
+            .text-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .text-content p {
+                font-size: 1.05rem;
+            }
+
+            .image-card {
+                padding: 36px;
+            }
+
+            .gradient-placeholder {
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section {
+                padding: 0 4%;
+            }
+
+            .section-content {
+                gap: 40px;
+            }
+
+            .text-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-nav {
+                display: none;
+            }
+
+            .image-card {
+                padding: 24px;
+            }
+
+            .gradient-placeholder {
+                height: 260px;
+            }
+        }
+
+        /* Performance optimizations */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Parallax Background -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+
+    <!-- Section Navigation -->
+    <div class="section-nav" id="sectionNav">
+        <div class="nav-dot active" data-section="0"></div>
+        <div class="nav-dot" data-section="1"></div>
+        <div class="nav-dot" data-section="2"></div>
+        <div class="nav-dot" data-section="3"></div>
+        <div class="nav-dot" data-section="4"></div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="mouse-icon">
+            <div class="mouse-wheel"></div>
+        </div>
+    </div>
+
+    <!-- Scroll Container -->
+    <div class="scroll-container" id="scrollContainer">
+
+        <!-- Section 1 -->
+        <section class="section" data-section="0">
+            <div class="section-content">
+                <div class="text-content">
+                    <span class="section-number">Section 01</span>
+                    <h1>Premium <span class="highlight">Cinematic</span> Scroll</h1>
+                    <p>
+                        Discover a new way to tell stories on the web. Each section smoothly slides into view,
+                        creating a <span class="highlight">presentation-style</span> experience with controlled,
+                        purposeful animations that captivate your audience from the very first scroll.
+                    </p>
+                    <a href="#" class="cta-button">
+                        Explore More
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="image-content">
+                    <div class="image-card">
+                        <div class="gradient-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="section" data-section="1">
+            <div class="section-content">
+                <div class="text-content">
+                    <span class="section-number">Section 02</span>
+                    <h1>Smooth <span class="highlight-purple">Transitions</span> Matter</h1>
+                    <p>
+                        Powered by <span class="highlight-purple">Intersection Observer API</span>, animations trigger
+                        precisely when
+                        70-80% of each section enters the viewport. Experience cubic-bezier easing, staggered entrances,
+                        and zero jitter for buttery-smooth motion that feels native and polished.
+                    </p>
+                    <a href="#" class="cta-button">
+                        Learn Techniques
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="image-content">
+                    <div class="image-card">
+                        <div class="gradient-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="section" data-section="2">
+            <div class="section-content">
+                <div class="text-content">
+                    <span class="section-number">Section 03</span>
+                    <h1>Dark UI with <span class="highlight">Neon Accents</span></h1>
+                    <p>
+                        A meticulously crafted dark theme featuring soft shadows, rounded containers, and
+                        high-contrast typography. <span class="highlight">Minimal neon accents</span> in cyan, purple,
+                        and pink create visual hierarchy without overwhelming the design. Every pixel serves a purpose.
+                    </p>
+                    <a href="#" class="cta-button">
+                        View Design System
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="image-content">
+                    <div class="image-card">
+                        <div class="gradient-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="section" data-section="3">
+            <div class="section-content">
+                <div class="text-content">
+                    <span class="section-number">Section 04</span>
+                    <h1>Parallax <span class="highlight-purple">Depth Effect</span></h1>
+                    <p>
+                        The background layer moves at a different velocity than foreground content, creating a
+                        <span class="highlight-purple">subtle sense of depth</span> and dimension. Combined with
+                        breathing gradients and floating particles, every scroll feels immersive and alive.
+                    </p>
+                    <a href="#" class="cta-button">
+                        See It in Action
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="image-content">
+                    <div class="image-card">
+                        <div class="gradient-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section class="section" data-section="4">
+            <div class="section-content">
+                <div class="text-content">
+                    <span class="section-number">Section 05</span>
+                    <h1>Apple-Style <span class="highlight-pink">Storytelling</span></h1>
+                    <p>
+                        Inspired by the world's most iconic product pages, this scroll experience feels
+                        <span class="highlight-pink">premium, controlled, and purposeful</span>. Each frame is a
+                        carefully composed slide in your narrative—designed to inform, delight, and convert.
+                    </p>
+                    <a href="#" class="cta-button">
+                        Start Your Journey
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="image-content">
+                    <div class="image-card">
+                        <div class="gradient-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Performance optimization: Use requestAnimationFrame for smooth animations
+        let ticking = false;
+
+        // Generate floating particles
+        function createParticles() {
+            const particleCount = 20;
+            const body = document.body;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                body.appendChild(particle);
+            }
+        }
+
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        };
+
+        let currentSection = null;
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Trigger when 70-80% visible
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+                    // Mark previous section as exiting
+                    if (currentSection && currentSection !== entry.target) {
+                        currentSection.classList.add('exiting');
+                        setTimeout(() => {
+                            currentSection.classList.remove('active', 'exiting');
+                        }, 700);
+                    }
+
+                    // Activate new section
+                    entry.target.classList.add('active');
+                    currentSection = entry.target;
+
+                    // Update navigation dots
+                    const sectionIndex = entry.target.getAttribute('data-section');
+                    updateNavDots(sectionIndex);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Navigation dots functionality
+        function updateNavDots(activeIndex) {
+            const dots = document.querySelectorAll('.nav-dot');
+            dots.forEach((dot, index) => {
+                if (index === parseInt(activeIndex)) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Click navigation
+        document.querySelectorAll('.nav-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                const sectionIndex = dot.getAttribute('data-section');
+                sections[sectionIndex].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Parallax effect with performance optimization
+        const parallaxBg = document.getElementById('parallaxBg');
+        const scrollContainer = document.getElementById('scrollContainer');
+
+        scrollContainer.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = scrollContainer.scrollTop;
+                    const parallaxSpeed = 0.5;
+                    parallaxBg.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Progress bar
+        const progressBar = document.getElementById('progressBar');
+
+        scrollContainer.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                    const scrolled = (scrollContainer.scrollTop / scrollHeight);
+                    progressBar.style.transform = `scaleX(${scrolled})`;
+                });
+            }
+        });
+
+        // Hide scroll indicator after first scroll
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        let hasScrolled = false;
+
+        scrollContainer.addEventListener('scroll', () => {
+            if (!hasScrolled && scrollContainer.scrollTop > 100) {
+                scrollIndicator.classList.add('hidden');
+                hasScrolled = true;
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            // Create particles
+            createParticles();
+
+            // Activate first section
+            setTimeout(() => {
+                sections[0].classList.add('active');
+                currentSection = sections[0];
+            }, 100);
+        });
+
+        // Prevent CTA buttons from navigating
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Add pulse effect
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const currentIndex = parseInt(currentSection?.getAttribute('data-section') || 0);
+
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                const nextIndex = Math.min(currentIndex + 1, sections.length - 1);
+                sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                const prevIndex = Math.max(currentIndex - 1, 0);
+                sections[prevIndex].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                sections[0].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                sections[sections.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+
+</html>
