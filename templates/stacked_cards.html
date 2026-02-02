@@ -28,7 +28,6 @@
             --accent-purple: #b366ff;
             --accent-pink: #ff3366;
             --accent-teal: #00d9c0;
-            --card-spacing: 40px;
         }
 
         body {
@@ -46,12 +45,12 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 24px 48px;
+            padding: 20px 48px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 10, 15, 0.8);
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -85,12 +84,12 @@
 
         /* Intro Section */
         .intro-section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 24px;
+            padding: 120px 24px 80px;
             background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 100%);
             position: relative;
             overflow: hidden;
@@ -103,7 +102,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(77, 159, 255, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 50%, rgba(77, 159, 255, 0.15) 0%, transparent 50%);
         }
 
         .intro-content {
@@ -162,33 +161,39 @@
         }
 
         /* Cards Container */
-        .cards-wrapper {
-            padding-top: 100vh;
+        .cards-container {
+            position: relative;
             background: var(--bg-primary);
         }
 
-        .card-spacer {
+        /* Individual Card Section */
+        .card-section {
             height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 48px;
         }
 
         /* Stacked Card */
         .stacked-card {
             position: sticky;
-            top: var(--card-spacing);
-            height: calc(100vh - var(--card-spacing) * 2);
-            margin-bottom: var(--card-spacing);
+            top: 60px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 120px);
             will-change: transform, opacity;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card-inner {
             height: 100%;
             background: linear-gradient(135deg, #1a1a26 0%, #2d1b3d 100%);
             border-radius: 32px;
-            padding: 80px;
+            padding: 60px 80px;
             box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 20px 60px rgba(0, 0, 0, 0.6),
                 0 0 0 1px rgba(255, 255, 255, 0.05);
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -205,7 +210,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(77, 159, 255, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 30%, rgba(77, 159, 255, 0.12) 0%, transparent 60%);
             pointer-events: none;
         }
 
@@ -242,7 +247,7 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--accent-blue);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .card-2 .card-number {
@@ -263,7 +268,7 @@
 
         .card-content h2 {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 24px;
@@ -281,11 +286,12 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            margin-bottom: 32px;
         }
 
         .tag {
             padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             font-size: 13px;
@@ -297,7 +303,6 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-top: 24px;
             padding: 16px 32px;
             background: rgba(77, 159, 255, 0.15);
             border: 1px solid var(--accent-blue);
@@ -328,7 +333,7 @@
         .media-container {
             width: 100%;
             height: 100%;
-            max-height: 500px;
+            max-height: 450px;
             background: linear-gradient(135deg,
                     #4d9fff 0%,
                     #b366ff 50%,
@@ -336,7 +341,7 @@
             border-radius: 24px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .card-2 .media-container {
@@ -390,41 +395,41 @@
         }
 
         /* Z-index stacking */
-        .card-1 {
+        .card-section:nth-child(1) .stacked-card {
             z-index: 50;
         }
 
-        .card-2 {
+        .card-section:nth-child(2) .stacked-card {
             z-index: 40;
         }
 
-        .card-3 {
+        .card-section:nth-child(3) .stacked-card {
             z-index: 30;
         }
 
-        .card-4 {
+        .card-section:nth-child(4) .stacked-card {
             z-index: 20;
         }
 
-        .card-5 {
+        .card-section:nth-child(5) .stacked-card {
             z-index: 10;
         }
 
         /* Scale effect on scroll */
         .stacked-card.scaled {
-            transform: scale(0.92);
-            opacity: 0.7;
+            transform: scale(0.94);
+            opacity: 0.6;
         }
 
         /* Footer */
         .footer-section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 100%);
             text-align: center;
-            padding: 0 24px;
+            padding: 80px 24px;
         }
 
         .footer-content h2 {
@@ -457,10 +462,19 @@
                 font-size: 3rem;
             }
 
+            .card-section {
+                padding: 0 24px;
+            }
+
+            .stacked-card {
+                top: 40px;
+                height: calc(100vh - 80px);
+            }
+
             .card-inner {
                 grid-template-columns: 1fr;
                 gap: 40px;
-                padding: 48px 32px;
+                padding: 40px 32px;
             }
 
             .card-content h2 {
@@ -468,15 +482,24 @@
             }
 
             .media-container {
-                max-height: 300px;
-            }
-
-            :root {
-                --card-spacing: 20px;
+                max-height: 280px;
             }
         }
 
         @media (max-width: 640px) {
+            .intro-section {
+                padding: 100px 20px 60px;
+            }
+
+            .card-section {
+                padding: 0 16px;
+            }
+
+            .stacked-card {
+                top: 30px;
+                height: calc(100vh - 60px);
+            }
+
             .card-inner {
                 padding: 32px 24px;
                 border-radius: 24px;
@@ -491,7 +514,7 @@
             }
 
             .media-container {
-                max-height: 250px;
+                max-height: 220px;
             }
         }
     </style>
@@ -511,7 +534,7 @@
     <!-- Intro Section -->
     <section class="intro-section">
         <div class="intro-content">
-            <h1>Stacked Cards Effect</h1>
+            <h1>Stacked Cards</h1>
             <p>
                 Experience modern portfolio design with smooth stacking cards.
                 As you scroll, each card slides up and sticks while previous cards scale down and dim.
@@ -526,168 +549,169 @@
         </div>
     </section>
 
-    <!-- Cards Wrapper -->
-    <div class="cards-wrapper">
+    <!-- Cards Container -->
+    <div class="cards-container">
 
         <!-- Card 1 -->
-        <div class="stacked-card card-1">
-            <div class="card-inner">
-                <div class="card-content">
-                    <div class="card-number">Project 01</div>
-                    <h2>E-Commerce Platform</h2>
-                    <p>
-                        A modern, responsive e-commerce solution with real-time inventory management,
-                        secure payment processing, and an intuitive admin dashboard.
-                    </p>
-                    <div class="card-tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Node.js</span>
-                        <span class="tag">MongoDB</span>
-                        <span class="tag">Stripe</span>
+        <section class="card-section">
+            <div class="stacked-card card-1">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-number">Project 01</div>
+                        <h2>E-Commerce Platform</h2>
+                        <p>
+                            A modern, responsive e-commerce solution with real-time inventory management,
+                            secure payment processing, and an intuitive admin dashboard.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Stripe</span>
+                        </div>
+                        <a href="#" class="card-cta">
+                            View Case Study
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="#" class="card-cta">
-                        View Case Study
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="card-media">
-                    <div class="media-container"></div>
+                    <div class="card-media">
+                        <div class="media-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card-spacer"></div>
+        </section>
 
         <!-- Card 2 -->
-        <div class="stacked-card card-2">
-            <div class="card-inner">
-                <div class="card-content">
-                    <div class="card-number">Project 02</div>
-                    <h2>Analytics Dashboard</h2>
-                    <p>
-                        Real-time data visualization platform with customizable widgets,
-                        AI-powered insights, and seamless integration with multiple data sources.
-                    </p>
-                    <div class="card-tags">
-                        <span class="tag">Vue.js</span>
-                        <span class="tag">D3.js</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">PostgreSQL</span>
+        <section class="card-section">
+            <div class="stacked-card card-2">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-number">Project 02</div>
+                        <h2>Analytics Dashboard</h2>
+                        <p>
+                            Real-time data visualization platform with customizable widgets,
+                            AI-powered insights, and seamless integration with multiple data sources.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">D3.js</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">PostgreSQL</span>
+                        </div>
+                        <a href="#" class="card-cta">
+                            View Case Study
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="#" class="card-cta">
-                        View Case Study
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="card-media">
-                    <div class="media-container"></div>
+                    <div class="card-media">
+                        <div class="media-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card-spacer"></div>
+        </section>
 
         <!-- Card 3 -->
-        <div class="stacked-card card-3">
-            <div class="card-inner">
-                <div class="card-content">
-                    <div class="card-number">Project 03</div>
-                    <h2>Social Media App</h2>
-                    <p>
-                        Feature-rich social networking platform with live messaging,
-                        content sharing, and advanced privacy controls for modern users.
-                    </p>
-                    <div class="card-tags">
-                        <span class="tag">React Native</span>
-                        <span class="tag">Firebase</span>
-                        <span class="tag">WebRTC</span>
-                        <span class="tag">Redis</span>
+        <section class="card-section">
+            <div class="stacked-card card-3">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-number">Project 03</div>
+                        <h2>Social Media App</h2>
+                        <p>
+                            Feature-rich social networking platform with live messaging,
+                            content sharing, and advanced privacy controls for modern users.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">React Native</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">WebRTC</span>
+                            <span class="tag">Redis</span>
+                        </div>
+                        <a href="#" class="card-cta">
+                            View Case Study
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="#" class="card-cta">
-                        View Case Study
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="card-media">
-                    <div class="media-container"></div>
+                    <div class="card-media">
+                        <div class="media-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card-spacer"></div>
+        </section>
 
         <!-- Card 4 -->
-        <div class="stacked-card card-4">
-            <div class="card-inner">
-                <div class="card-content">
-                    <div class="card-number">Project 04</div>
-                    <h2>Fitness Tracker</h2>
-                    <p>
-                        Comprehensive health and fitness tracking application with workout plans,
-                        nutrition tracking, and AI-powered personal coaching.
-                    </p>
-                    <div class="card-tags">
-                        <span class="tag">Swift</span>
-                        <span class="tag">HealthKit</span>
-                        <span class="tag">CoreML</span>
-                        <span class="tag">AWS</span>
+        <section class="card-section">
+            <div class="stacked-card card-4">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-number">Project 04</div>
+                        <h2>Fitness Tracker</h2>
+                        <p>
+                            Comprehensive health and fitness tracking application with workout plans,
+                            nutrition tracking, and AI-powered personal coaching.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">Swift</span>
+                            <span class="tag">HealthKit</span>
+                            <span class="tag">CoreML</span>
+                            <span class="tag">AWS</span>
+                        </div>
+                        <a href="#" class="card-cta">
+                            View Case Study
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="#" class="card-cta">
-                        View Case Study
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="card-media">
-                    <div class="media-container"></div>
+                    <div class="card-media">
+                        <div class="media-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card-spacer"></div>
+        </section>
 
         <!-- Card 5 -->
-        <div class="stacked-card card-5">
-            <div class="card-inner">
-                <div class="card-content">
-                    <div class="card-number">Project 05</div>
-                    <h2>Learning Platform</h2>
-                    <p>
-                        Interactive online education platform with video courses,
-                        live sessions, progress tracking, and certification programs.
-                    </p>
-                    <div class="card-tags">
-                        <span class="tag">Next.js</span>
-                        <span class="tag">GraphQL</span>
-                        <span class="tag">Prisma</span>
-                        <span class="tag">Vercel</span>
+        <section class="card-section">
+            <div class="stacked-card card-5">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-number">Project 05</div>
+                        <h2>Learning Platform</h2>
+                        <p>
+                            Interactive online education platform with video courses,
+                            live sessions, progress tracking, and certification programs.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">Next.js</span>
+                            <span class="tag">GraphQL</span>
+                            <span class="tag">Prisma</span>
+                            <span class="tag">Vercel</span>
+                        </div>
+                        <a href="#" class="card-cta">
+                            View Case Study
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </div>
-                    <a href="#" class="card-cta">
-                        View Case Study
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="card-media">
-                    <div class="media-container"></div>
+                    <div class="card-media">
+                        <div class="media-container"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="card-spacer"></div>
     </div>
 
     <!-- Footer Section -->
@@ -704,16 +728,16 @@
 
         const observerOptions = {
             root: null,
-            rootMargin: '0px',
-            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+            rootMargin: '-20% 0px -20% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1.0]
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // When card is less than 50% visible, scale it down
-                if (entry.intersectionRatio < 0.5 && entry.boundingClientRect.top < 0) {
+                // Scale down cards that are being covered
+                if (entry.boundingClientRect.top < 100 && !entry.isIntersecting) {
                     entry.target.classList.add('scaled');
-                } else {
+                } else if (entry.isIntersecting) {
                     entry.target.classList.remove('scaled');
                 }
             });
@@ -727,7 +751,6 @@
         document.querySelectorAll('.card-cta').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Add pulse effect
                 link.style.transform = 'scale(0.95) translateY(-2px)';
                 setTimeout(() => {
                     link.style.transform = '';
@@ -735,13 +758,23 @@
             });
         });
 
-        // Performance optimization
+        // Enhanced scroll effect
         let ticking = false;
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
-                    // Any additional scroll-based animations can go here
+                    cards.forEach((card, index) => {
+                        const rect = card.getBoundingClientRect();
+                        const topPos = rect.top;
+
+                        // Scale down cards that have scrolled past
+                        if (topPos < 60) {
+                            card.classList.add('scaled');
+                        } else {
+                            card.classList.remove('scaled');
+                        }
+                    });
                     ticking = false;
                 });
                 ticking = true;
