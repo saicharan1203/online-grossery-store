@@ -300,10 +300,10 @@
                             const nextCardRect = nextCard.getBoundingClientRect();
 
                             // Calculate how much the next card has scrolled up
-                            // When next card is at 30% from top (70% scrolled up), fade current card
-                            const triggerPoint = windowHeight * 0.3;
+                            // When next card is at 45% from top (55% scrolled up), fade current card
+                            const triggerPoint = windowHeight * 0.45;
 
-                            // Fade current card when NEXT card has scrolled 70% up
+                            // Fade current card when NEXT card has scrolled 55% up
                             if (nextCardRect.top <= triggerPoint) {
                                 card.classList.add('scaled');
                             } else {
