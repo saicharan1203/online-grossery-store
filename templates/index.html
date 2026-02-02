@@ -707,26 +707,37 @@
         // Add 'selected' class to clicked chip
         event.target.classList.add('selected');
 
-        // Filter products
+        // Filter products with proper style reset
         productCards.forEach(card => {
             const productCategory = card.getAttribute('data-category');
+
+            // Reset all inline styles first
+            card.style.removeProperty('transition');
+            card.style.removeProperty('opacity');
+            card.style.removeProperty('transform');
 
             if (category === '' || productCategory === category) {
                 // Show product
                 card.style.display = '';
+
+                // Force reflow
+                void card.offsetHeight;
+
                 // Fade in animation
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
+
+                requestAnimationFrame(() => {
                     card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, 10);
+                });
             } else {
                 // Hide product
                 card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(-10px)';
+
                 setTimeout(() => {
                     card.style.display = 'none';
                 }, 300);
