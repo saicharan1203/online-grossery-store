@@ -281,19 +281,22 @@
 
     <!-- Add Stacking Animation Script -->
     <script>
-        // Intersection Observer for stacked cards scaling (exact same as demo)
+        // Intersection Observer for stacked cards scaling
         const categoryCards = document.querySelectorAll('.stacked-category-card');
 
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -20% 0px',
+            rootMargin: '-30% 0px -30% 0px',
             threshold: [0, 0.25, 0.5, 0.75, 1.0]
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Scale down cards that are being covered
-                if (entry.boundingClientRect.top < 100 && !entry.isIntersecting) {
+                const windowHeight = window.innerHeight;
+                const triggerPoint = windowHeight * 0.3; // 30% from top (70% scrolled)
+
+                // Scale down cards only when they're 70% scrolled up
+                if (entry.boundingClientRect.top < triggerPoint && !entry.isIntersecting) {
                     entry.target.classList.add('scaled');
                 } else if (entry.isIntersecting) {
                     entry.target.classList.remove('scaled');
@@ -305,18 +308,21 @@
             observer.observe(card);
         });
 
-        // Enhanced scroll effect (exact same as demo)
+        // Enhanced scroll effect with delayed scaling
         let ticking = false;
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
+                    const windowHeight = window.innerHeight;
+                    const triggerPoint = windowHeight * 0.3; // Only scale when 30% from top (70% scrolled)
+
                     categoryCards.forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
                         const topPos = rect.top;
 
-                        // Scale down cards that have scrolled past
-                        if (topPos < 70) {
+                        // Scale down cards only after they've scrolled 70% up
+                        if (topPos < triggerPoint) {
                             card.classList.add('scaled');
                         } else {
                             card.classList.remove('scaled');
