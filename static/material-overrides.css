@@ -436,13 +436,19 @@
     left: auto;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
+    justify-content: center;
+    gap: 6px;
+    min-width: 36px;
+    height: 32px;
+    padding: 8px 14px;
     background: var(--md-tertiary-container);
     color: var(--md-on-tertiary-container);
     border-radius: var(--md-shape-full);
-    font: var(--md-font-label-medium);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
     z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition:
         opacity var(--md-duration-short4) var(--md-motion-standard),
         transform var(--md-duration-short4) var(--md-motion-standard);
@@ -452,6 +458,14 @@
     opacity: 0;
     transform: scale(0.8);
     pointer-events: none;
+}
+
+/* Enhanced visibility in dark mode */
+[data-theme="dark"] .quantity-pill {
+    background: #7B61FF;
+    color: #FFFFFF;
+    box-shadow: 0 2px 12px rgba(123, 97, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ============================================
