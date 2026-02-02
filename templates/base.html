@@ -28,10 +28,10 @@
 
 <body class="{% block body_class %}{% endblock %}">
     <nav class="top-nav md-nav">
-        <div class="logo">
+        <a class="logo" href="{{ url_for('main.index') }}">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="FreshMarket Logo">
             <span>FreshMarket</span>
-        </div>
+        </a>
 
         <!-- Hamburger Menu Button for Mobile -->
         <button id="mobile-menu-toggle" class="mobile-menu-toggle md-icon-btn" type="button"
@@ -83,10 +83,6 @@
                 <span class="material-icons">account_circle</span>
                 <span class="nav-link-text">Profile</span>
             </a>
-            <span class="nav-user md-chip">
-                <span class="material-icons">person</span>
-                {{ current_user.username }}
-            </span>
             <a href="{{ url_for('main.logout') }}" class="nav-link md-nav-link">
                 <span class="material-icons">logout</span>
                 <span class="nav-link-text">Logout</span>

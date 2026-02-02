@@ -965,16 +965,30 @@ body[data-theme="dark"] .btn-primary:hover {
 }
 
 body[data-theme="dark"] .btn-secondary,
-body[data-theme="dark"] .btn-ghost {
-    background: rgba(30, 41, 59, 0.6);
-    border-color: rgba(148, 163, 184, 0.2);
-    color: #e2e8f0;
+body[data-theme="dark"] .btn-ghost,
+body[data-theme="dark"] .btn.btn-secondary,
+body[data-theme="dark"] .btn.btn-ghost,
+body[data-theme="dark"] .btn.btn-secondary.btn-ghost,
+body[data-theme="dark"] a.btn-secondary,
+body[data-theme="dark"] a.btn-ghost,
+body[data-theme="dark"] a.btn.btn-secondary.btn-ghost {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(148, 163, 184, 0.3) !important;
+    color: #F0F4F8 !important;
+    font-weight: 600 !important;
 }
 
 body[data-theme="dark"] .btn-secondary:hover,
-body[data-theme="dark"] .btn-ghost:hover {
-    background: rgba(51, 65, 85, 0.8);
-    border-color: rgba(6, 182, 212, 0.3);
+body[data-theme="dark"] .btn-ghost:hover,
+body[data-theme="dark"] .btn.btn-secondary:hover,
+body[data-theme="dark"] .btn.btn-ghost:hover,
+body[data-theme="dark"] .btn.btn-secondary.btn-ghost:hover,
+body[data-theme="dark"] a.btn-secondary:hover,
+body[data-theme="dark"] a.btn-ghost:hover,
+body[data-theme="dark"] a.btn.btn-secondary.btn-ghost:hover {
+    background: rgba(51, 65, 85, 0.95) !important;
+    border-color: rgba(6, 182, 212, 0.5) !important;
+    color: #FFFFFF !important;
 }
 
 /* Dark Mode Filters */
