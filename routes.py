@@ -147,6 +147,14 @@ def index():
     # Fresh drop radar (newest arrivals)
     fresh_products = Product.query.order_by(Product.id.desc()).limit(4).all()
     
+    # Category-grouped products for stacked cards
+    category_showcase = {}
+    showcase_categories = ['Vegetable', 'Fruit', 'Dairy', 'Bakery']
+    for category in showcase_categories:
+        category_products = Product.query.filter_by(category=category).filter(Product.stock > 0).order_by(Product.average_rating.desc()).limit(4).all()
+        if category_products:
+            category_showcase[category] = category_products
+    
     return render_template('index.html', 
                          products=products, 
                          cart_quantities=cart_quantities,
@@ -163,7 +171,8 @@ def index():
                          price_ceiling=price_ceiling,
                          spotlight_products=spotlight_products,
                          quick_reorder_items=quick_reorder_items,
-                         fresh_products=fresh_products)
+                         fresh_products=fresh_products,
+                         category_showcase=category_showcase)
 
 # --- Authentication ---
 @main.route('/login', methods=['GET', 'POST'])

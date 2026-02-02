@@ -46,6 +46,286 @@
     </div>
 </section>
 
+<!-- Stacked Category Showcase -->
+<link rel="stylesheet" href="{{ url_for('static', filename='stacked_homepage.css') }}">
+<section class="category-showcase">
+    {% if category_showcase %}
+
+    <!-- Vegetables Section -->
+    {% if category_showcase.get('Vegetable') %}
+    <div class="category-section category-vegetables">
+        <div class="stacked-category-card">
+            <div class="category-card-inner">
+                <div class="category-content">
+                    <div class="category-badge">
+                        <span class="material-icons">eco</span>
+                        Fresh Vegetables
+                    </div>
+                    <h2>Farm-Fresh Vegetables</h2>
+                    <p class="description">
+                        Handpicked, organic vegetables delivered straight from local farms.
+                        Crisp, nutritious, and packed with flavor for your healthy lifestyle.
+                    </p>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ category_showcase['Vegetable']|length }}+</div>
+                            <div class="stat-label">Products</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Organic</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24h</div>
+                            <div class="stat-label">Fresh</div>
+                        </div>
+                    </div>
+                    <a href="/?category=Vegetable" class="category-cta">
+                        Shop Vegetables
+                        <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="category-products">
+                    {% for product in category_showcase['Vegetable'] %}
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="mini-product-card">
+                        {% if product.image_url %}
+                        <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}"
+                            class="mini-product-image">
+                        {% endif %}
+                        <h4 class="mini-product-name">{{ product.name }}</h4>
+                        <div class="mini-product-price">${{ "%.2f"|format(product.price) }}</div>
+                        {% if product.review_count > 0 %}
+                        <div class="mini-product-rating">
+                            <span class="star">★</span>
+                            {{ "%.1f"|format(product.average_rating) }}
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Fruits Section -->
+    {% if category_showcase.get('Fruit') %}
+    <div class="category-section category-fruits">
+        <div class="stacked-category-card">
+            <div class="category-card-inner">
+                <div class="category-content">
+                    <div class="category-badge">
+                        <span class="material-icons">spa</span>
+                        Fresh Fruits
+                    </div>
+                    <h2>Seasonal Fruits</h2>
+                    <p class="description">
+                        Sweet, juicy fruits at peak ripeness. From exotic tropicals to classic favorites,
+                        every bite bursts with natural sweetness and vitamins.
+                    </p>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ category_showcase['Fruit']|length }}+</div>
+                            <div class="stat-label">Varieties</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Peak</div>
+                            <div class="stat-label">Ripeness</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Daily</div>
+                            <div class="stat-label">Fresh</div>
+                        </div>
+                    </div>
+                    <a href="/?category=Fruit" class="category-cta">
+                        Shop Fruits
+                        <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="category-products">
+                    {% for product in category_showcase['Fruit'] %}
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="mini-product-card">
+                        {% if product.image_url %}
+                        <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}"
+                            class="mini-product-image">
+                        {% endif %}
+                        <h4 class="mini-product-name">{{ product.name }}</h4>
+                        <div class="mini-product-price">${{ "%.2f"|format(product.price) }}</div>
+                        {% if product.review_count > 0 %}
+                        <div class="mini-product-rating">
+                            <span class="star">★</span>
+                            {{ "%.1f"|format(product.average_rating) }}
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Dairy Section -->
+    {% if category_showcase.get('Dairy') %}
+    <div class="category-section category-dairy">
+        <div class="stacked-category-card">
+            <div class="category-card-inner">
+                <div class="category-content">
+                    <div class="category-badge">
+                        <span class="material-icons">local_cafe</span>
+                        Dairy Products
+                    </div>
+                    <h2>Premium Dairy</h2>
+                    <p class="description">
+                        Fresh milk, creamy cheese, and artisan dairy products from trusted local farms.
+                        Quality you can taste in every sip and bite.
+                    </p>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ category_showcase['Dairy']|length }}+</div>
+                            <div class="stat-label">Products</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Farm</div>
+                            <div class="stat-label">Fresh</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Local</div>
+                            <div class="stat-label">Sourced</div>
+                        </div>
+                    </div>
+                    <a href="/?category=Dairy" class="category-cta">
+                        Shop Dairy
+                        <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="category-products">
+                    {% for product in category_showcase['Dairy'] %}
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="mini-product-card">
+                        {%if product.image_url %}
+                        <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}"
+                            class="mini-product-image">
+                        {% endif %}
+                        <h4 class="mini-product-name">{{ product.name }}</h4>
+                        <div class="mini-product-price">${{ "%.2f"|format(product.price) }}</div>
+                        {% if product.review_count > 0 %}
+                        <div class="mini-product-rating">
+                            <span class="star">★</span>
+                            {{ "%.1f"|format(product.average_rating) }}
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Bakery Section -->
+    {% if category_showcase.get('Bakery') %}
+    <div class="category-section category-bakery">
+        <div class="stacked-category-card">
+            <div class="category-card-inner">
+                <div class="category-content">
+                    <div class="category-badge">
+                        <span class="material-icons">bakery_dining</span>
+                        Bakery Goods
+                    </div>
+                    <h2>Artisan Bakery</h2>
+                    <p class="description">
+                        Freshly baked bread, pastries, and treats made daily by master bakers.
+                        From crusty sourdough to flaky croissants, taste the difference.
+                    </p>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ category_showcase['Bakery']|length }}+</div>
+                            <div class="stat-label">Items</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Daily</div>
+                            <div class="stat-label">Baked</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Artisan</div>
+                            <div class="stat-label">Quality</div>
+                        </div>
+                    </div>
+                    <a href="/?category=Bakery" class="category-cta">
+                        Shop Bakery
+                        <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="category-products">
+                    {% for product in category_showcase['Bakery'] %}
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="mini-product-card">
+                        {% if product.image_url %}
+                        <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}"
+                            class="mini-product-image">
+                        {% endif %}
+                        <h4 class="mini-product-name">{{ product.name }}</h4>
+                        <div class="mini-product-price">${{ "%.2f"|format(product.price) }}</div>
+                        {% if product.review_count > 0 %}
+                        <div class="mini-product-rating">
+                            <span class="star">★</span>
+                            {{ "%.1f"|format(product.average_rating) }}
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Add Stacking Animation Script -->
+    <script>
+        // Intersection Observer for stacked cards scaling
+        const categoryCards = document.querySelectorAll('.stacked-category-card');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px -10% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1.0]
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.boundingClientRect.top < 80 && !entry.isIntersecting) {
+                    entry.target.classList.add('scaled');
+                } else if (entry.isIntersecting) {
+                    entry.target.classList.remove('scaled');
+                }
+            });
+        }, observerOptions);
+
+        categoryCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Enhanced scroll performance
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    categoryCards.forEach(card => {
+                        const rect = card.getBoundingClientRect();
+                        if (rect.top < 80) {
+                            card.classList.add('scaled');
+                        } else {
+                            card.classList.remove('scaled');
+                        }
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+    {% endif %}
+</section>
+
 <section class="spotlight-section">
     <div class="spotlight-header">
         <div>
