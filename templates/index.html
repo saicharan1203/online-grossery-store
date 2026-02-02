@@ -556,22 +556,11 @@
             ] %}
             <div class="category-filters">
                 {% for filter in filter_categories %}
-                {% set url_parts = [] %}
-                {% if filter.value %}
-                {% set _ = url_parts.append('category=' + filter.value) %}
-                {% endif %}
-                {% if search_query %}
-                {% set _ = url_parts.append('search=' + search_query) %}
-                {% endif %}
-                {% if current_sort %}
-                {% set _ = url_parts.append('sort=' + current_sort) %}
-                {% endif %}
-                {% set url = '/?' + url_parts|join('&') %}
-
-                <a href="{{ url }}"
-                    class="filter-chip md-chip md-chip-filter {% if (not filter.value and not current_category) or (filter.value == current_category) %}selected{% endif %}">
+                <button type="button"
+                    class="filter-chip md-chip md-chip-filter {% if (not filter.value and not current_category) or (filter.value == current_category) %}selected{% endif %}"
+                    data-category="{{ filter.value }}" onclick="filterByCategory('{{ filter.value }}')">
                     {{ filter.label }}
-                </a>
+                </button>
                 {% endfor %}
             </div>
             <div class="sort-container">
@@ -710,6 +699,50 @@
         if (pageState.category) params.set('category', pageState.category);
         if (pageState.sort) params.set('sort', pageState.sort);
         window.location.href = '/?' + params.toString();
+    }
+
+    // Category filtering (no page refresh)
+    function filterByCategory(category) {
+        // Get all product cards
+        const productCards = document.querySelectorAll('.product-card');
+
+        // Get all filter chips
+        const filterChips = document.querySelectorAll('.filter-chip');
+
+        // Remove 'selected' class from all chips
+        filterChips.forEach(chip => chip.classList.remove('selected'));
+
+        // Add 'selected' class to clicked chip
+        event.target.classList.add('selected');
+
+        // Filter products
+        productCards.forEach(card => {
+            const productCategory = card.getAttribute('data-category');
+
+            if (category === '' || productCategory === category) {
+                // Show product
+                card.style.display = '';
+                // Fade in animation
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 10);
+            } else {
+                // Hide product
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Update page state
+        pageState.category = category;
     }
 
     // Sort functionality
