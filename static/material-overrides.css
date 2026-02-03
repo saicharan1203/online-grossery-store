@@ -530,10 +530,15 @@
    LOGIN PAGE OVERRIDES
    ============================================ */
 .form-section.md-card-elevated {
-    background: var(--md-surface);
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 32px;
     border-radius: var(--md-shape-extra-large);
-    box-shadow: var(--md-elevation-3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .form-title.md-headline-large {
@@ -667,7 +672,13 @@
 }
 
 [data-theme="dark"] .form-section.md-card-elevated {
-    background: var(--md-surface-1);
+    background: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Wishlist Button - Dark Mode Visibility Fix */
@@ -818,4 +829,92 @@
 
 .hero-stats .stat-card:nth-child(3) {
     animation-delay: 300ms;
+}
+
+/* ============================================
+   GOOGLE SIGN-IN BUTTON STYLES
+   ============================================ */
+
+/* OR Divider */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+    width: 100%;
+}
+
+.auth-divider .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--md-outline-variant);
+}
+
+.auth-divider .divider-text {
+    color: var(--md-on-surface-variant);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Google Sign-In Button */
+.google-signin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--md-shape-full);
+    font: var(--md-font-label-large);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color var(--md-duration-short4) var(--md-motion-standard),
+        border-color var(--md-duration-short4) var(--md-motion-standard),
+        box-shadow var(--md-duration-short4) var(--md-motion-standard),
+        transform var(--md-duration-short3) var(--md-motion-standard);
+}
+
+.google-signin-btn:hover {
+    background: var(--md-surface-variant);
+    border-color: var(--md-primary);
+    box-shadow: var(--md-elevation-1);
+}
+
+.google-signin-btn:active {
+    transform: scale(0.98);
+}
+
+.google-signin-btn .google-icon {
+    flex-shrink: 0;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .google-signin-btn {
+    background: var(--md-surface-2);
+    border-color: var(--md-outline-variant);
+}
+
+[data-theme="dark"] .google-signin-btn:hover {
+    background: var(--md-surface-3);
+    border-color: var(--md-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .google-signin-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .google-signin-btn .google-icon {
+        width: 18px;
+        height: 18px;
+    }
 }
