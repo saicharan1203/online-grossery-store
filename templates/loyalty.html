@@ -122,7 +122,12 @@
         margin-bottom: 0.5rem;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
+    }
+
+    .loyalty-header p {
+        color: var(--md-on-surface-variant, #666);
     }
 
     .points-summary {
@@ -183,13 +188,13 @@
     }
 
     .stat-card {
-        background: white;
+        background: var(--md-surface, white);
         border-radius: 15px;
         padding: 1.5rem;
         display: flex;
         align-items: center;
         gap: 1rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--md-elevation-2, 0 4px 15px rgba(0, 0, 0, 0.1));
     }
 
     .stat-icon {
@@ -204,21 +209,21 @@
 
     .stat-info p {
         margin: 0.25rem 0 0 0;
-        color: #666;
+        color: var(--md-on-surface-variant, #666);
         font-size: 0.9rem;
     }
 
     .rewards-info {
-        background: white;
+        background: var(--md-surface, white);
         border-radius: 20px;
         padding: 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--md-elevation-2, 0 4px 15px rgba(0, 0, 0, 0.1));
     }
 
     .rewards-info h3 {
         margin-top: 0;
-        color: #333;
+        color: var(--md-on-surface, #333);
     }
 
     .info-cards {
@@ -231,7 +236,7 @@
     .info-card {
         text-align: center;
         padding: 1.5rem;
-        border: 2px solid #f0f0f0;
+        border: 2px solid var(--md-outline-variant, #f0f0f0);
         border-radius: 15px;
         transition: all 0.3s ease;
     }
@@ -258,25 +263,25 @@
 
     .info-card h4 {
         margin: 0.5rem 0;
-        color: #333;
+        color: var(--md-on-surface, #333);
     }
 
     .info-card p {
-        color: #666;
+        color: var(--md-on-surface-variant, #666);
         font-size: 0.95rem;
     }
 
     .transaction-history {
-        background: white;
+        background: var(--md-surface, white);
         border-radius: 20px;
         padding: 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--md-elevation-2, 0 4px 15px rgba(0, 0, 0, 0.1));
     }
 
     .transaction-history h3 {
         margin-top: 0;
-        color: #333;
+        color: var(--md-on-surface, #333);
     }
 
     .transactions-list {
@@ -288,12 +293,12 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--md-outline-variant, #f0f0f0);
         transition: background 0.2s ease;
     }
 
     .transaction-item:hover {
-        background: #f9f9f9;
+        background: var(--md-surface-variant, #f9f9f9);
     }
 
     .transaction-item:last-child {
@@ -328,13 +333,13 @@
     .transaction-desc {
         margin: 0;
         font-weight: 500;
-        color: #333;
+        color: var(--md-on-surface, #333);
     }
 
     .transaction-date {
         margin: 0.25rem 0 0 0;
         font-size: 0.85rem;
-        color: #999;
+        color: var(--md-on-surface-variant, #999);
     }
 
     .transaction-points {
@@ -355,13 +360,13 @@
         display: block;
         font-size: 0.75rem;
         font-weight: 400;
-        color: #999;
+        color: var(--md-on-surface-variant, #999);
     }
 
     .no-transactions {
         text-align: center;
         padding: 3rem 1rem;
-        color: #999;
+        color: var(--md-on-surface-variant, #999);
     }
 
     .loyalty-cta {
@@ -380,6 +385,23 @@
     .loyalty-cta p {
         margin-bottom: 1.5rem;
         opacity: 0.9;
+    }
+
+    /* Dark Mode Support */
+    [data-theme="dark"] .stat-card {
+        background: var(--md-surface-1, #1e1e1e);
+    }
+
+    [data-theme="dark"] .rewards-info {
+        background: var(--md-surface-1, #1e1e1e);
+    }
+
+    [data-theme="dark"] .transaction-history {
+        background: var(--md-surface-1, #1e1e1e);
+    }
+
+    [data-theme="dark"] .transaction-item:hover {
+        background: var(--md-surface-2, #2a2a2a);
     }
 
     @media (max-width: 768px) {
