@@ -1461,3 +1461,60 @@ def stacked_cards():
 def ultra_smooth():
     """Display the ultra smooth 120fps scrolling experience"""
     return render_template('ultra_smooth_scroll.html')
+
+
+# --- AI Shopping Assistant Chatbot ---
+from flask import session as flask_session
+
+@main.route('/api/chatbot', methods=['POST'])
+def chatbot():
+    """
+    AI chatbot endpoint for FreshBot shopping assistant.
+    Accepts JSON with 'message' field, returns AI response.
+    """
+    try:
+        from ai_chatbot import chat_with_ai
+    except ImportError:
+        return jsonify({'success': False, 'message': 'AI service unavailable'})
+
+    data = request.get_json()
+    if not data or not data.get('message'):
+        return jsonify({'success': False, 'message': 'No message provided'})
+
+    user_message = data['message'].strip()
+    if not user_message:
+        return jsonify({'success': False, 'message': 'Empty message'})
+
+    if len(user_message) > 500:
+        return jsonify({'success': False, 'message': 'Message too long (max 500 characters)'})
+
+    # Retrieve conversation history from session
+    conversation_history = flask_session.get('chatbot_history', [])
+
+    # Get AI response
+    ai_response = chat_with_ai(
+        message=user_message,
+        user=current_user if current_user.is_authenticated else None,
+        conversation_history=conversation_history
+    )
+
+    # Update conversation history (keep last 10 exchanges = 20 messages)
+    conversation_history.append({'role': 'user', 'content': user_message})
+    conversation_history.append({'role': 'model', 'content': ai_response})
+    if len(conversation_history) > 20:
+        conversation_history = conversation_history[-20:]
+    flask_session['chatbot_history'] = conversation_history
+    flask_session.modified = True
+
+    return jsonify({
+        'success': True,
+        'message': ai_response,
+        'is_authenticated': current_user.is_authenticated
+    })
+
+
+@main.route('/api/chatbot/reset', methods=['POST'])
+def chatbot_reset():
+    """Reset the chatbot conversation history."""
+    flask_session.pop('chatbot_history', None)
+    return jsonify({'success': True, 'message': 'Conversation reset'})

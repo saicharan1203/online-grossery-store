@@ -16,6 +16,8 @@ def create_app(test_config=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config.setdefault('GOOGLE_CLIENT_ID', os.getenv('GOOGLE_CLIENT_ID'))
     app.config.setdefault('GOOGLE_CLIENT_SECRET', os.getenv('GOOGLE_CLIENT_SECRET'))
+    app.config['GEMINI_API_KEY'] = os.getenv('GEMINI_API_KEY', '')
+
 
     if test_config:
         app.config.update(test_config)

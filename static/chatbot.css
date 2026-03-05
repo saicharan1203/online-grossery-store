@@ -1,0 +1,794 @@
+/* =====================================================
+   FreshBot AI Chatbot UI — Premium Glassmorphic Design
+   ===================================================== */
+
+/* ---- Floating Action Button ---- */
+#freshbot-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+    border: none;
+    cursor: pointer;
+    z-index: 9998;
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.45), 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+    overflow: hidden;
+}
+
+#freshbot-fab:hover {
+    transform: scale(1.12) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(76, 175, 80, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+#freshbot-fab:active {
+    transform: scale(0.96);
+}
+
+#freshbot-fab .fab-icon {
+    font-size: 28px;
+    color: #fff;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+    position: absolute;
+}
+
+#freshbot-fab .fab-icon-open {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+}
+
+#freshbot-fab.is-open .fab-icon-bot {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+}
+
+#freshbot-fab.is-open .fab-icon-open {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Pulse ring animation */
+#freshbot-fab::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid rgba(76, 175, 80, 0.6);
+    animation: fab-pulse 2.5s ease-out infinite;
+}
+
+@keyframes fab-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    70% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Notification badge */
+#freshbot-fab .fab-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
+    background: #FF5252;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badge-pop {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* ---- Chat Window ---- */
+#freshbot-window {
+    position: fixed;
+    bottom: 104px;
+    right: 28px;
+    width: 380px;
+    max-width: calc(100vw - 32px);
+    height: 560px;
+    max-height: calc(100vh - 120px);
+    z-index: 9997;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* Glass morphism */
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+
+    /* Entrance animation */
+    transform-origin: bottom right;
+    transform: scale(0.6) translateY(40px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
+        opacity 0.3s ease;
+}
+
+#freshbot-window.is-open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Dark mode */
+[data-theme="dark"] #freshbot-window {
+    background: rgba(28, 30, 36, 0.93);
+    border-color: rgba(76, 175, 80, 0.25);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(76, 175, 80, 0.15) inset;
+}
+
+/* ---- Chat Header ---- */
+#freshbot-header {
+    background: linear-gradient(135deg, #388E3C 0%, #1565C0 100%);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+#freshbot-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.freshbot-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.freshbot-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: #69F0AE;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.freshbot-header-info {
+    flex: 1;
+}
+
+.freshbot-header-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+}
+
+.freshbot-header-status {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.freshbot-header-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #69F0AE;
+    border-radius: 50%;
+    display: inline-block;
+    animation: status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+#freshbot-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+#freshbot-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#freshbot-reset-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.3s;
+    flex-shrink: 0;
+}
+
+#freshbot-reset-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(180deg);
+}
+
+/* ---- Quick Suggestions ---- */
+#freshbot-suggestions {
+    padding: 10px 14px 4px;
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] #freshbot-suggestions {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.freshbot-suggestion-chip {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #2E7D32;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .freshbot-suggestion-chip {
+    background: rgba(76, 175, 80, 0.15);
+    border-color: rgba(76, 175, 80, 0.35);
+    color: #A5D6A7;
+}
+
+.freshbot-suggestion-chip:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+    transform: translateY(-1px);
+}
+
+/* ---- Messages Area ---- */
+#freshbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+}
+
+#freshbot-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+#freshbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#freshbot-messages::-webkit-scrollbar-thumb {
+    background: rgba(76, 175, 80, 0.3);
+    border-radius: 2px;
+}
+
+/* Message bubbles */
+.freshbot-message {
+    display: flex;
+    gap: 8px;
+    max-width: 90%;
+    animation: msg-slide-in 0.3s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
+@keyframes msg-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.freshbot-message.user-msg {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.freshbot-message.bot-msg {
+    align-self: flex-start;
+}
+
+.freshbot-msg-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+.bot-msg .freshbot-msg-avatar {
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+}
+
+.user-msg .freshbot-msg-avatar {
+    background: linear-gradient(135deg, #7E57C2, #5C6BC0);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.freshbot-bubble {
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    word-break: break-word;
+    position: relative;
+}
+
+.bot-msg .freshbot-bubble {
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.15);
+    color: #1a1a2e;
+    border-bottom-left-radius: 4px;
+}
+
+[data-theme="dark"] .bot-msg .freshbot-bubble {
+    background: rgba(76, 175, 80, 0.12);
+    border-color: rgba(76, 175, 80, 0.2);
+    color: #e8f5e9;
+}
+
+.user-msg .freshbot-bubble {
+    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.freshbot-timestamp {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.4);
+    margin-top: 3px;
+    padding: 0 4px;
+    align-self: flex-end;
+}
+
+[data-theme="dark"] .freshbot-timestamp {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Typing indicator */
+.freshbot-typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.15);
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    width: fit-content;
+}
+
+[data-theme="dark"] .freshbot-typing {
+    background: rgba(76, 175, 80, 0.12);
+    border-color: rgba(76, 175, 80, 0.2);
+}
+
+.freshbot-typing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4CAF50;
+    animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.freshbot-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.freshbot-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-bounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    30% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
+}
+
+/* Welcome message area */
+.freshbot-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+    gap: 10px;
+    animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.freshbot-welcome-icon {
+    font-size: 48px;
+    animation: wave 2.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+.freshbot-welcome-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2E7D32;
+    margin: 0;
+}
+
+[data-theme="dark"] .freshbot-welcome-title {
+    color: #A5D6A7;
+}
+
+.freshbot-welcome-subtitle {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .freshbot-welcome-subtitle {
+    color: #aaa;
+}
+
+/* ---- Input Area ---- */
+#freshbot-input-area {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] #freshbot-input-area {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#freshbot-input {
+    flex: 1;
+    border: 1.5px solid rgba(76, 175, 80, 0.3);
+    border-radius: 22px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    resize: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    color: #1a1a2e;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    max-height: 100px;
+    overflow-y: auto;
+    font-family: 'Roboto', sans-serif;
+    scrollbar-width: thin;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] #freshbot-input {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e8f5e9;
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+#freshbot-input::placeholder {
+    color: #aaa;
+}
+
+#freshbot-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
+
+#freshbot-send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.2s,
+        opacity 0.2s;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+}
+
+#freshbot-send-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 4px 14px rgba(76, 175, 80, 0.5);
+}
+
+#freshbot-send-btn:active:not(:disabled) {
+    transform: scale(0.94);
+}
+
+#freshbot-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#freshbot-send-btn .material-icons {
+    font-size: 20px;
+}
+
+/* ---- Rich Markdown Formatting in Bot Bubbles ---- */
+.freshbot-bubble strong,
+.freshbot-bubble b {
+    font-weight: 700;
+    color: inherit;
+}
+
+.freshbot-bubble em,
+.freshbot-bubble i {
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* Numbered + bullet lists */
+.freshbot-bubble .fb-list {
+    margin: 4px 0 4px 0;
+    padding-left: 20px;
+    list-style: none;
+    counter-reset: fb-counter;
+}
+
+.freshbot-bubble ul.fb-list {
+    padding-left: 16px;
+}
+
+.freshbot-bubble ol.fb-list {
+    counter-reset: fb-counter;
+    padding-left: 4px;
+}
+
+.freshbot-bubble .fb-list li {
+    margin: 4px 0;
+    padding: 3px 0 3px 4px;
+    line-height: 1.5;
+    position: relative;
+    border-radius: 4px;
+    transition: background 0.15s;
+}
+
+.freshbot-bubble ul.fb-list li::before {
+    content: '›';
+    color: #4CAF50;
+    font-weight: 900;
+    position: absolute;
+    left: -14px;
+    top: 3px;
+    font-size: 14px;
+}
+
+.freshbot-bubble ol.fb-list li {
+    counter-increment: fb-counter;
+    padding-left: 8px;
+}
+
+.freshbot-bubble ol.fb-list li::before {
+    content: counter(fb-counter) ".";
+    color: #2196F3;
+    font-weight: 700;
+    position: absolute;
+    left: -20px;
+    top: 3px;
+    font-size: 12px;
+    min-width: 16px;
+    text-align: right;
+}
+
+[data-theme="dark"] .freshbot-bubble ul.fb-list li::before {
+    color: #69F0AE;
+}
+
+[data-theme="dark"] .freshbot-bubble ol.fb-list li::before {
+    color: #90CAF9;
+}
+
+/* Section headers (lines ending with :) */
+.freshbot-bubble .fb-section-header {
+    font-weight: 700;
+    font-size: 13px;
+    color: #1B5E20;
+    margin: 8px 0 2px;
+    padding: 5px 8px;
+    background: rgba(76, 175, 80, 0.08);
+    border-left: 3px solid #4CAF50;
+    border-radius: 0 4px 4px 0;
+    letter-spacing: 0.01em;
+}
+
+[data-theme="dark"] .freshbot-bubble .fb-section-header {
+    color: #A5D6A7;
+    background: rgba(76, 175, 80, 0.12);
+}
+
+/* Normal text line */
+.freshbot-bubble .fb-line {
+    line-height: 1.6;
+    margin: 1px 0;
+}
+
+/* Paragraph spacer */
+.freshbot-bubble .fb-spacer {
+    height: 6px;
+}
+
+/* Horizontal rule */
+.freshbot-bubble .fb-hr {
+    border: none;
+    border-top: 1px solid rgba(76, 175, 80, 0.2);
+    margin: 8px 0;
+}
+
+/* Inline code */
+.freshbot-bubble .fb-code {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #1B5E20;
+}
+
+[data-theme="dark"] .freshbot-bubble .fb-code {
+    background: rgba(76, 175, 80, 0.15);
+    color: #A5D6A7;
+}
+
+/* Wider window to accommodate product lists */
+#freshbot-window {
+    width: 400px;
+}
+
+@media (max-width: 440px) {
+    #freshbot-window {
+        width: calc(100vw - 24px);
+    }
+}
+
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 480px) {
+    #freshbot-window {
+        right: 12px;
+        bottom: 90px;
+        width: calc(100vw - 24px);
+        height: calc(100vh - 110px);
+        border-radius: 20px;
+    }
+
+    #freshbot-fab {
+        bottom: 20px;
+        right: 20px;
+        width: 54px;
+        height: 54px;
+    }
+}

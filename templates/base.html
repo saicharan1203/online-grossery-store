@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='homepage_modern.css') }}">
     <!-- Material Design Overrides - Must be last -->
     <link rel="stylesheet" href="{{ url_for('static', filename='material-overrides.css') }}">
+    <!-- FreshBot AI Chatbot Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}">
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -327,6 +329,8 @@
         }
     </script>
     <script src="{{ url_for('static', filename='interactive-ui.js') }}"></script>
+    <!-- FreshBot AI Shopping Assistant -->
+    <script src="{{ url_for('static', filename='chatbot.js') }}"></script>
 </body>
 
 </html>
